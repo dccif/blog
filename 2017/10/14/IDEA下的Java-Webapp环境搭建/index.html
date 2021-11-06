@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="IDEA 下Java Webapp的环境搭建       本文在以下环境搭建：  IntelliJ IDEA 2017.2.5JDK 1.8.0_144JRE: 1.8.0_152-release-915-b12 amd64JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.oApache Tomcat 9.0.1 ServerWin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA下的Java Webapp环境搭建">
+<meta property="og:url" content="http://example.com/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="dccif&#39;s Blog">
+<meta property="og:description" content="IDEA 下Java Webapp的环境搭建       本文在以下环境搭建：  IntelliJ IDEA 2017.2.5JDK 1.8.0_144JRE: 1.8.0_152-release-915-b12 amd64JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.oApache Tomcat 9.0.1 ServerWin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/IDEA/newproject.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/select.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/struct.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/after.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/newservlet.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/newstruct.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/newout.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/newlib.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/outset.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/configserver.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/setserver1.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/setserver2.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/result1.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/result2.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/savetemp.jpg">
+<meta property="og:image" content="http://example.com/image/IDEA/usertemp.jpg">
+<meta property="article:published_time" content="2017-10-14T15:14:55.000Z">
+<meta property="article:modified_time" content="2021-11-06T21:22:49.769Z">
+<meta property="article:author" content="Barry He">
+<meta property="article:tag" content="环境搭建">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image/IDEA/newproject.jpg"><title>IDEA下的Java Webapp环境搭建 | dccif's Blog</title><link ref="canonical" href="http://example.com/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: undefined,
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">IDEA下的Java Webapp环境搭建</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2017-10-14</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-06</span></span></div></header><div class="post-body">
+        <h1 id="IDEA-下Java-Webapp的环境搭建"   >
+          <a href="#IDEA-下Java-Webapp的环境搭建" class="heading-link"><i class="fas fa-link"></i></a><a href="#IDEA-下Java-Webapp的环境搭建" class="headerlink" title="IDEA 下Java Webapp的环境搭建"></a>IDEA 下Java Webapp的环境搭建</h1>
+      <p>本文在以下环境搭建：</p>
+<blockquote>
+<p>IntelliJ IDEA 2017.2.5<br>JDK 1.8.0_144<br>JRE: 1.8.0_152-release-915-b12 amd64<br>JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o<br>Apache Tomcat 9.0.1 Server<br>Windows 10 x64 15063.674</p>
+</blockquote>
+<p><strong>注意!!</strong> 本文不包括JAVA环境及Tomcat的搭建！</p>
+<span id="more"></span>
+
+
+        <h2 id="写文缘由"   >
+          <a href="#写文缘由" class="heading-link"><i class="fas fa-link"></i></a><a href="#写文缘由" class="headerlink" title="写文缘由"></a>写文缘由</h2>
+      <p>可能有人问我既然不是写给新人看的，还不写重点的JAVA环境及Tomcat的搭建，你写这有什么用？那么你可以<strong>Ctrl+w</strong>了。因为现在网上的都是关于Eclipse或者老版本的IDEA的教程，所以想写一篇新的，顺带拉一波新人入IDEA的坑。</p>
+<p><del>个人不喜欢课堂上老师用的旧工具</del></p>
+
+        <h3 id="新建Project"   >
+          <a href="#新建Project" class="heading-link"><i class="fas fa-link"></i></a><a href="#新建Project" class="headerlink" title="新建Project"></a>新建Project</h3>
+      <img src="/image/IDEA/newproject.jpg" class="" title="新建项目">
+
+<img src="/image/IDEA/select.jpg" class="" title="选择应用module">
+
+<p>下一步随便给项目取一个名字</p>
+
+        <h3 id="下面是重点了"   >
+          <a href="#下面是重点了" class="heading-link"><i class="fas fa-link"></i></a><a href="#下面是重点了" class="headerlink" title="下面是重点了"></a><strong>下面是重点了</strong></h3>
+      <p>可能是我的环境太新了，和网上的教程生成的目录结构是不一样的。</p>
+<img src="/image/IDEA/struct.jpg" class="" title="目录结构">
+
+<p>我们要新建2个文件夹，都是在web/WEB-INF/目录下</p>
+<ol>
+<li>classes &nbsp&nbsp&nbsp&nbsp –编译后的文件</li>
+<li>lib &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp –以后要引入的库</li>
+</ol>
+
+        <h3 id="新的目录结构"   >
+          <a href="#新的目录结构" class="heading-link"><i class="fas fa-link"></i></a><a href="#新的目录结构" class="headerlink" title="新的目录结构 "></a>新的目录结构 <img src="/image/IDEA/after.jpg" class="" title="新建Servlet和新的目录结构"></h3>
+      <img src="/image/IDEA/newservlet.jpg" class="" title="新建Servlet">
+
+
+        <h3 id="更改项目目录结构"   >
+          <a href="#更改项目目录结构" class="heading-link"><i class="fas fa-link"></i></a><a href="#更改项目目录结构" class="headerlink" title="更改项目目录结构 "></a>更改项目目录结构 <img src="/image/IDEA/newstruct.jpg" class="" title="更改目录结构"></h3>
+      
+        <h4 id="更改out目录"   >
+          <a href="#更改out目录" class="heading-link"><i class="fas fa-link"></i></a><a href="#更改out目录" class="headerlink" title="更改out目录 "></a>更改out目录 <img src="/image/IDEA/newout.jpg" class="" title="更改out目录"></h4>
+      
+        <h4 id="更改lib目录"   >
+          <a href="#更改lib目录" class="heading-link"><i class="fas fa-link"></i></a><a href="#更改lib目录" class="headerlink" title="更改lib目录 "></a>更改lib目录 <img src="/image/IDEA/newlib.jpg" class="" title="更改lib目录"></h4>
+      
+        <h4 id="更改out结构"   >
+          <a href="#更改out结构" class="heading-link"><i class="fas fa-link"></i></a><a href="#更改out结构" class="headerlink" title="更改out结构 "></a>更改out结构 <img src="/image/IDEA/outset.jpg" class="" title="更改out结构"></h4>
+      
+        <h3 id="配置服务器"   >
+          <a href="#配置服务器" class="heading-link"><i class="fas fa-link"></i></a><a href="#配置服务器" class="headerlink" title="配置服务器 "></a>配置服务器 <img src="/image/IDEA/configserver.jpg" class="" title="配置服务器"></h3>
+      <img src="/image/IDEA/setserver1.jpg" class="">
+
+<img src="/image/IDEA/setserver2.jpg" class="" title="配置服务器">
+
+
+        <h2 id="测试代码"   >
+          <a href="#测试代码" class="heading-link"><i class="fas fa-link"></i></a><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2>
+      <p>Jsp 测试：</p>
+<figure class="highlight jsp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;简单的JSP页面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Hello,World!&lt;/h1&gt;</span><br><span class="line">现在的时间是: &lt;%= <span class="keyword">new</span> java.util.Date() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></div></figure>
+<p>结果：</p>
+<img src="/image/IDEA/result1.jpg" class="" title="Jsp页面测试">
+
+
+
+<p>Servlet 测试：</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(name = &quot;HelloServlet&quot;, urlPatterns = &#123;&quot;/helloServlet.do&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        out.println(<span class="string">&quot;&lt;html&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;head&gt;&lt;title&gt;当前时间&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;h3&gt;Hello,World!&lt;/h3&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;现在时间是：&quot;</span> + <span class="keyword">new</span> java.util.Date());</span><br><span class="line">        out.println(<span class="string">&quot;&lt;/body&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;/html&gt;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>结果：</p>
+<img src="/image/IDEA/result2.jpg" class="" title="Servlet测试">
+
+
+        <h2 id="搭建完成"   >
+          <a href="#搭建完成" class="heading-link"><i class="fas fa-link"></i></a><a href="#搭建完成" class="headerlink" title="搭建完成"></a>搭建完成</h2>
+      <p>至此完成了在IDEA上Servlet的环境搭建。</p>
+<p><del>你以为接这样结束了？</del></p>
+<p>你难道想每次都按怎么多才能搭建好环境？<br><del>其实可以选择Maven的，但是Maven更难掌握</del><br>有个简单的方法能节省几步以后搭建的操作</p>
+
+        <h3 id="保存模版"   >
+          <a href="#保存模版" class="heading-link"><i class="fas fa-link"></i></a><a href="#保存模版" class="headerlink" title="保存模版"></a>保存模版</h3>
+      <img src="/image/IDEA/savetemp.jpg" class="" title="保存模版">
+
+<p>之后就能看到了</p>
+<img src="/image/IDEA/usertemp.jpg" class="" title="用户模版">
+
+<p>然而这个功能支持Java项目并不完美，所以以后每次都要新建两个文件夹，就是classes和lib，但之后的目录结构设置会自动完成的</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Barry He</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">http://example.com/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2017/10/16/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E6%B8%85%E5%8D%95/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">重装系统程序清单</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2017/10/10/Prologue/"><span class="paginator-prev__text">Prologue</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDEA-%E4%B8%8BJava-Webapp%E7%9A%84%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">
+          IDEA 下Java Webapp的环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E6%96%87%E7%BC%98%E7%94%B1"><span class="toc-number">1.1.</span> <span class="toc-text">
+          写文缘由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BAProject"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          新建Project</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E6%98%AF%E9%87%8D%E7%82%B9%E4%BA%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          下面是重点了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.3.</span> <span class="toc-text">
+          新的目录结构 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.4.</span> <span class="toc-text">
+          更改项目目录结构 </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9out%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">
+          更改out目录 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9lib%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">
+          更改lib目录 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9out%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">
+          更改out结构 </span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.1.5.</span> <span class="toc-text">
+          配置服务器 </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">
+          测试代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%88%90"><span class="toc-number">1.3.</span> <span class="toc-text">
+          搭建完成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E6%A8%A1%E7%89%88"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+          保存模版</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">hello world</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">14</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Barry He</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
