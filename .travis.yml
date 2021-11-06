@@ -2,26 +2,26 @@ sudo: false
 language: node_js
 node_js:
   - 14 # use nodejs v10 LTS
-cache: npm
+cache: 
+  npm: true
+  directories:
+    - node_modules
 branches:
   only:
     - main # build master branch only
-cache:
-  directories:
-    - node_modules
 before_script:
-  - git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
-  - npm install --save hexo-renderer-pug
   - npm install -g hexo-cli
   - npm install
 script:
+  - git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
+  - npm install --save hexo-renderer-pug
   - hexo clean
   - hexo g -d # generate static files
 after_success:
   - hexo deploy
 deploy:
   provider: pages
-  skip-cleanup: true
+  cleanup: false
   github-token: $GH_TOKEN
   keep-history: true
   on:
