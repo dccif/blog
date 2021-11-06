@@ -10,6 +10,8 @@ cache:
   directories:
     - node_modules
 before_script:
+  - git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
+  - npm install --save hexo-renderer-pug
   - npm install -g hexo-cli
   - npm install
 script:
