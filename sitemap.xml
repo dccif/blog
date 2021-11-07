@@ -114,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dccif.top/README.html</loc>
-    
-    <lastmod>2021-11-07</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.dccif.top/about/index.html</loc>
     
     <lastmod>2021-11-07</lastmod>
@@ -129,6 +122,13 @@
   
   <url>
     <loc>https://blog.dccif.top/categories/index.html</loc>
+    
+    <lastmod>2021-11-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.dccif.top/README.html</loc>
     
     <lastmod>2021-11-07</lastmod>
     
