@@ -22,7 +22,7 @@ script:
   - npm install
   - hexo clean
   - hexo g  # generate static files
-  - node fix-search.js
+  # - node fix-search.js
 after_success:
   - hexo deploy
   - cd public
