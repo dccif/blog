@@ -11,6 +11,7 @@ branches:
     - main # build master branch only
 cache:
 before_script:
+  - npm install -g hexo
   - npm install -g hexo-cli
   - npm install
 script:
@@ -24,6 +25,9 @@ script:
   - hexo g -d # generate static files
 after_success:
   - hexo deploy
+  - cd public
+  - rm -f README.html
+  - cd ..
 deploy:
   provider: pages
   skip_cleanup: true
