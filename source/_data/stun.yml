@@ -131,7 +131,7 @@ layout:
 
 # The header of site.
 header:
-  enable: false
+  enable: true
   show_on:
     # Whether to show on the article page.
     post: true
@@ -139,11 +139,11 @@ header:
   height: 20%
   # Background image of site header.
   bg_image:
-    enable: false
+    enable: true
     # In theme directory (source/images): /images/avatar.png
     # In site directory (source/uploads): /uploads/avatar.png
     # You can also use a link of image.
-    url:
+    url: /image/bg/bg.webp
   # Mask effect of the background image.
   mask:
     enable: false
@@ -296,7 +296,7 @@ author:
     # Optional values: turn | shake
     animation: shake
   # Your favorite motto.
-  motto: hello world
+  motto: People walks on the road of regret
 
 # Social links
 # Value before `||` is the target link, value after `||` is the name of FontAwesome icon.
@@ -426,7 +426,7 @@ post_list:
     archives: false
   # Whether to show the cover image of post.
   cover_image:
-    home: false
+    home: true
 
 # The widget of post.
 post_widget:
@@ -466,15 +466,15 @@ stick_top:
 # Gittalk
 # See: https://github.com/gitalk/gitalk/
 gitalk:
-  enable: true
+  enable: false
   # Github username.
   owner: dccif
   # Github repository.
   repo: blog
   # Github Application Client ID.
-  client_id: 1f48cc042d2143e88614
+  client_id: 
   # Github Application Client Secret.
-  client_secret: bcf9d543f6c6613488151b832c21e14047ce498d
+  client_secret: 
   # GitHub repo owner and collaborators, only these guys can initialize github issues.
   admin: dccif
   # Facebook-like distraction free mode.
@@ -506,15 +506,15 @@ waline:
 # Valine
 # See: https://valine.js.org/quickstart.html
 valine:
-  enable: false
+  enable: true
   # Your leancloud application appid.
-  appid:
+  appid: GSxAEoPRzKE9XzsxkIERDwkg-9Nh9j0Va
   # Your leancloud application appkey.
-  appkey:
+  appkey: C5uzAHfvtWKhBCXWI47wTpX7
   # Mail notifier.
   notify: true
   # Verification code.
-  verify: true
+  verify: false
   # Comment box placeholder.
   placeholder: Just go go
   # Gravatar style.
@@ -524,9 +524,9 @@ valine:
   # Pagination size.
   pageSize: 10
   # Article reading statistics.
-  visitor: false
+  visitor: true
   # Whether to record the commenter IP.
-  recordIP: false
+  recordIP: true
   # Optional values: en | zh-cn
   language:
 
@@ -895,6 +895,7 @@ icon:
   notetag_warning: fas fa-exclamation-circle
   notetag_danger: fas fa-minus-circle
   google: fab fa-google
+  bing: 
   # bing: fab fa-bing # not exist
 
 # Set a CDN address for the vendor you want to customize.
