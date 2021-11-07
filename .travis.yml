@@ -21,7 +21,8 @@ script:
   - npm install hexo-generator-sitemap --save
   - npm install hexo-generator-search --save
   - hexo clean
-  - hexo g -d # generate static files
+  - hexo g  # generate static files
+  - node fix-search.js
 after_success:
   - hexo deploy
   - cd public
