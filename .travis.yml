@@ -18,6 +18,8 @@ script:
   - npm install --save hexo-renderer-pug
   - npm un hexo-renderer-marked --save
   - npm i hexo-renderer-markdown-it-plus --save
+  - npm install hexo-generator-sitemap --save
+  - npm install hexo-generator-search --save
   - hexo clean
   - hexo g -d # generate static files
 after_success:

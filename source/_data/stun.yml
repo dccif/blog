@@ -26,7 +26,7 @@ google_site_verification: tMWqfOoUAGHxzREjCDaWbus132gTVCQw9KoLHRF8PT8
 
 # Bing Webmaster tools verification setting
 # See: https://www.bing.com/webmaster/
-bing_site_verification:
+bing_site_verification: 5F76390BCDDEE4CDDFFD2B5310B498BE
 
 # Baidu Webmaster tools verification setting
 # See: https://ziyuan.baidu.com/site/
@@ -655,7 +655,7 @@ algolia_search:
 # Local Search
 # See: https://github.com/wzpan/hexo-generator-search/
 local_search:
-  enable: false
+  enable: true
 
 # Auxiliary search buttons
 # ! -----------------------------------------------------------------------------------------
