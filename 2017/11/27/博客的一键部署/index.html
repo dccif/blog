@@ -6,7 +6,7 @@
 <meta property="og:description" content="博客的一键部署        终于在一番折腾和学习下，我用“三脚猫”的水平写了一个能一键写博客的脚本😂，这样以后写博客我只需要想写什么东西了，不用再在部署上折腾了。。。                      为什么要折腾        说来这么折腾的写博客，也是我自找没趣。。。承接《博客的备份》，我这的写作环境我备份了好多份，每次要在这么多环境之间选">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-11-27T18:31:26.000Z">
-<meta property="article:modified_time" content="2021-11-07T05:41:37.664Z">
+<meta property="article:modified_time" content="2021-11-07T14:01:06.677Z">
 <meta property="article:author" content="Barry He">
 <meta property="article:tag" content="环境搭建">
 <meta name="twitter:card" content="summary"><title>博客的一键部署 | dccif's Blog</title><link ref="canonical" href="https://blog.dccif.top/2017/11/27/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async="" data-pjax=""></script><script data-pjax="">if (window.location.hostname !== 'localhost') {
@@ -268,7 +268,7 @@ function closeSearch () {
   $('.search-mask').css({ display: 'none' });
 }
 
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
   Stun.utils.pjaxReloadLocalSearch = function () {
     $('.header-nav-search').on('click', function (e) {
       e.stopPropagation();
