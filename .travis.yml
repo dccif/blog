@@ -16,6 +16,8 @@ before_script:
 script:
   - git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
   - npm install --save hexo-renderer-pug
+  - npm un hexo-renderer-marked --save
+  - npm i hexo-renderer-markdown-it-plus --save
   - hexo clean
   - hexo g -d # generate static files
 after_success:

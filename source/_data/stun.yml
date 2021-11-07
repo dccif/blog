@@ -22,7 +22,7 @@ canonical: true
 # ---------------------------------------------------------------
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-google_site_verification:
+google_site_verification: tMWqfOoUAGHxzREjCDaWbus132gTVCQw9KoLHRF8PT8
 
 # Bing Webmaster tools verification setting
 # See: https://www.bing.com/webmaster/
@@ -286,14 +286,14 @@ author:
     # In theme directory (source/images): /images/avatar.png
     # In site directory (source/uploads): /uploads/avatar.png
     # You can also use a link of image.
-    url: /assets/stun-logo.svg
+    url: /assets/android-chrome-512x512.png
     # If true, the avatar would be displayed in a circle.
     rounded: false
     # Opacity of avatar (value: 0 ~ 1)
     opacity: 1
     # Mouse hover animation
     # Optional values: turn | shake
-    animation: turn
+    animation: shake
   # Your favorite motto.
   motto: hello world
 
@@ -304,19 +304,20 @@ author:
 # If you can`t find a suitable icon, you can choose to display text by adding the `origin:` prefix.
 # e.g. `origin:sf`, so `sf` will be displayed.
 social:
-  github: https://github.com/ || fab fa-github
+  github: https://github.com/dccif || fab fa-github
   google: https://plus.google.com/ || fab fa-google
-  twitter: https://twitter.com/ || fab fa-twitter
-  youtube: https://youtube.com/ || fab fa-youtube
+  twitter: https://twitter.com/heyujieboy || fab fa-twitter
+  Gmail: mailto:heyujieboy@gmail.com || origin:Gmail
+  # youtube: https://youtube.com/ || fab fa-youtube
   # segmentfault: https://segmentfault.com/ || origin:sf
   # weibo: https://weibo.com/ || fab fa-weibo
   # zhihu: https://www.zhihu.com/ || origin:知
   # wechat: yournumber || fab fa-weixin
   # telegram: yournumber || fab fa-telegram
-  # qq: yournumber || fab fa-qq
+  qq: tencent://message?uin=632055362|| fab fa-qq
 
 social_setting:
-  enable: false
+  enable: true
   # Only show by icon.
   icon_only: true
 
@@ -464,17 +465,17 @@ stick_top:
 # Gittalk
 # See: https://github.com/gitalk/gitalk/
 gitalk:
-  enable: false
+  enable: true
   # Github username.
-  owner:
+  owner: dccif
   # Github repository.
-  repo:
+  repo: blog
   # Github Application Client ID.
-  client_id:
+  client_id: 1f48cc042d2143e88614
   # Github Application Client Secret.
-  client_secret:
+  client_secret: bcf9d543f6c6613488151b832c21e14047ce498d
   # GitHub repo owner and collaborators, only these guys can initialize github issues.
-  admin:
+  admin: dccif
   # Facebook-like distraction free mode.
   distraction_free_mode: false
   # Gitalk's display language depends on user's browser or system environment.
@@ -626,11 +627,11 @@ busuanzi:
 
 # Google analytics ID
 # See: https://analytics.google.com/
-google_analytics:
+google_analytics: G-X2E5TNLHF0
 
 # Baidu analytics ID
 # See: https://tongji.baidu.com/
-baidu_analytics:
+baidu_analytics: 587dfeaffdbdf8ad83e8b313b54383ab
 
 # Tencent analytics ID
 # See: https://v2.ta.qq.com/
@@ -702,7 +703,7 @@ canvas_nest:
 # Math and Chart config
 # ---------------------------------------------------------------
 math:
-  enable: false
+  enable: true
   # If true, this function will be enabled on every page.
   # If false, this function will be enabled only if the page where `math: true` is set in `Front-matter`.
   per_page: false
@@ -756,14 +757,14 @@ gallery_waterfall:
 # Lazy load the images of post.
 # See: https://github.com/tuupola/lazyload
 lazyload:
-  enable: false
+  enable: true
   # Optional values: gif | block
   placeholder: gif
 
 # Quicklink support
 # See: https://github.com/GoogleChromeLabs/quicklink/
 quicklink:
-  enable: false
+  enable: true
   # Quicklink (quicklink.umd.js script) is loaded on demand.
   # Add `quicklink: true` in Front-matter of the page or post you need.
   # Home page and archive page can be controlled through home and archive options below.
@@ -790,7 +791,7 @@ quicklink:
 # Pjax
 # See: https://github.com/MoOx/pjax/
 pjax:
-  enable: false
+  enable: true
   # When switching pages, scroll to the bottom of the top image.
   avoid_banner: false
   # ! --------------------------------------------------
