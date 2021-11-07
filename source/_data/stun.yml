@@ -52,8 +52,9 @@ sougou_site_verification:
 menu:
   home: / || fas fa-home
   archives: /archives/ || fas fa-folder-open
-  # categories: /categories/ || fas fa-layer-group
-  # tags: /tags/ || fas fa-tags
+  categories: /categories/ || fas fa-layer-group
+  tags: /tags/ || fas fa-tags
+  about: /about/ || fas fa-user
   # You can add a secondary menu like follow.
   # xxx1: javascript:; || fa(s|r|l|d|b) fa-xxx
 
@@ -212,7 +213,7 @@ footer:
     # Icon name in FontAwesome, see: https://fontawesome.com/icons
     name: fas fa-heart
     # Heartbeat animation.
-    animation: false
+    animation: true
     # (Please use "" to wrap the value)
     color: "#ff0000"
   # Hexo link
@@ -662,7 +663,7 @@ local_search:
 # ! This feature can only be enabled if either `algolia_search` or `local_search` is enabled.
 # ! -----------------------------------------------------------------------------------------
 assist_search:
-  enable: false
+  enable: true
   # Show the Google Search button. Use `www.google.com` to search for what you type.
   google: true
   # Show the Bing Search button. Use `www.bing.com` to search for what you type.
@@ -733,7 +734,7 @@ math:
 
 # Fancybox
 # See: https://fancyapps.com/fancybox/3/
-fancybox: false
+fancybox: true
 
 # Click to enlarge picture.
 zoom_image:
@@ -791,7 +792,7 @@ quicklink:
 # Pjax
 # See: https://github.com/MoOx/pjax/
 pjax:
-  enable: false
+  enable: true
   # When switching pages, scroll to the bottom of the top image.
   avoid_banner: false
   # ! --------------------------------------------------
