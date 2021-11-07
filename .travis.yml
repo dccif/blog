@@ -20,9 +20,9 @@ script:
   - npm install hexo-generator-sitemap --save
   - npm install hexo-generator-search --save
   - npm install
+  - mv -f ./localsearch.pug ./themes/stun/layout/_third-party/search/localsearch.pug
   - hexo clean
   - hexo g  # generate static files
-  - node fix-search.js
 after_success:
   - hexo deploy
   - cd public
