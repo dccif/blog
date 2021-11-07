@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dccif.top/categories/index.html</loc>
-    
-    <lastmod>2021-11-07</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.dccif.top/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2021-11-07</lastmod>
@@ -72,6 +65,13 @@
   </url>
   
   <url>
+    <loc>https://blog.dccif.top/2021/05/09/%E7%94%98%E9%9B%A8%E9%AA%97%E5%B1%80/</loc>
+    
+    <lastmod>2021-11-07</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.dccif.top/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/</loc>
     
     <lastmod>2021-11-07</lastmod>
@@ -107,14 +107,21 @@
   </url>
   
   <url>
-    <loc>https://blog.dccif.top/README.html</loc>
+    <loc>https://blog.dccif.top/about/index.html</loc>
     
     <lastmod>2021-11-07</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.dccif.top/about/index.html</loc>
+    <loc>https://blog.dccif.top/categories/index.html</loc>
+    
+    <lastmod>2021-11-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.dccif.top/README.html</loc>
     
     <lastmod>2021-11-07</lastmod>
     
@@ -165,6 +172,20 @@
   </url>
   
   <url>
+    <loc>https://blog.dccif.top/tags/%E8%A7%92%E8%89%B2%E8%AF%84%E4%BB%B7/</loc>
+    <lastmod>2021-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dccif.top/tags/%E7%90%86%E8%A7%A3%E4%BA%A4%E6%B5%81/</loc>
+    <lastmod>2021-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dccif.top/tags/%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2021-11-07</lastmod>
     <changefreq>daily</changefreq>
@@ -196,6 +217,13 @@
   
   <url>
     <loc>https://blog.dccif.top/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2021-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dccif.top/categories/%E5%8E%9F%E7%A5%9E/</loc>
     <lastmod>2021-11-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
