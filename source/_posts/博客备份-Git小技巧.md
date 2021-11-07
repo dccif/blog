@@ -26,7 +26,7 @@ tags: 细节
 
 因为这次忽略文件是我临时添加的，再修改了**.gitignore**文件后在次上传并没有生效
 
-感谢pfeng的作者，本文参考http://www.pfeng.org/archives/840
+感谢pfeng的作者，本文参考 http://www.pfeng.org/archives/840
 
 在**git**中如果想忽略掉某个文件，不让这个文件提交到版本库中，可以使用修改根目录中 **.gitignore** 文件的方法（如无，则需自己手工建立此文件）。这个文件每一行保存了一个匹配的规则例如：
 
