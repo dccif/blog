@@ -4,7 +4,7 @@
 <meta property="og:site_name" content="dccif&#39;s Blog">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Barry He">
-<meta name="twitter:card" content="summary"><title>标签: 阅读 | dccif's Blog</title><link ref="canonical" href="https://blog.dccif.top/tags/%E9%98%85%E8%AF%BB/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async="" data-pjax=""></script><script data-pjax="">if (window.location.hostname !== 'localhost') {
+<meta name="twitter:card" content="summary"><title>标签: 阅读 | dccif's Blog</title><link ref="canonical" href="https://blog.dccif.top/tags/%E9%98%85%E8%AF%BB/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async=""></script><script>if (window.location.hostname !== 'localhost') {
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
@@ -15,7 +15,7 @@
   hm.src = 'https://hm.baidu.com/hm.js?587dfeaffdbdf8ad83e8b313b54383ab';
   hm.async = true;
 
-  if (true) {
+  if (false) {
     hm.setAttribute('data-pjax', '');
   }
   var s = document.getElementsByTagName('script')[0]; 
@@ -37,7 +37,7 @@ var CONFIG = {
   zoomImage: {"gapAside":"20px"},
   galleryWaterfall: undefined,
   lazyload: true,
-  pjax: {"avoidBanner":false},
+  pjax: undefined,
   externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
   shortcuts: undefined,
   prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
@@ -317,104 +317,4 @@ if (Array.isArray(assistSearchList)) {
       extSearch(name);
     }, false);
   });
-}</script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
-  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
-  // 加载进度条的计时器
-  var loadingTimer = null;
-
-  // 重置页面 Y 方向上的滚动偏移量
-  document.addEventListener('pjax:send', function () {
-    $('.header-nav-menu').removeClass('show');
-    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
-      $('html').velocity('scroll', {
-        duration: 500,
-        offset: $('#header').height(),
-        easing: 'easeInOutCubic'
-      });
-    }
-
-    var loadingBarWidth = 20;
-    var MAX_LOADING_WIDTH = 95;
-
-    $('.loading-bar').addClass('loading');
-    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
-    clearInterval(loadingTimer);
-    loadingTimer = setInterval(function () {
-      loadingBarWidth += 3;
-      if (loadingBarWidth > MAX_LOADING_WIDTH) {
-        loadingBarWidth = MAX_LOADING_WIDTH;
-      }
-      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
-    }, 500);
-  }, false);
-
-  window.addEventListener('pjax:complete', function () {
-    clearInterval(loadingTimer);
-    $('.loading-bar__progress').css('width', '100%');
-    $('.loading-bar').removeClass('loading');
-    setTimeout(function () {
-      $('.loading-bar__progress').css('width', '0');
-    }, 400);
-    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
-      $(this).remove();
-    });
-    $('script[data-pjax], #pjax-reload script').each(function () {
-      $(this).parent().append($(this).remove());
-    });
-
-    if (Stun.utils.pjaxReloadBoot) {
-      Stun.utils.pjaxReloadBoot();
-    }
-    if (Stun.utils.pjaxReloadScroll) {
-      Stun.utils.pjaxReloadScroll();
-    }
-    if (Stun.utils.pjaxReloadSidebar) {
-      Stun.utils.pjaxReloadSidebar();
-    }
-    if (true) {
-      if (Stun.utils.pjaxReloadHeader) {
-        Stun.utils.pjaxReloadHeader();
-      }
-      if (Stun.utils.pjaxReloadScrollIcon) {
-        Stun.utils.pjaxReloadScrollIcon();
-      }
-      if (Stun.utils.pjaxReloadLocalSearch) {
-        Stun.utils.pjaxReloadLocalSearch();
-      }
-    }
-  }, false);
-}, false);</script><div id="pjax-reload"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@1.0.1/dist/quicklink.umd.js"></script><script>function initQuicklink() {
-  quicklink({
-    timeout: '10000',
-    priority: true,
-    ignores: [uri => uri.includes('#'), uri => uri === 'https://blog.dccif.top/tags/%E9%98%85%E8%AF%BB/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
-  });
-}
-
-if (true || false) {
-  initQuicklink();
-} else {
-  window.addEventListener('DOMContentLoaded', initQuicklink, false);
-}</script></div><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js" data-pjax=""></script><script src="https://cdn.jsdelivr.net/npm/js-md5@latest/src/md5.min.js" data-pjax=""></script><script data-pjax="">function loadGitalk () {
-  if (!document.getElementById('gitalk-container')) {
-    return;
-  }
-
-  var gitalk = new Gitalk({
-    id: md5(window.location.pathname.slice(1)),
-    clientID: '1f48cc042d2143e88614',
-    clientSecret: 'bcf9d543f6c6613488151b832c21e14047ce498d',
-    repo: 'blog',
-    owner: 'dccif',
-    admin: ['dccif'],
-    distractionFreeMode: 'false',
-    language: 'zh-CN'
-  });
-  gitalk.render('gitalk-container');
-}
-
-if (true) {
-  loadGitalk();
-} else {
-  window.addEventListener('DOMContentLoaded', loadGitalk, false);
 }</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script></body></html>
