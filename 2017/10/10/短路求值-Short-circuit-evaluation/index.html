@@ -1,15 +1,31 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="短路求值        Short-circuit evaluation  最早是在php中接触到的这种求值，后来在学习Lisp中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧">
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="google-site-verification" content="tMWqfOoUAGHxzREjCDaWbus132gTVCQw9KoLHRF8PT8"><meta name="description" content="短路求值         Short-circuit evaluation  最早是在php中接触到的这种求值，后来在学习Lisp中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="短路求值(Short-circuit evaluation)">
 <meta property="og:url" content="http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/index.html">
 <meta property="og:site_name" content="dccif&#39;s Blog">
-<meta property="og:description" content="短路求值        Short-circuit evaluation  最早是在php中接触到的这种求值，后来在学习Lisp中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧">
+<meta property="og:description" content="短路求值         Short-circuit evaluation  最早是在php中接触到的这种求值，后来在学习Lisp中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-10-10T16:05:27.000Z">
-<meta property="article:modified_time" content="2021-11-06T21:36:20.945Z">
+<meta property="article:modified_time" content="2021-11-07T00:12:42.806Z">
 <meta property="article:author" content="Barry He">
 <meta property="article:tag" content="细节">
-<meta name="twitter:card" content="summary"><title>短路求值(Short-circuit evaluation) | dccif's Blog</title><link ref="canonical" href="http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+<meta name="twitter:card" content="summary"><title>短路求值(Short-circuit evaluation) | dccif's Blog</title><link ref="canonical" href="http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async="" data-pjax=""></script><script data-pjax="">if (window.location.hostname !== 'localhost') {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-X2E5TNLHF0');
+}</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?587dfeaffdbdf8ad83e8b313b54383ab';
+  hm.async = true;
+
+  if (true) {
+    hm.setAttribute('data-pjax', '');
+  }
+  var s = document.getElementsByTagName('script')[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var Stun = window.Stun || {};
 var CONFIG = {
   root: '/',
   algolia: undefined,
@@ -25,113 +41,220 @@ var CONFIG = {
   fancybox: false,
   zoomImage: {"gapAside":"20px"},
   galleryWaterfall: undefined,
-  lazyload: false,
-  pjax: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
   externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
   shortcuts: undefined,
   prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">短路求值(Short-circuit evaluation)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2017-10-10</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-06</span></span></div></header><div class="post-body">
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner header-inner--height header-inner--bgcolor"><nav class="header-nav header-nav--sticky"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">短路求值(Short-circuit evaluation)</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2017-10-10</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-07</span></span></div></header><div class="post-body">
         <h1 id="短路求值"   >
-          <a href="#短路求值" class="heading-link"><i class="fas fa-link"></i></a><a href="#短路求值" class="headerlink" title="短路求值"></a>短路求值</h1>
-      <blockquote>
+          <a href="#短路求值" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#短路求值"></a> 短路求值</h1>
+      
+<blockquote>
 <p>Short-circuit evaluation</p>
 </blockquote>
 <p>最早是在<strong>php</strong>中接触到的这种求值，后来在学习<strong>Lisp</strong>中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧</p>
 <span id="more"></span>
 
-
-        <h2 id="什么是短路求值（Short-circuit-evaluation）"   >
-          <a href="#什么是短路求值（Short-circuit-evaluation）" class="heading-link"><i class="fas fa-link"></i></a><a href="#什么是短路求值（Short-circuit-evaluation）" class="headerlink" title="什么是短路求值（Short-circuit evaluation）"></a>什么是<strong>短路求值（Short-circuit evaluation）</strong></h2>
-      <p>以下摘自<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.wikiwand.com/en/Short-circuit_evaluation" >Short-circuit evaluation</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+        <h2 id="什么是短路求值short-circuit-evaluation"   >
+          <a href="#什么是短路求值short-circuit-evaluation" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#什么是短路求值short-circuit-evaluation"></a> 什么是<strong>短路求值（Short-circuit evaluation）</strong></h2>
+      
+<p>以下摘自<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.wikiwand.com/en/Short-circuit_evaluation" >Short-circuit evaluation</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
 <blockquote>
-<p><strong>Short-circuit evaluation</strong>, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function<br>evaluates to true, the overall value must be true.</p>
+<p><strong>Short-circuit evaluation</strong>, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function<br />
+evaluates to true, the overall value must be true.</p>
 </blockquote>
 <p>概况来说就是在求<strong>布尔表达式</strong>的时候程序并不会执行全部的<strong>Expression</strong></p>
 <p>比如<strong>AND</strong>或者<strong>OR</strong>操作时如果后面第一个Expression为True，那么之后的Expression就不会再求值了。</p>
 
         <h2 id="一些例子"   >
-          <a href="#一些例子" class="heading-link"><i class="fas fa-link"></i></a><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2>
+          <a href="#一些例子" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#一些例子"></a> 一些例子</h2>
       
-        <h3 id="普通的C程序"   >
-          <a href="#普通的C程序" class="heading-link"><i class="fas fa-link"></i></a><a href="#普通的C程序" class="headerlink" title="普通的C程序"></a>普通的<strong>C</strong>程序</h3>
-      <figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> denom = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (denom != <span class="number">0</span> &amp;&amp; num / denom)</span><br><span class="line">&#123;</span><br><span class="line">    ... <span class="comment">// ensures that calculating num/denom never results in divide-by-zero error   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 
+        <h3 id="普通的c程序"   >
+          <a href="#普通的c程序" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#普通的c程序"></a> 普通的<strong>C</strong>程序</h3>
+      
+<figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> denom = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (denom != <span class="number">0</span> &amp;&amp; num / denom)</span><br><span class="line">&#123;</span><br><span class="line">    ... <span class="comment">// ensures that calculating num/denom never results in divide-by-zero error   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 
-        <h3 id="使用了短路求值的C程序"   >
-          <a href="#使用了短路求值的C程序" class="heading-link"><i class="fas fa-link"></i></a><a href="#使用了短路求值的C程序" class="headerlink" title="使用了短路求值的C程序"></a>使用了短路求值的<strong>C</strong>程序</h3>
-      <figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (a != <span class="number">0</span> &amp;&amp; myfunc(b))</span><br><span class="line">&#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
-
-<p>在这个例子中**&amp;&amp;<strong>后的</strong>myfunc(b)<strong>将永远不会执行，因为</strong>a!=0<strong>永远是</strong>FALSE**。<br>利用短路求值有2个有用的技巧</p>
+        <h3 id="使用了短路求值的c程序"   >
+          <a href="#使用了短路求值的c程序" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#使用了短路求值的c程序"></a> 使用了短路求值的<strong>C</strong>程序</h3>
+      
+<figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (a != <span class="number">0</span> &amp;&amp; myfunc(b))</span><br><span class="line">&#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+<p>在这个例子中**&amp;&amp;<strong>后的</strong>myfunc(b)<strong>将永远不会执行，因为</strong>a!=0<strong>永远是</strong>FALSE**。<br />
+利用短路求值有2个有用的技巧</p>
 <ol>
 <li>如果条件判断的expression需要复杂的计算，并且第一个结果为<strong>False</strong>，则可以不计算之后的表达式</li>
 <li>可以构造一个expression来使第二个可能会发生运行时错误的expression成功运行</li>
 </ol>
 <figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_first_char_valid_alpha_unsafe</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// SEGFAULT highly possible with p == NULL</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_first_char_valid_alpha</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p != <span class="literal">NULL</span> &amp;&amp; <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// 1) no unneeded isalpha() execution with p == NULL, 2) no SEGFAULT risk</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
-
 <p>这个例子避免了空指针</p>
 
-        <h3 id="最近学习的Lisp中的例子："   >
-          <a href="#最近学习的Lisp中的例子：" class="heading-link"><i class="fas fa-link"></i></a><a href="#最近学习的Lisp中的例子：" class="headerlink" title="最近学习的Lisp中的例子："></a>最近学习的Lisp中的例子：</h3>
-      <figure class="highlight lisp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">defparameter</span> *is-it-even* <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">or</span> (<span class="name">oddp</span> <span class="number">5</span>) </span><br><span class="line">(<span class="name">setf</span> *is-it-even* <span class="literal">t</span>))</span><br></pre></td></tr></table></div></figure>
-
+        <h3 id="最近学习的lisp中的例子"   >
+          <a href="#最近学习的lisp中的例子" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#最近学习的lisp中的例子"></a> 最近学习的Lisp中的例子：</h3>
+      
+<figure class="highlight lisp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">defparameter</span> *is-it-even* <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">or</span> (<span class="name">oddp</span> <span class="number">5</span>) </span><br><span class="line">(<span class="name">setf</span> *is-it-even* <span class="literal">t</span>))</span><br></pre></td></tr></table></div></figure>
 <p>利用短路求值，用<strong>OR</strong>实现了条件判断</p>
 
-        <h2 id="可能的问题："   >
-          <a href="#可能的问题：" class="heading-link"><i class="fas fa-link"></i></a><a href="#可能的问题：" class="headerlink" title="可能的问题："></a>可能的问题：</h2>
-      <p>尽管有上面说的优点，但是可能会带来没有意识到的问题，比如：</p>
+        <h2 id="可能的问题"   >
+          <a href="#可能的问题" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#可能的问题"></a> 可能的问题：</h2>
+      
+<p>尽管有上面说的优点，但是可能会带来没有意识到的问题，比如：</p>
 <figure class="highlight c"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (expressionA &amp;&amp; myfunc(b)) &#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
-
-<p>当<strong>expressionA</strong>为<strong>True</strong>时无论**do_something()<strong>是否执行，</strong>myfunc(b)**都会执行，例如分配系统资源的操作。</p>
+<p>当<strong>expressionA</strong>为<strong>True</strong>时无论**do_something()**是否执行，**myfunc(b)**都会执行，例如分配系统资源的操作。</p>
 <p>相反，<strong>expressionA</strong>为<strong>False</strong>时**myfunc(b)**永远不会执行</p>
 
         <h2 id="支持的语言"   >
-          <a href="#支持的语言" class="heading-link"><i class="fas fa-link"></i></a><a href="#支持的语言" class="headerlink" title="支持的语言"></a>支持的语言</h2>
-      <p><strong>并不是所有语言和所有操作符支持的</strong><br>Java支持<strong>非短路求值</strong>也支持<strong>短路求值</strong></p>
+          <a href="#支持的语言" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#支持的语言"></a> 支持的语言</h2>
+      
+<p><strong>并不是所有语言和所有操作符支持的</strong><br />
+Java支持<strong>非短路求值</strong>也支持<strong>短路求值</strong></p>
 <div class="table-container"><table>
 <thead>
 <tr>
-<th align="left">常见的语言</th>
-<th align="left">支持的操作符</th>
+<th style="text-align:left">常见的语言</th>
+<th style="text-align:left">支持的操作符</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">C, Obejective-C, C++, C#</td>
-<td align="left">&amp;&amp;, ∥, ?</td>
+<tbody>
+<tr>
+<td style="text-align:left">C, Obejective-C, C++, C#</td>
+<td style="text-align:left">&amp;&amp;, ∥, ?</td>
 </tr>
 <tr>
-<td align="left">Java, MATLAB, R, Swift</td>
-<td align="left">&amp;&amp;, ∥</td>
+<td style="text-align:left">Java, MATLAB, R, Swift</td>
+<td style="text-align:left">&amp;&amp;, ∥</td>
 </tr>
 <tr>
-<td align="left">JavaScript, GO, Haskel</td>
-<td align="left">&amp;&amp;, ∥</td>
+<td style="text-align:left">JavaScript, GO, Haskel</td>
+<td style="text-align:left">&amp;&amp;, ∥</td>
 </tr>
 <tr>
-<td align="left">Lisp, Lua, Scheme</td>
-<td align="left">and, or</td>
+<td style="text-align:left">Lisp, Lua, Scheme</td>
+<td style="text-align:left">and, or</td>
 </tr>
 <tr>
-<td align="left">PHP</td>
-<td align="left">&amp;&amp;, and, ∥, or</td>
+<td style="text-align:left">PHP</td>
+<td style="text-align:left">&amp;&amp;, and, ∥, or</td>
 </tr>
 <tr>
-<td align="left">Python</td>
-<td align="left">and, or</td>
+<td style="text-align:left">Python</td>
+<td style="text-align:left">and, or</td>
 </tr>
 <tr>
-<td align="left">Visual Basic</td>
-<td align="left">不支持</td>
+<td style="text-align:left">Visual Basic</td>
+<td style="text-align:left">不支持</td>
 </tr>
-</tbody></table></div>
-</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Barry He</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/">http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/%E7%BB%86%E8%8A%82/">细节</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2017/10/10/%E9%80%92%E5%BD%92%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">递归的两种优化方法</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2017/10/10/my-test-page/"><span class="paginator-prev__text">my test page</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">
-          短路求值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC%EF%BC%88Short-circuit-evaluation%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">
-          什么是短路求值（Short-circuit evaluation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">
-          一些例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%9A%84C%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">
-          普通的C程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC%E7%9A%84C%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">
-          使用了短路求值的C程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E5%AD%A6%E4%B9%A0%E7%9A%84Lisp%E4%B8%AD%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">
-          最近学习的Lisp中的例子：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">
-          可能的问题：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E8%AF%AD%E8%A8%80"><span class="toc-number">1.4.</span> <span class="toc-text">
-          支持的语言</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">hello world</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">14</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Barry He</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
+</tbody>
+</table></div>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Barry He</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/">http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="http://example.com/tags/%E7%BB%86%E8%8A%82/">细节</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2017/10/10/%E9%80%92%E5%BD%92%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">递归的两种优化方法</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2017/10/10/my-test-page/"><span class="paginator-prev__text">my test page</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="gitalk-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">
+           短路求值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BCshort-circuit-evaluation"><span class="toc-number">1.1.</span> <span class="toc-text">
+           什么是短路求值（Short-circuit evaluation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">
+           一些例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%9A%84c%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+           普通的C程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC%E7%9A%84c%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+           使用了短路求值的C程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E5%AD%A6%E4%B9%A0%E7%9A%84lisp%E4%B8%AD%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+           最近学习的Lisp中的例子：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">
+           可能的问题：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E8%AF%AD%E8%A8%80"><span class="toc-number">1.4.</span> <span class="toc-text">
+           支持的语言</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/android-chrome-512x512.png" alt="avatar"></div><p class="sidebar-ov-author__text">hello world</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/dccif" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/heyujieboy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="mailto:heyujieboy@gmail.com" target="_blank" rel="noopener" data-popover="social.Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon">Gmail</span></a><a class="sidebar-ov-social-item" href="tencent://message?uin=632055362" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">14</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Barry He</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload",".header-inner"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (true) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@1.0.1/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'http://example.com/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script></div><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js" data-pjax=""></script><script src="https://cdn.jsdelivr.net/npm/js-md5@latest/src/md5.min.js" data-pjax=""></script><script data-pjax="">function loadGitalk () {
+  if (!document.getElementById('gitalk-container')) {
+    return;
+  }
+
+  var gitalk = new Gitalk({
+    id: md5(window.location.pathname.slice(1)),
+    clientID: '1f48cc042d2143e88614',
+    clientSecret: 'bcf9d543f6c6613488151b832c21e14047ce498d',
+    repo: 'blog',
+    owner: 'dccif',
+    admin: ['dccif'],
+    distractionFreeMode: 'false',
+    language: 'zh-CN'
+  });
+  gitalk.render('gitalk-container');
+}
+
+if (true) {
+  loadGitalk();
+} else {
+  window.addEventListener('DOMContentLoaded', loadGitalk, false);
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
