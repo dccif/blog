@@ -296,7 +296,7 @@ author:
     # Optional values: turn | shake
     animation: shake
   # Your favorite motto.
-  motto: People walks on the road of regret
+  motto: People are on the road to regret.
 
 # Social links
 # Value before `||` is the target link, value after `||` is the name of FontAwesome icon.
