@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="google-site-verification" content="tMWqfOoUAGHxzREjCDaWbus132gTVCQw9KoLHRF8PT8"><meta name="msvalidate.01" content="5F76390BCDDEE4CDDFFD2B5310B498BE"><meta name="description" content="问题的起因（挖坑原因）：         玩乐器的同学知道，简谱上的不同调之间的转换不如五线谱上方便，我原来最先是参照转调表一个一个人工查找😥太累，后来就想写个程序完成了。 ———关于调，不懂的可以百毒一下。。。就是与起始音do的位置，或者末音la的位置（这不是小调了吗，不管，乐理也不太精通，如有大神求指出）                       问题的实现：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记第一个对我有实际作用的程序（逃）">
+<meta property="og:url" content="https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/index.html">
+<meta property="og:site_name" content="dccif&#39;s Blog">
+<meta property="og:description" content="问题的起因（挖坑原因）：         玩乐器的同学知道，简谱上的不同调之间的转换不如五线谱上方便，我原来最先是参照转调表一个一个人工查找😥太累，后来就想写个程序完成了。 ———关于调，不懂的可以百毒一下。。。就是与起始音do的位置，或者末音la的位置（这不是小调了吗，不管，乐理也不太精通，如有大神求指出）                       问题的实现：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dccif.top/image/tuneChange/cmd.webp">
+<meta property="article:published_time" content="2015-12-14T01:14:35.000Z">
+<meta property="article:modified_time" content="2021-11-07T16:41:00.849Z">
+<meta property="article:author" content="Barry He">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="音乐">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dccif.top/image/tuneChange/cmd.webp"><title>记第一个对我有实际作用的程序（逃） | dccif's Blog</title><link ref="canonical" href="https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async="" data-pjax=""></script><script data-pjax="">if (window.location.hostname !== 'localhost') {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-X2E5TNLHF0');
+}</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?587dfeaffdbdf8ad83e8b313b54383ab';
+  hm.async = true;
+
+  if (true) {
+    hm.setAttribute('data-pjax', '');
+  }
+  var s = document.getElementsByTagName('script')[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/about/"><span class="header-nav-menu-item__icon"><i class="fas fa-user"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">dccif's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">记第一个对我有实际作用的程序（逃）</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2015-12-14</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-07</span></span><span class="post-meta-item post-meta-item--visitors leancloud_visitors" id="/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/" data-flag-title="记第一个对我有实际作用的程序（逃）"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value leancloud-visitors-count"></span></span></div></header><div class="post-body">
+        <h1 id="问题的起因挖坑原因"   >
+          <a href="#问题的起因挖坑原因" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#问题的起因挖坑原因"></a> 问题的起因（挖坑原因）：</h1>
+      
+<ol>
+<li>玩乐器的同学知道，简谱上的不同调之间的转换不如五线谱上方便，我原来最先是参照转调表一个一个人工查找😥太累，后来就想写个程序完成了。</li>
+<li>———关于调，不懂的可以百毒一下。。。就是与起始音do的位置，或者末音la的位置（这不是小调了吗，不管，乐理也不太精通，如有大神求指出）</li>
+</ol>
+
+        <h1 id="问题的实现"   >
+          <a href="#问题的实现" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#问题的实现"></a> 问题的实现：</h1>
+      
+<ol>
+<li>
+<p>脑洞昨天太大😓，明明只是一个会C调的，你干嘛要写个转换任意调的。。。。<br />
+原始目的只是想任意调转成C，后来写着写着觉得这样这程序太弱了（虽然本来就不强)，就临时想转成任意调了。。。。于是有琢磨了一会就有了实现。。。</p>
+</li>
+<li>
+<p>实现思路：当初第一目的——任意调到C，最初是想通过if一句一句判断进行实现。。。。后来想写任意调后发现不现实，因为会有C(6,2)，15种可能，每个if下还要再进行判断是否是1，2，3，4，这类的简谱名，这样会造成程序的冗长与无用。。。于是就放弃了</p>
+</li>
+<li>
+<p>于是想到了Python的dict数据结构，使用key-value对，便可以便捷的实现调之间转换，只需提前输入好dict</p>
+</li>
+</ol>
+<span id="more"></span>
+
+        <h1 id="实现过程中的问题"   >
+          <a href="#实现过程中的问题" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#实现过程中的问题"></a> 实现过程中的问题：</h1>
+      
+<ol>
+<li>
+<p>我就不应该用command line（命令行）来获取输入数据🙈</p>
+</li>
+<li>
+<p>命令行输入的数据我要考虑各种间隔，因为input()函数获取的输入是“******“中的所有字符，其中考虑如何实现区分，b7,7 ，8这类输入都头疼了我好久。。</p>
+<p>b7在input()中会当成b和7两个单独的字符，而我想表示的是低音7，</p>
+<p>
+        <img   class="lazyload lazyload-gif"
+          src="/images/loading.svg" data-src="/image/tuneChange/cmd.webp"  alt="cmd" />
+      </p>
+<p>7，8在input()中也会傻不拉唧的把逗号（，）也识别进入，我要想办法去除符号后才能进行数据操作</p>
+</li>
+</ol>
+
+        <h1 id="问题的解决"   >
+          <a href="#问题的解决" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#问题的解决"></a> 问题的解决</h1>
+      
+<ol>
+<li>input()的问题，假设用户配合，全用空格分开，便可利用.split(&quot; &quot;)方法进行去除，之后便可传入列表就行操作</li>
+<li>函数中局部变量和函数定义好后，不会自行调用真是够了</li>
+</ol>
+
+        <h1 id="一些感想"   >
+          <a href="#一些感想" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#一些感想"></a> 一些感想</h1>
+      
+<ol>
+<li>
+<p>变量名要取好，我这么一点我都有时忘记了这个变量是干嘛（水平太差）</p>
+</li>
+<li>
+<p>函数中的变量尽量与函数外的变量不要重名，我这个就是重名的，有时搞不懂为何会没有输出，就是因为函数中变量是局部的</p>
+</li>
+<li>
+<p>写什么要先写好第一目的，不要想我这样，写着写着又想写其他目的了，也不要想我一样边写边调试，大部分时间都废在找bug和纠错上了。。。。当然因为我是写着写着就想别的目的了，所以边写边调试还是没什么问题的。。。（我觉得）</p>
+</li>
+</ol>
+
+        <h1 id="垃圾代码"   >
+          <a href="#垃圾代码" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#垃圾代码"></a> 垃圾代码</h1>
+      
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#一时兴起想写的转换简谱调的代码，可以实现任意调之间的转换，啪啪啪，如果在字典中</span></span><br><span class="line"><span class="comment">#有的话。。。字典还没填完备，暂时只有其他调的全音，还无半音</span></span><br><span class="line"><span class="comment">#因为字典还不完备，任意调之间的转换可能会出问题，转c调是没问题的</span></span><br><span class="line"><span class="comment">#（啪啪，打脸，@_@，原本只是想任意调转c，后来脑洞又开，写任意调了）</span></span><br><span class="line"><span class="comment">#命令行版本。。command line version。我觉得还是函数版本好写，不管了以后有空再补</span></span><br><span class="line"><span class="comment">#输入</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Please enter the original an&#x27;dand ambition tune(use space splite)&quot;</span>)</span><br><span class="line">tuneer = <span class="built_in">input</span>(<span class="string">&quot;The default is to C:&quot;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;#b表示低音，#表示升（半音阶），g表示高音，用b#表示低半音，用g#表示高半音&#x27;&#x27;&#x27;</span></span><br><span class="line">putin = <span class="built_in">input</span>(<span class="string">&quot;please enter number:&quot;</span>)</span><br><span class="line">first1 = <span class="string">&quot;&quot;</span></span><br><span class="line">listin1 = []</span><br><span class="line">listin2 = []</span><br><span class="line">listout1 = []</span><br><span class="line">listout2 = []</span><br><span class="line">listoutTemp = []</span><br><span class="line">listTemp = []</span><br><span class="line">changekey = &#123;&#125;</span><br><span class="line">changekey2 = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># #如有空格去除后再操作</span></span><br><span class="line"><span class="comment"># first1 =&quot;&quot;</span></span><br><span class="line"><span class="comment"># listin1 = []</span></span><br><span class="line"><span class="comment"># listin2 = []</span></span><br><span class="line"><span class="comment"># listout1 = []</span></span><br><span class="line"><span class="comment"># first1 = putin.strip()</span></span><br><span class="line"><span class="comment"># final1 = first1.split(&quot; &quot;)</span></span><br><span class="line"><span class="comment"># for i in final1:</span></span><br><span class="line">    <span class="comment"># listin1.append(i)</span></span><br><span class="line"><span class="comment"># print(listin1)</span></span><br><span class="line"><span class="comment"># #对tune去除</span></span><br><span class="line"><span class="comment"># first2 =&quot;&quot;</span></span><br><span class="line"><span class="comment"># first2 = tuneer.strip()</span></span><br><span class="line"><span class="comment"># final2 = first2.split(&quot; &quot;)</span></span><br><span class="line"><span class="comment"># for i in final2:</span></span><br><span class="line">    <span class="comment"># listin2.append(i)</span></span><br><span class="line"><span class="comment"># print(listin2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#清除空格和转换大小写，默认到c调</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkspace</span>(<span class="params">listin</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;#b表示低音，#表示升（半音阶），g表示高音，用b#表示低半音，用g#表示高半音&#x27;&#x27;&#x27;</span></span><br><span class="line">    listTemp = <span class="string">&quot;&quot;</span></span><br><span class="line">    listTemp = listin.strip()</span><br><span class="line">    listlow = listTemp.lower()</span><br><span class="line">    listOut = listlow.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(listOut) == <span class="number">1</span>:</span><br><span class="line">        listOut.append(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> listOut</span><br><span class="line">    </span><br><span class="line"><span class="comment">#获取原始输入</span></span><br><span class="line">listin1 = checkspace(putin)</span><br><span class="line">formtuneer = checkspace(tuneer)</span><br><span class="line">tuneerin = formtuneer[<span class="number">0</span>]</span><br><span class="line">tuneerout = formtuneer[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#b表示低音，#表示升（半音阶），g表示高音，用b#表示低升半音，用g#表示高半音</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#keys   </span></span><br><span class="line">GtoC = &#123;<span class="string">&quot;1&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;1&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;2&quot;</span>, <span class="string">&quot;6&quot;</span>: <span class="string">&quot;3&quot;</span>, </span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;g2&quot;</span>:<span class="string">&quot;6&quot;</span>,<span class="string">&quot;g3&quot;</span>:<span class="string">&quot;7&quot;</span>,<span class="string">&quot;g4&quot;</span>:<span class="string">&quot;g1&quot;</span>,<span class="string">&quot;g5&quot;</span>:<span class="string">&quot;g2&quot;</span>,<span class="string">&quot;g6&quot;</span>:<span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;g7&quot;</span>:<span class="string">&quot;g#4&quot;</span>,<span class="string">&quot;gg1&quot;</span>:<span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line">AtoC = &#123;<span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;2&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;6&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#1&quot;</span>, <span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g2&quot;</span>,</span><br><span class="line"><span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g6&quot;</span> : <span class="string">&quot;g#4&quot;</span> &#125;</span><br><span class="line">BtoC = &#123;<span class="string">&quot;b6&quot;</span> : <span class="string">&quot;b#5&quot;</span>, <span class="string">&quot;b7&quot;</span>:<span class="string">&quot;b#6&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#2&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;5&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#6&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g#1&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#2&quot;</span>,</span><br><span class="line"><span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g#4&quot;</span>&#125;</span><br><span class="line">DtoC = &#123;<span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;2&quot;</span>,</span><br><span class="line"><span class="string">&quot;2&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g2&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#4&quot;</span>, <span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line">EtoC = &#123;<span class="string">&quot;b3&quot;</span> : <span class="string">&quot;b#5&quot;</span>, <span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#2&quot;</span>,</span><br><span class="line"><span class="string">&quot;1&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;g#2&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g#4&quot;</span>&#125;</span><br><span class="line">FtoC = &#123;<span class="string">&quot;b2&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;b3&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b#6&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;1&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;2&quot;</span>,</span><br><span class="line"><span class="string">&quot;b7&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;4&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;#6&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;g1&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;g2&quot;</span>,</span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g4&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">Fulltunekey = &#123;<span class="string">&quot;g&quot;</span>:GtoC, <span class="string">&quot;a&quot;</span> : AtoC, <span class="string">&quot;b&quot;</span> : BtoC, <span class="string">&quot;d&quot;</span> : DtoC, </span><br><span class="line"><span class="string">&quot;e&quot;</span> : EtoC, <span class="string">&quot;f&quot;</span> : FtoC&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#Anykeys，key转换</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse</span>(<span class="params"><span class="built_in">dict</span></span>):</span></span><br><span class="line">    dictout = &#123;v : k <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">dict</span>.items()&#125;</span><br><span class="line">    <span class="keyword">return</span> dictout</span><br><span class="line">    </span><br><span class="line">CtoG = inverse(GtoC)</span><br><span class="line">CtoA = inverse(AtoC)</span><br><span class="line">CtoB = inverse(BtoC)</span><br><span class="line">CtoD = inverse(DtoC)</span><br><span class="line">CtoE = inverse(EtoC)</span><br><span class="line">CtoF = inverse(FtoC)</span><br><span class="line"></span><br><span class="line">Fulltuneanykey = &#123;<span class="string">&quot;g&quot;</span> : CtoG, <span class="string">&quot;a&quot;</span> : CtoA, <span class="string">&quot;b&quot;</span> : CtoB, <span class="string">&quot;d&quot;</span> : CtoD, </span><br><span class="line"><span class="string">&quot;e&quot;</span> : CtoE, <span class="string">&quot;f&quot;</span> : CtoF&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#转换key-values对 （first 全到C)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dictoc</span>(<span class="params">tuneerin,tuneerout</span>):</span></span><br><span class="line">    <span class="keyword">if</span> tuneerin == <span class="string">&quot;a&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;a&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;g&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;g&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;b&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;b&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;d&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;d&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;e&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;e&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;f&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;f&quot;</span>]</span><br><span class="line">    <span class="keyword">return</span> changekey</span><br><span class="line"><span class="comment"># def dicany(tuneerin,tuneerout):</span></span><br><span class="line">    <span class="comment"># if tuneerin != &quot;c&quot;:</span></span><br><span class="line">        <span class="comment"># changekey = Fulltunekey[tuneerin]</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#判断输出，如不是C，再进行转换</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dictoany</span>(<span class="params">tuneerout</span>):</span></span><br><span class="line">    <span class="keyword">if</span> tuneerout == <span class="string">&quot;a&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;a&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;g&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;g&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;b&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;b&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;d&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;d&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;e&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;e&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;f&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;f&quot;</span>]</span><br><span class="line">    <span class="keyword">return</span> changekey2   </span><br><span class="line">    </span><br><span class="line"><span class="comment">#强制全部到c调</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">alltoC</span>(<span class="params">tuneerin</span>):</span></span><br><span class="line">    changekey = dictoc(tuneerin, tuneerout)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> listin1:</span><br><span class="line">        listout1.append(changekey[i])</span><br><span class="line">    <span class="comment">#print(listout1)</span></span><br><span class="line">    <span class="keyword">return</span> listout1</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># print(listout1)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ctoall</span>(<span class="params">tuneerout</span>):</span></span><br><span class="line">    <span class="keyword">if</span> tuneerout != <span class="string">&quot;c&quot;</span>:</span><br><span class="line">        changekey2 = dictoany(tuneerout)</span><br><span class="line">        listout1 = alltoC(tuneerin) </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> listout1:</span><br><span class="line">            listout2.append(changekey2[i])</span><br><span class="line">    <span class="keyword">return</span> listout2</span><br><span class="line"><span class="comment"># ctoall(tuneerout)</span></span><br><span class="line"><span class="comment"># print(listout2)   </span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># if tuneerout != &quot;c&quot;:</span></span><br><span class="line">    <span class="comment"># dicany(tuneerout)</span></span><br><span class="line">    <span class="comment"># for i in listoutTemp:</span></span><br><span class="line">        <span class="comment"># listout1.append(changekey[i])</span></span><br><span class="line">    <span class="comment"># print(listout1)</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">#最后输出   </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkout</span>(<span class="params">tuneerin,tuneerout</span>):</span></span><br><span class="line">    <span class="keyword">if</span> tuneerout == <span class="string">&quot;c&quot;</span>:</span><br><span class="line">        alltoC(tuneerin)</span><br><span class="line">        <span class="built_in">print</span>(tuneerin,listin1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;-&gt;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>,listout1) </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        listout2 = ctoall(tuneerout)</span><br><span class="line">        <span class="built_in">print</span>(tuneerin,listin1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;-&gt;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(tuneerout,listout2)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">checkout(tuneerin,tuneerout)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#AtoC = &#123;&quot;b7&quot; : &quot;#5&quot;, &quot;1&quot; : &quot;b6&quot;, &quot;2&quot; : &quot;b7&quot;, &quot;3&quot; : &quot;#1&quot;, &quot;4&quot; : &quot;2&quot;, </span></span><br><span class="line"><span class="string">&quot;5&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g2&quot;</span>, <span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g6&quot;</span> : <span class="string">&quot;g#4&quot;</span> &#125;</span><br><span class="line"><span class="comment"># if tuneerout == &quot;c&quot;:</span></span><br><span class="line">    <span class="comment"># for i in listin1:</span></span><br><span class="line">        <span class="comment"># listout1.append(changekey[i])</span></span><br><span class="line">    <span class="comment"># print(listout1)</span></span><br></pre></td></tr></table></div></figure>
+<p>如有大神愿意改良或者提出修改的话。。。求到 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/dccif-zz/Bauble/blob/master/TuneChange/TuneChange.py" >Github地址</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>感激不尽。。。。（半路出家，最近更快期末了，压力山大 ）</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://blog.dccif.top">Barry He</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/">https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/%E7%BC%96%E7%A8%8B/">编程</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/%E9%9F%B3%E4%B9%90/">音乐</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2017/08/07/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%AE%80%E8%B0%B1%E8%BD%AC%E8%B0%83%E7%A8%8B%E5%BA%8F/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">一个简单的简谱转调程序</span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E8%B5%B7%E5%9B%A0%E6%8C%96%E5%9D%91%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">
+           问题的起因（挖坑原因）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">
+           问题的实现：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">
+           实现过程中的问题：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3"><span class="toc-number">4.</span> <span class="toc-text">
+           问题的解决</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%84%9F%E6%83%B3"><span class="toc-number">5.</span> <span class="toc-text">
+           一些感想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E4%BB%A3%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">
+           垃圾代码</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/android-chrome-512x512.png" alt="avatar"></div><p class="sidebar-ov-author__text">People are on the road to regret.</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/dccif" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/heyujieboy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="mailto:heyujieboy@gmail.com" target="_blank" rel="noopener" data-popover="social.Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="far fa-envelope"></i></span></a><a class="sidebar-ov-social-item" href="tg://resolve?domain=dccif" target="_blank" rel="noopener" data-popover="Telegram" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="tencent://message?uin=632055362" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">18</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">5</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">10</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Barry He</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1.0.1/dist/canvas-nest.min.js" color="0,0,0" opacity="0.6" count="99" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('load', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (false) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@1.0.1/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script></div><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script data-pjax="">function loadValine () {
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var guest_info = 'nick,mail,link';
+
+  guest_info = guest_info.split(',').filter(function(item) {
+    return GUEST_INFO.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#valine-container',
+    appId: 'GSxAEoPRzKE9XzsxkIERDwkg-9Nh9j0Va',
+    appKey: 'C5uzAHfvtWKhBCXWI47wTpX7',
+    notify: true,
+    verify: false,
+    placeholder: 'Just go go',
+    avatar: 'mp',
+    meta: guest_info,
+    pageSize: '10' || 10,
+    visitor: true,
+    recordIP: true,
+    lang: '' || 'zh-cn',
+    path: window.location.pathname
+  });
+}
+
+if (true) {
+  loadValine();
+} else {
+  window.addEventListener('DOMContentLoaded', loadValine, false);
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script></body></html>
