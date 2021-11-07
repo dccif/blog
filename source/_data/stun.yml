@@ -307,13 +307,13 @@ social:
   github: https://github.com/dccif || fab fa-github
   google: https://plus.google.com/ || fab fa-google
   twitter: https://twitter.com/heyujieboy || fab fa-twitter
-  Gmail: mailto:heyujieboy@gmail.com || origin:Gmail
+  Gmail: mailto:heyujieboy@gmail.com || far fa-envelope
   # youtube: https://youtube.com/ || fab fa-youtube
   # segmentfault: https://segmentfault.com/ || origin:sf
   # weibo: https://weibo.com/ || fab fa-weibo
   # zhihu: https://www.zhihu.com/ || origin:知
   # wechat: yournumber || fab fa-weixin
-  # telegram: yournumber || fab fa-telegram
+  telegram: tg://resolve?domain=dccif || fab fa-telegram
   qq: tencent://message?uin=632055362|| fab fa-qq
 
 social_setting:
@@ -677,7 +677,7 @@ assist_search:
 # Canvas-ribbon
 # Dependency: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: false
+  enable: true
   # The width of the ribbon.
   size: 120
   # The transparency of the ribbon.
@@ -688,7 +688,7 @@ canvas_ribbon:
 # Canvas-nest
 # Dependency: https://github.com/hustcc/canvas-nest.js
 canvas_nest:
-  enable: false
+  enable: true
   # Color of lines.
   # RGB values, use `,` to separate.
   color: "0,0,0"
