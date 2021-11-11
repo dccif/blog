@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="google-site-verification" content="tMWqfOoUAGHxzREjCDaWbus132gTVCQw9KoLHRF8PT8"><meta name="msvalidate.01" content="5F76390BCDDEE4CDDFFD2B5310B498BE"><meta name="description" content="环境准备        QT 6版本全面换成了CMake，Win下环境需要 CMake, Ninja, Perl, Python 官网要求    Tool Supported Versions Description     CMake Version 3.16 and newer (3.17 and newer for -debug-and-release builds">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT 6.2 msvc 2019 下 静态编译">
+<meta property="og:url" content="https://blog.dccif.top/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="dccif&#39;s Blog">
+<meta property="og:description" content="环境准备        QT 6版本全面换成了CMake，Win下环境需要 CMake, Ninja, Perl, Python 官网要求    Tool Supported Versions Description     CMake Version 3.16 and newer (3.17 and newer for -debug-and-release builds">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-11T10:39:30.000Z">
+<meta property="article:modified_time" content="2021-11-11T16:49:42.107Z">
+<meta property="article:author" content="Barry He">
+<meta property="article:tag" content="环境搭建">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="QT">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary"><title>QT 6.2 msvc 2019 下 静态编译 | dccif's Blog</title><link ref="canonical" href="https://blog.dccif.top/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://hm.baidu.com"><script src="https://www.googletagmanager.com/gtag/js?id=G-X2E5TNLHF0" async="" data-pjax=""></script><script data-pjax="">if (window.location.hostname !== 'localhost') {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-X2E5TNLHF0');
+}</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?587dfeaffdbdf8ad83e8b313b54383ab';
+  hm.async = true;
+
+  if (true) {
+    hm.setAttribute('data-pjax', '');
+  }
+  var s = document.getElementsByTagName('script')[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: ["google","bing","baidu"],
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: true,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: true,
+  pjax: {"avoidBanner":false},
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/about/"><span class="header-nav-menu-item__icon"><i class="fas fa-user"></i></span><span class="header-nav-menu-item__text">关于</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">dccif's Blog</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">QT 6.2 msvc 2019 下 静态编译</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-11-11</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-11-11</span></span><span class="post-meta-item post-meta-item--visitors leancloud_visitors" id="/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/" data-flag-title="QT 6.2 msvc 2019 下 静态编译"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value leancloud-visitors-count"></span></span></div></header><div class="post-body">
+        <h1 id="环境准备"   >
+          <a href="#环境准备" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h1>
+      
+<p>QT 6版本全面换成了CMake，Win下环境需要</p>
+<p>CMake, Ninja, Perl, Python <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://doc.qt.io/qt-6/windows-building.html" >官网要求</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th><strong>Tool</strong></th>
+<th><strong>Supported Versions</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMake</td>
+<td>Version 3.16 and newer (3.17 and newer for <code>-debug-and-release</code> builds 3.21 and newer for <code>-static</code> builds).</td>
+<td>Required for configuring the Qt build. Available in the Qt Online Installer and on <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://cmake.org/" >cmake.org</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</td>
+</tr>
+<tr>
+<td>Ninja</td>
+<td>-</td>
+<td>Recommended tool for building Qt. Available in the Qt Online Installer and on <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://ninja-build.org/" >ninja-build.org</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</td>
+</tr>
+<tr>
+<td>Perl</td>
+<td>-</td>
+<td>Required build tool. Popular Windows installers are <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.activestate.com/products/perl/downloads/" >ActiveState Perl</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> and <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://strawberryperl.com/" >Strawberry Perl</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>. Perl is also installed as part of <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://git-scm.com/download/win" >Git</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Version 3</td>
+<td>Required build tool. Windows installers are available on <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.python.org/downloads/windows/" >python.org</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>, or from the <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://docs.python.org/3/using/windows.html#windows-store" >Microsoft Store</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>.</td>
+</tr>
+</tbody>
+</table></div>
+<p>关于Perl 个人推荐 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://strawberryperl.com/" >Strawberry Perl</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 版本新，安装方便。缺工具就去下，全部环境变量中配置好就行</p>
+<span id="more"></span>
+
+        <h3 id="编译环境选择mingwmsvc"   >
+          <a href="#编译环境选择mingwmsvc" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#编译环境选择mingwmsvc"></a> 编译环境选择：MinGW/MSVC</h3>
+      
+<p>在Windows上，有两个预构建环境可供选择：一个是 MinGW ，另一个是Microsoft Visual Studio(MSVC)。这两个环境不兼容，无法混合。你必须选择一个。</p>
+<p>这两者的区别如下：</p>
+<p>当你的项目使用MinGW编译的使用，想要用一个MSVC编译生成的库时就会有问题。使用MinGW编译项目的时候，所使用的Lib也要是MinGW编译的。如果你只是开发Window平台的软件时，最好用Qt MSVC组合，这样可以使用大量的第三方lib，还有很多的构建指令，毕竟window上MSVC才是王道。</p>
+<p>我选择MSVC，打开安装VS时自带安装的MSCV：<code>x64 Native Tools Command Prompt for VS 2019</code></p>
+<p><em>不要使用 Developer Command Prompt for VS 2019</em></p>
+
+        <h2 id="编译"   >
+          <a href="#编译" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#编译"></a> 编译</h2>
+      
+<p>在随便什么盘里新建一个目录用来存放编译好的内容：<code>D:\qt</code></p>
+<p>在<code>x64 Native Tools Command Prompt for VS 2019</code>的终端进入Qt源代码目录：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\peter\Downloads&gt;cd qt-everywhere-src-5.15.0</span><br><span class="line"></span><br><span class="line">C:\Users\peter\Downloads\qt-everywhere-src-5.15.0&gt;</span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="可选1修改源码里的qtbasemkspecscommonmsvc-desktopconf文件"   >
+          <a href="#可选1修改源码里的qtbasemkspecscommonmsvc-desktopconf文件" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#可选1修改源码里的qtbasemkspecscommonmsvc-desktopconf文件"></a> （可选）1.修改源码里的<code>qtbase\mkspecs\common\msvc-desktop.conf</code>文件</h3>
+      
+<p>修改-MD为-MT</p>
+<p>修改前：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QMAKE_CFLAGS_RELEASE    = $$QMAKE_CFLAGS_OPTIMIZE -MD</span><br><span class="line">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $$QMAKE_CFLAGS_OPTIMIZE -Zi -MD</span><br><span class="line">QMAKE_CFLAGS_DEBUG      = -Zi -MDd</span><br></pre></td></tr></table></div></figure>
+<p>修改后：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QMAKE_CFLAGS_RELEASE    = $$QMAKE_CFLAGS_OPTIMIZE -MT</span><br><span class="line">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $$QMAKE_CFLAGS_OPTIMIZE -Zi -MT</span><br><span class="line">QMAKE_CFLAGS_DEBUG      = -Zi -MTd</span><br></pre></td></tr></table></div></figure>
+<p>D的意思是动态编译(dynamic link)，T的意思是静态编译（static link）。 这一步官方教程没有要求，但其他人的很多教程里都有写，我就加上了</p>
+<p>这样编译出来的Win上静态文件是最小的</p>
+
+        <h3 id="配置config文件"   >
+          <a href="#配置config文件" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#配置config文件"></a> 配置config文件：</h3>
+      
+<p>主要需要在 VS 2019的命令行中运行，如果一次配置不通过，出错下一次也是无法通过的，因为有<code>CMakeCache.txt</code> 文件，需要删除上一步失败的<code>CMakeCache.txt</code>文件</p>
+<p>我的配置文件：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure.bat -static -prefix &quot;D:\qt&quot; -confirm-license -opensource -debug-and-release -platform win32-msvc -optimize-size -no-pch -nomake examples -nomake tests -nomake tools -plugin-sql-sqlite -plugin-sql-odbc -qt-zlib -qt-libpng -qt-freetype -qt-pcre -qt-harfbuzz -qt-libjpeg -opengl desktop -mp</span><br></pre></td></tr></table></div></figure>
+<p>具体含义如下：</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">configure.bat </span><br><span class="line">-static  #指明静态编译</span><br><span class="line">-prefix &quot;D:\qt&quot; #安装目录，最好使用不需要管理员权限的目录</span><br><span class="line">-confirm-license -opensource #指明是开源版本</span><br><span class="line">-debug-and-release #指明需要debug版和release版，可以单独选择release版</span><br><span class="line">-platform win32-msvc #指明使用msvc编译，这里的win32并不指32位</span><br><span class="line">-optimize-size #最优化文件大小而不是速度(可选)</span><br><span class="line">-no-pch #不使用预编译头文件（可选）</span><br><span class="line">-nomake examples -nomake tests -nomake tools #不编译用不上的东西</span><br><span class="line">-plugin-sql-sqlite -plugin-sql-odbc -qt-zlib -qt-libpng -qt-freetype -qt-pcre -qt-harfbuzz -qt-libjpeg #可选插件</span><br><span class="line">-opengl desktop  #用系统自带的opengl</span><br><span class="line">-mp #多核编译</span><br></pre></td></tr></table></div></figure>
+<p>如果无报错</p>
+<p>接着运行</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake --build . ---parallel //编译本目录，parallel为并行，即多核心编译</span><br><span class="line">cmake --install . //安装命令</span><br></pre></td></tr></table></div></figure>
+
+        <h2 id="配置qtcreator"   >
+          <a href="#配置qtcreator" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#配置qtcreator"></a> 配置QtCreator</h2>
+      
+<p>Qt version 下找到刚才编译的<code>bin/qmake.exe</code></p>
+<p>Kits下选择刚才的Qt version 注意编译器选择需要和上面编译时使用的一样</p>
+<p>至此，编译完成</p>
+
+        <h2 id="测试大小"   >
+          <a href="#测试大小" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#测试大小"></a> 测试大小</h2>
+      
+<p>选择release模式编译，等待编译完成后打开编译文件夹，即可看到编译后的文件大小大约12.7MB</p>
+<p>如果是动态编译，再使用<code>windeployqt</code>个人测试的大小是78MB左右，所以还是静态编译时省事</p>
+
+        <h2 id="参考"   >
+          <a href="#参考" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+      
+<p>最后感谢这些文章的作者，Thanks</p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://last2win.com/qt-5.15-static-link/" >Qt5.15在Windows环境静态编译安装和部署的完整过程 VS 2019-Qt static link build Windows 64 bit</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://aymetic.com/post/2273ab9c.html" >使用MSVC2019静态编译生成Qt库</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://decovar.dev/blog/2018/02/17/build-qt-statically/" >At last, let’s build Qt statically</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://blog.dccif.top">Barry He</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://blog.dccif.top/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/">https://blog.dccif.top/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/%E7%BC%96%E7%A8%8B/">编程</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/QT/">QT</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://blog.dccif.top/tags/C/">C++</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/11/07/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B22/"><span class="paginator-prev__text">博客的一键部署2</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">
+           环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E9%80%89%E6%8B%A9mingwmsvc"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+           编译环境选择：MinGW&#x2F;MSVC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">1.1.</span> <span class="toc-text">
+           编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%891%E4%BF%AE%E6%94%B9%E6%BA%90%E7%A0%81%E9%87%8C%E7%9A%84qtbasemkspecscommonmsvc-desktopconf%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+           （可选）1.修改源码里的qtbase\mkspecs\common\msvc-desktop.conf文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEconfig%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+           配置config文件：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEqtcreator"><span class="toc-number">1.2.</span> <span class="toc-text">
+           配置QtCreator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.3.</span> <span class="toc-text">
+           测试大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.4.</span> <span class="toc-text">
+           参考</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/android-chrome-512x512.png" alt="avatar"></div><p class="sidebar-ov-author__text">People are on the road to regret.</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/dccif" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://plus.google.com/" target="_blank" rel="noopener" data-popover="Google" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-google"></i></span></a><a class="sidebar-ov-social-item" href="https://twitter.com/heyujieboy" target="_blank" rel="noopener" data-popover="Twitter" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-twitter"></i></span></a><a class="sidebar-ov-social-item" href="mailto:heyujieboy@gmail.com" target="_blank" rel="noopener" data-popover="social.Gmail" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="far fa-envelope"></i></span></a><a class="sidebar-ov-social-item" href="tg://resolve?domain=dccif" target="_blank" rel="noopener" data-popover="Telegram" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="tencent://message?uin=632055362" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">19</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">5</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2021</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Barry He</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"><div class="search-btns">使用搜索：<span class="search-btns-item search-btns-item--google"><i class="fab fa-google"></i>谷歌</span><span class="search-btns-item search-btns-item--bing"><i></i>必应</span><span class="search-btns-item search-btns-item--baidu"><i></i>百度</span></div></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1.0.1/dist/canvas-nest.min.js" color="0,0,0" opacity="0.6" count="99" zIndex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('load', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js"></script><script>window.addEventListener('DOMContentLoaded', function () {
+  var pjax = new Pjax({"selectors":["head title","#main",".pjax-reload"],"history":true,"scrollTo":false,"scrollRestoration":false,"cacheBust":false,"debug":false,"currentUrlFullReload":false,"timeout":0});
+  // 加载进度条的计时器
+  var loadingTimer = null;
+
+  // 重置页面 Y 方向上的滚动偏移量
+  document.addEventListener('pjax:send', function () {
+    $('.header-nav-menu').removeClass('show');
+    if (CONFIG.pjax && CONFIG.pjax.avoidBanner) {
+      $('html').velocity('scroll', {
+        duration: 500,
+        offset: $('#header').height(),
+        easing: 'easeInOutCubic'
+      });
+    }
+
+    var loadingBarWidth = 20;
+    var MAX_LOADING_WIDTH = 95;
+
+    $('.loading-bar').addClass('loading');
+    $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    clearInterval(loadingTimer);
+    loadingTimer = setInterval(function () {
+      loadingBarWidth += 3;
+      if (loadingBarWidth > MAX_LOADING_WIDTH) {
+        loadingBarWidth = MAX_LOADING_WIDTH;
+      }
+      $('.loading-bar__progress').css('width', loadingBarWidth + '%');
+    }, 500);
+  }, false);
+
+  window.addEventListener('pjax:complete', function () {
+    clearInterval(loadingTimer);
+    $('.loading-bar__progress').css('width', '100%');
+    $('.loading-bar').removeClass('loading');
+    setTimeout(function () {
+      $('.loading-bar__progress').css('width', '0');
+    }, 400);
+    $('link[rel=prefetch], script[data-pjax-rm]').each(function () {
+      $(this).remove();
+    });
+    $('script[data-pjax], #pjax-reload script').each(function () {
+      $(this).parent().append($(this).remove());
+    });
+
+    if (Stun.utils.pjaxReloadBoot) {
+      Stun.utils.pjaxReloadBoot();
+    }
+    if (Stun.utils.pjaxReloadScroll) {
+      Stun.utils.pjaxReloadScroll();
+    }
+    if (Stun.utils.pjaxReloadSidebar) {
+      Stun.utils.pjaxReloadSidebar();
+    }
+    if (false) {
+      if (Stun.utils.pjaxReloadHeader) {
+        Stun.utils.pjaxReloadHeader();
+      }
+      if (Stun.utils.pjaxReloadScrollIcon) {
+        Stun.utils.pjaxReloadScrollIcon();
+      }
+      if (Stun.utils.pjaxReloadLocalSearch) {
+        Stun.utils.pjaxReloadLocalSearch();
+      }
+    }
+  }, false);
+}, false);</script><div id="pjax-reload"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" rel="stylesheet" type="text/css"><link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css"><script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@1.0.1/dist/quicklink.umd.js"></script><script>function initQuicklink() {
+  quicklink({
+    timeout: '10000',
+    priority: true,
+    ignores: [uri => uri.includes('#'), uri => uri === 'https://blog.dccif.top/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/', /\/api\/?/,uri => uri.includes('.xml'),uri => uri.includes('.zip'),(uri, el) => el.hasAttribute('nofollow'),(uri, el) => el.hasAttribute('noprefetch')]
+  });
+}
+
+if (true || false) {
+  initQuicklink();
+} else {
+  window.addEventListener('DOMContentLoaded', initQuicklink, false);
+}</script></div><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script data-pjax="">function loadValine () {
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var guest_info = 'nick,mail,link';
+
+  guest_info = guest_info.split(',').filter(function(item) {
+    return GUEST_INFO.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#valine-container',
+    appId: 'GSxAEoPRzKE9XzsxkIERDwkg-9Nh9j0Va',
+    appKey: 'C5uzAHfvtWKhBCXWI47wTpX7',
+    notify: true,
+    verify: false,
+    placeholder: 'Just go go',
+    avatar: 'mp',
+    meta: guest_info,
+    pageSize: '10' || 10,
+    visitor: true,
+    recordIP: true,
+    lang: '' || 'zh-cn',
+    path: window.location.pathname
+  });
+}
+
+if (true) {
+  loadValine();
+} else {
+  window.addEventListener('DOMContentLoaded', loadValine, false);
+}</script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script><script type="application/json" src="/search.json"></script></body></html>
