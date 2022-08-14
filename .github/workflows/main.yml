@@ -22,9 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -33,8 +30,8 @@ jobs:
       
       - name : update npm
         run: |
-          npm update -g npm
-          npm update -g
+          npm update --location=global npm
+          npm update --location=global
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -51,9 +48,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
       - name: install hexo
         run: |
-          npm install -g hexo
+          npm install --location=global hexo
           git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
           npm install --save hexo-renderer-pug
           npm un hexo-renderer-marked --save
