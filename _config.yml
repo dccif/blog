@@ -102,12 +102,6 @@ theme: stun
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  repo: https://github.com/dccif/blog.git
-  branch: gh-pages
-  token: $GH_TOKEN
-  name: dccif
-  email: heyujieboy@163.com
 
 search:
   path: search.json
