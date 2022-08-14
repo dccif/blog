@@ -23,19 +23,20 @@ jobs:
     
     steps:
       - name: Check out repository
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Setup node
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: npm
-      - run: |
+
+        run: |
           npm ci
           npm test
       
       - name : update npm
-      - run: |
+        run: |
           npm update -g npm
           npm update -g
 
