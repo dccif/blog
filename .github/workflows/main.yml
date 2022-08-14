@@ -31,6 +31,7 @@ jobs:
           node-version: 16
           cache: npm
 
+      - name: run npm
         run: |
           npm ci
           npm test
