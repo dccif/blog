@@ -106,6 +106,8 @@ deploy:
   repo: https://github.com/dccif/blog
   branch: gh-pages
   token: $GH_TOKEN
+  name: dccif
+  email: heyujieboy@163.com
 
 search:
   path: search.json
