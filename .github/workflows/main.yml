@@ -17,12 +17,14 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   set_up_environment:
+    name: set up environment
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: npm
