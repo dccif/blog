@@ -46,6 +46,7 @@ jobs:
           npm i hexo-renderer-markdown-it-plus --save
           npm install hexo-generator-sitemap --save
           npm install hexo-generator-search --save
+          npm install hexo-deployer-git --save
           npm install
           mv -f ./localsearch.pug ./themes/stun/layout/_third-party/search/localsearch.pug
           hexo clean
