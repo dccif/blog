@@ -1,4 +1,4 @@
 # dccif's Blog
-[![Build Status](https://app.travis-ci.com/dccif/blog.svg?branch=main)](https://app.travis-ci.com/github/dccif/blog)
+[![Build and Deploy](https://github.com/dccif/blog/actions/workflows/main.yml/badge.svg)](https://github.com/dccif/blog/actions/workflows/main.yml)
 
 Basic file of dccif's blog
