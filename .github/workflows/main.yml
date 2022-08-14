@@ -30,11 +30,6 @@ jobs:
         with:
           node-version: 16
           cache: npm
-
-      - name: run npm
-        run: |
-          npm ci
-          npm test
       
       - name : update npm
         run: |
@@ -50,3 +45,22 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+    
+  generate:
+    name: Generate page
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install hexo
+        run: |
+          npm install -g hexo
+          git clone https://github.com/liuyib/hexo-theme-stun.git themes/stun
+          npm install --save hexo-renderer-pug
+          npm un hexo-renderer-marked --save
+          npm i hexo-renderer-markdown-it-plus --save
+          npm install hexo-generator-sitemap --save
+          npm install hexo-generator-search --save
+          npm install
+          mv -f ./localsearch.pug ./themes/stun/layout/_third-party/search/localsearch.pug
+          hexo clean
+          hexo g  # generate static files
