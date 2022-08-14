@@ -49,16 +49,11 @@ jobs:
           npm install
           mv -f ./localsearch.pug ./themes/stun/layout/_third-party/search/localsearch.pug
           hexo clean
-          hexo g  # generate static files
+          hexo g
       
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
-      
-      - name: Clean
+      - name: Deploy and clean
         run: |
+          hexo deploy
           cd public
           rm -f README.html
           cd ..
