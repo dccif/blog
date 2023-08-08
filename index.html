@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.dccif.top","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.dccif.top","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="blog dccif">
 <meta property="og:type" content="website">
@@ -172,10 +172,10 @@
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/dccif" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dccif" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RjY2lm" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dccif"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:heyujieboy@hotmail.com" title="E-Mail → mailto:heyujieboy@hotmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <span class="exturl" data-url="bWFpbHRvOmhleXVqaWVib3lAaG90bWFpbC5jb20=" title="E-Mail → mailto:heyujieboy@hotmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
   </div>
 
@@ -239,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -277,8 +277,8 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h1>
-<p>QT 6版本全面换成了CMake，Win下环境需要</p>
-<p>CMake, Ninja, Perl, Python <a target="_blank" rel="noopener" href="https://doc.qt.io/qt-6/windows-building.html">官网要求</a></p>
+<p>QT 6 版本全面换成了 CMake，Win 下环境需要</p>
+<p>CMake, Ninja, Perl, Python <span class="exturl" data-url="aHR0cHM6Ly9kb2MucXQuaW8vcXQtNi93aW5kb3dzLWJ1aWxkaW5nLmh0bWw=">官网要求<i class="fa fa-external-link-alt"></i></span></p>
 <table>
 <thead>
 <tr>
@@ -291,26 +291,26 @@
 <tr>
 <td>CMake</td>
 <td>Version 3.16 and newer (3.17 and newer for <code>-debug-and-release</code> builds 3.21 and newer for <code>-static</code> builds).</td>
-<td>Required for configuring the Qt build. Available in the Qt Online Installer and on <a target="_blank" rel="noopener" href="https://cmake.org/">cmake.org</a>.</td>
+<td>Required for configuring the Qt build. Available in the Qt Online Installer and on <span class="exturl" data-url="aHR0cHM6Ly9jbWFrZS5vcmcv">cmake.org<i class="fa fa-external-link-alt"></i></span>.</td>
 </tr>
 <tr>
 <td>Ninja</td>
 <td>-</td>
-<td>Recommended tool for building Qt. Available in the Qt Online Installer and on <a target="_blank" rel="noopener" href="https://ninja-build.org/">ninja-build.org</a>.</td>
+<td>Recommended tool for building Qt. Available in the Qt Online Installer and on <span class="exturl" data-url="aHR0cHM6Ly9uaW5qYS1idWlsZC5vcmcv">ninja-build.org<i class="fa fa-external-link-alt"></i></span>.</td>
 </tr>
 <tr>
 <td>Perl</td>
 <td>-</td>
-<td>Required build tool. Popular Windows installers are <a target="_blank" rel="noopener" href="https://www.activestate.com/products/perl/downloads/">ActiveState Perl</a> and <a target="_blank" rel="noopener" href="https://strawberryperl.com/">Strawberry Perl</a>. Perl is also installed as part of <a target="_blank" rel="noopener" href="https://git-scm.com/download/win">Git</a>.</td>
+<td>Required build tool. Popular Windows installers are <span class="exturl" data-url="aHR0cHM6Ly93d3cuYWN0aXZlc3RhdGUuY29tL3Byb2R1Y3RzL3BlcmwvZG93bmxvYWRzLw==">ActiveState Perl<i class="fa fa-external-link-alt"></i></span> and <span class="exturl" data-url="aHR0cHM6Ly9zdHJhd2JlcnJ5cGVybC5jb20v">Strawberry Perl<i class="fa fa-external-link-alt"></i></span>. Perl is also installed as part of <span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9kb3dubG9hZC93aW4=">Git<i class="fa fa-external-link-alt"></i></span>.</td>
 </tr>
 <tr>
 <td>Python</td>
 <td>Version 3</td>
-<td>Required build tool. Windows installers are available on <a target="_blank" rel="noopener" href="https://www.python.org/downloads/windows/">python.org</a>, or from the <a target="_blank" rel="noopener" href="https://docs.python.org/3/using/windows.html#windows-store">Microsoft Store</a>.</td>
+<td>Required build tool. Windows installers are available on <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy9kb3dubG9hZHMvd2luZG93cy8=">python.org<i class="fa fa-external-link-alt"></i></span>, or from the <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvMy91c2luZy93aW5kb3dzLmh0bWwjd2luZG93cy1zdG9yZQ==">Microsoft Store<i class="fa fa-external-link-alt"></i></span>.</td>
 </tr>
 </tbody>
 </table>
-<p>关于Perl 个人推荐 <a target="_blank" rel="noopener" href="https://strawberryperl.com/">Strawberry Perl</a> 版本新，安装方便。缺工具就去下，全部环境变量中配置好就行</p>
+<p>关于 Perl 个人推荐 <span class="exturl" data-url="aHR0cHM6Ly9zdHJhd2JlcnJ5cGVybC5jb20v">Strawberry Perl<i class="fa fa-external-link-alt"></i></span> 版本新，安装方便。缺工具就去下，全部环境变量中配置好就行</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/#more" rel="contents">
@@ -380,7 +380,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -417,13 +417,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="博客的一键部署2"><a class="markdownIt-Anchor" href="#博客的一键部署2"></a> 博客的一键部署2</h1>
+          <h1 id="博客的一键部署-2"><a class="markdownIt-Anchor" href="#博客的一键部署-2"></a> 博客的一键部署 2</h1>
 <p>承接以前的 <a href="https://blog.dccif.top/2017/11/27/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/"><strong>博客的一键部署</strong></a></p>
 <p>时隔几年，我又开始写博客了，这次一开始还是纠结了是选用传统的动态博客还是静态博客，考虑的价钱和安全性的问题，可能还是静态博客更适合我目前的阶段</p>
 <h2 id="曾经的一键部署不好用了吗"><a class="markdownIt-Anchor" href="#曾经的一键部署不好用了吗"></a> 曾经的一键部署不好用了吗？</h2>
-<p>的确曾经我的一键部署把简单的问题复杂了，想着利用一个仓库的两个分支保存原始文件和生成文件。的确这没有问题，目前我的博客也是这个方式，但是有问题的是我过去的整个工作流程。曾经我的流程完全和现在相反，难怪当初的用法那么难受😂</p>
+<p>的确曾经我的一键部署把简单的问题复杂了，想着利用一个仓库的两个分支保存原始文件和生成文件。的确这没有问题，目前我的博客也是这个方式，但是有问题的是我过去的整个工作流程。曾经我的流程完全和现在相反，难怪当初的用法那么难受 😂</p>
 <h2 id="现在的方法"><a class="markdownIt-Anchor" href="#现在的方法"></a> 现在的方法</h2>
-<p>用现在Modern一点的词来说，就是现在使用了<strong>持续集成 ( Continuous integration )</strong>, 毕竟博客这种<em>项目</em>也算一种<strong>持续交付（Continuous delivery）</strong>，<strong>持续部署（continuous deployment）</strong>，只不过现在我只需写文章，然后推送，现代的在线工具就可以完成部署任务了，可以说能让我更专注于写作了。不过如果要长时间保持产出干货文章还是有点难度的啊，还是评说评说游戏什么的好了🤣</p>
+<p>用现在 Modern 一点的词来说，就是现在使用了<strong>持续集成 ( Continuous integration )</strong>, 毕竟博客这种<em>项目</em>也算一种<strong>持续交付（Continuous delivery）</strong>，<strong>持续部署（continuous deployment）</strong>，只不过现在我只需写文章，然后推送，现代的在线工具就可以完成部署任务了，可以说能让我更专注于写作了。不过如果要长时间保持产出干货文章还是有点难度的啊，还是评说评说游戏什么的好了 🤣</p>
 
       
     </div>
@@ -486,7 +486,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -523,10 +523,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"><a class="markdownIt-Anchor" href="#随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"></a> <strong>随着难度的提高，其实月卡平民不该硬练(投入过量资源)甘雨</strong></h1>
+          <img data-src="/image/genshin/gy.webp" class="" width="600" height="640" title="ganyu" alt="ganyu">
+<h1 id="随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"><a class="markdownIt-Anchor" href="#随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"></a> <strong>随着难度的提高，其实月卡平民不该硬练(投入过量资源)甘雨</strong></h1>
 <p>随着活动的结束，和深渊“开荒”的结束，很多玩家无脑吹上了甘雨，但是我认为甘雨其实是最不平民的角色，她是给平民保下限的角色。<br />
-如果难度进一步增大，可能一些0命上限高的角色才是最适合月卡平民的。现在新出的优菈，胡桃，公子论dps是平民手上最强的</p>
-<p>首先我给出平民的定义: 满精4星武器0命5星角色，拿着5星武器甚至专属武器的就不要来“代入”了</p>
+如果难度进一步增大，可能一些 0 命上限高的角色才是最适合月卡平民的。现在新出的优菈，胡桃，公子论 dps 是平民手上最强的</p>
+<p>首先我给出平民的定义: 满精 4 星武器 0 命 5 星角色，拿着 5 星武器甚至专属武器的就不要来“代入”了</p>
 <h2 id="甘雨不适合平民的理由"><a class="markdownIt-Anchor" href="#甘雨不适合平民的理由"></a> 甘雨不适合平民的理由：</h2>
           <!--noindex-->
             <div class="post-button">
@@ -597,7 +598,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -708,7 +709,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -746,8 +747,8 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="关于疯狂系列"><a class="markdownIt-Anchor" href="#关于疯狂系列"></a> 关于《疯狂系列》</h1>
-<p>首先感谢李刚老师的《疯狂HTML5》的一书，本文以下的内容也是基于这本目前我看完的书得出的，作为对比的是《Head First HTML5》。</p>
-<p>下面我就从我暂时能想到的几个方面来谈谈这本《疯狂HTML5》或者同样的《疯狂系列》和《Head Fist》系列的对比吧。</p>
+<p>首先感谢李刚老师的《疯狂 HTML5》的一书，本文以下的内容也是基于这本目前我看完的书得出的，作为对比的是《Head First HTML5》。</p>
+<p>下面我就从我暂时能想到的几个方面来谈谈这本《疯狂 HTML5》或者同样的《疯狂系列》和《Head Fist》系列的对比吧。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/02/24/%E5%85%B3%E4%BA%8E%E3%80%8A%E7%96%AF%E7%8B%82%E7%B3%BB%E5%88%97%E3%80%8B/#more" rel="contents">
@@ -817,7 +818,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -918,7 +919,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1022,7 +1023,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1060,9 +1061,9 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="博客的一键部署"><a class="markdownIt-Anchor" href="#博客的一键部署"></a> 博客的一键部署</h1>
-<p>终于在一番折腾和学习下，我用“三脚猫”的水平写了一个能一键写博客的脚本😂，这样以后写博客我只需要想写什么东西了，不用再在部署上折腾了。。。</p>
+<p>终于在一番折腾和学习下，我用“三脚猫”的水平写了一个能一键写博客的脚本 😂，这样以后写博客我只需要想写什么东西了，不用再在部署上折腾了。。。</p>
 <h2 id="为什么要折腾"><a class="markdownIt-Anchor" href="#为什么要折腾"></a> 为什么要折腾</h2>
-<p>说来这么折腾的写博客，也是我自找没趣。。。承接<a href="https://blog.dccif.top/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/">《博客的备份》</a>，我这的写作环境我备份了好多份，每次要在这么多环境之间选择那些可见，那些不可见太麻烦了。。。写脚本的目的也是为了这个，当然脚本我是存在私有仓库的😋~~(写得太烂不好意放出来丢人现眼)~~</p>
+<p>说来这么折腾的写博客，也是我自找没趣。。。承接<a href="https://blog.dccif.top/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/">《博客的备份》</a>，我这的写作环境我备份了好多份，每次要在这么多环境之间选择那些可见，那些不可见太麻烦了。。。写脚本的目的也是为了这个，当然脚本我是存在私有仓库的 😋~~(写得太烂不好意放出来丢人现眼)~~</p>
 
       
     </div>
@@ -1125,7 +1126,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1239,7 +1240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1276,9 +1277,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="ubuntu下的个性化配置"><a class="markdownIt-Anchor" href="#ubuntu下的个性化配置"></a> Ubuntu下的个性化配置</h1>
-<p>因为使用Linux开发方便的缘故，我在虚拟机上用全性能搭建了一个Ubuntu环境~~(别问我为什么不装双系统)~~</p>
-<p>于是和之前那篇Windows的重装一样，也想写一篇文章记录一下，以后搭建时可以方便一些</p>
+          <h1 id="ubuntu-下的个性化配置"><a class="markdownIt-Anchor" href="#ubuntu-下的个性化配置"></a> Ubuntu 下的个性化配置</h1>
+<p>因为使用 Linux 开发方便的缘故，我在虚拟机上用全性能搭建了一个 Ubuntu 环境~~(别问我为什么不装双系统)~~</p>
+<p>于是和之前那篇 Windows 的重装一样，也想写一篇文章记录一下，以后搭建时可以方便一些</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/10/27/Ubuntu%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/#more" rel="contents">
@@ -1322,14 +1323,13 @@
     </span>
     <span class="author" itemprop="copyrightHolder">Barry He</span>
   </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -1342,7 +1342,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>

@@ -20,17 +20,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.dccif.top","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.dccif.top","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Hexo博客的备份 可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和GitHub和私有服务器上备份了四份，在本博客的仓库的Public分支上就是我的博客文章的备份">
+    <meta name="description" content="Hexo 博客的备份 可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和 GitHub 和私有服务器上备份了四份，在本博客的仓库的 Public 分支上就是我的博客文章的备份">
 <meta property="og:type" content="article">
 <meta property="og:title" content="博客备份-Git小技巧">
 <meta property="og:url" content="https://blog.dccif.top/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/">
 <meta property="og:site_name" content="dccif&#39;s Blog">
-<meta property="og:description" content="Hexo博客的备份 可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和GitHub和私有服务器上备份了四份，在本博客的仓库的Public分支上就是我的博客文章的备份">
+<meta property="og:description" content="Hexo 博客的备份 可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和 GitHub 和私有服务器上备份了四份，在本博客的仓库的 Public 分支上就是我的博客文章的备份">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-10-23T15:53:27.000Z">
-<meta property="article:modified_time" content="2023-08-08T08:05:36.402Z">
+<meta property="article:modified_time" content="2023-08-08T08:47:13.369Z">
 <meta property="article:author" content="Barry He">
 <meta property="article:tag" content="细节">
 <meta name="twitter:card" content="summary">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%A4%87%E4%BB%BD"><span class="nav-number">1.</span> <span class="nav-text"> Hexo博客的备份</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%A4%87%E4%BB%BD"><span class="nav-number">1.1.</span> <span class="nav-text"> 为什么要备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E5%A4%87%E4%BB%BD%E6%96%87%E7%AB%A0"><span class="nav-number">1.2.</span> <span class="nav-text"> 为什么只备份文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">1.3.</span> <span class="nav-text"> Git小技巧</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%A4%87%E4%BB%BD"><span class="nav-number">1.</span> <span class="nav-text"> Hexo 博客的备份</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%A4%87%E4%BB%BD"><span class="nav-number">1.1.</span> <span class="nav-text"> 为什么要备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E5%A4%87%E4%BB%BD%E6%96%87%E7%AB%A0"><span class="nav-number">1.2.</span> <span class="nav-text"> 为什么只备份文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">1.3.</span> <span class="nav-text"> Git 小技巧</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,10 +176,10 @@
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/dccif" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dccif" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RjY2lm" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dccif"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:heyujieboy@hotmail.com" title="E-Mail → mailto:heyujieboy@hotmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <span class="exturl" data-url="bWFpbHRvOmhleXVqaWVib3lAaG90bWFpbC5jb20=" title="E-Mail → mailto:heyujieboy@hotmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
   </div>
 
@@ -244,7 +244,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-08 16:05:36" itemprop="dateModified" datetime="2023-08-08T16:05:36+08:00">2023-08-08</time>
+      <time title="修改时间：2023-08-08 16:47:13" itemprop="dateModified" datetime="2023-08-08T16:47:13+08:00">2023-08-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -280,21 +280,22 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="hexo博客的备份"><a class="markdownIt-Anchor" href="#hexo博客的备份"></a> Hexo博客的备份</h1>
-<p>可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和GitHub和私有服务器上备份了四份，在本博客的仓库的Public分支上就是我的博客文章的备份</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="hexo-博客的备份"><a class="markdownIt-Anchor" href="#hexo-博客的备份"></a> Hexo 博客的备份</h1>
+<p>可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和 GitHub 和私有服务器上备份了四份，在本博客的仓库的 Public 分支上就是我的博客文章的备份</p>
 <span id="more"></span>
 <h2 id="为什么要备份"><a class="markdownIt-Anchor" href="#为什么要备份"></a> 为什么要备份</h2>
 <p>备份的重要性我觉的不用我说了吧，为了防止数据的丢失 <s>虽然好像没什么宝贵的数据</s></p>
-<p>其实是突然发奇想想利用Git的分支来在一个仓库管理我的博客</p>
+<p>其实是突然发奇想想利用 Git 的分支来在一个仓库管理我的博客</p>
 <h2 id="为什么只备份文章"><a class="markdownIt-Anchor" href="#为什么只备份文章"></a> 为什么只备份文章</h2>
-<p>毕竟文章本来就是给各位看的，但是私人的配置文件中有个人APIKey和一些个性化设定，这些可不好Public了😃</p>
-<h2 id="git小技巧"><a class="markdownIt-Anchor" href="#git小技巧"></a> Git小技巧</h2>
+<p>毕竟文章本来就是给各位看的，但是私人的配置文件中有个人 APIKey 和一些个性化设定，这些可不好 Public 了 😃</p>
+<h2 id="git-小技巧"><a class="markdownIt-Anchor" href="#git-小技巧"></a> Git 小技巧</h2>
 <p>因为这次忽略文件是我临时添加的，再修改了**.gitignore**文件后在次上传并没有生效</p>
-<p>感谢pfeng的作者，本文参考 <a target="_blank" rel="noopener" href="http://www.pfeng.org/archives/840">http://www.pfeng.org/archives/840</a></p>
+<p>感谢 pfeng 的作者，本文参考 <span class="exturl" data-url="aHR0cDovL3d3dy5wZmVuZy5vcmcvYXJjaGl2ZXMvODQw">http://www.pfeng.org/archives/840<i class="fa fa-external-link-alt"></i></span></p>
 <p>在<strong>git</strong>中如果想忽略掉某个文件，不让这个文件提交到版本库中，可以使用修改根目录中 <strong>.gitignore</strong> 文件的方法（如无，则需自己手工建立此文件）。这个文件每一行保存了一个匹配的规则例如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此为注释 – 将被 Git 忽略</span></span><br><span class="line">*.a         # 忽略所有 .a 结尾的文件</span><br><span class="line">!lib.a      # 但 lib.a 除外</span><br><span class="line">/TODO`      # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO</span><br><span class="line">build/      # 忽略 build/ 目录下的所有文件</span><br><span class="line">doc/*.txt   # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt</span><br></pre></td></tr></table></figure>
-<p>规则很简单，不做过多解释，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效，原因是**.gitignore<strong>只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理中，则修改</strong>.gitignore**是无效的。那么解决方法就是先把本地缓存删除（改变成未track状态），然后再提交：</p>
+<p>规则很简单，不做过多解释，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效，原因是**.gitignore<strong>只能忽略那些原来没有被 track 的文件，如果某些文件已经被纳入了版本管理中，则修改</strong>.gitignore**是无效的。那么解决方法就是先把本地缓存删除（改变成未 track 状态），然后再提交：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m &#x27;update .gitignore&#x27;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -314,7 +315,7 @@
       <a href="https://blog.dccif.top/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="博客备份-Git小技巧">https://blog.dccif.top/2017/10/23/博客备份-Git小技巧/</a>
   </li>
   <li class="post-copyright-license">
-      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -369,14 +370,13 @@
     </span>
     <span class="author" itemprop="copyrightHolder">Barry He</span>
   </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -389,7 +389,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
