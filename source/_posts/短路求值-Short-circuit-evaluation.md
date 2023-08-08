@@ -13,7 +13,7 @@ tags: 细节
 
 <!--more-->
 
-## 什么是**短路求值（Short-circuit evaluation）**
+## 什么是短路求值（Short-circuit evaluation）
 
 以下摘自[Short-circuit evaluation](https://www.wikiwand.com/en/Short-circuit_evaluation)
 
@@ -46,10 +46,10 @@ if (a != 0 && myfunc(b))
 }
 ```
 
-在这个例子中**&&**后的**myfunc(b)**将永远不会执行，因为**a!=0**永远是**FALSE**。
+在这个例子中 **&&** 后的 **myfunc(b)** 将永远不会执行，因为 **a!=0** 永远是 **FALSE** 。
 利用短路求值有 2 个有用的技巧
 
-1.  如果条件判断的 expression 需要复杂的计算，并且第一个结果为**False**，则可以不计算之后的表达式
+1.  如果条件判断的 expression 需要复杂的计算，并且第一个结果为 **False** ，则可以不计算之后的表达式
 1.  可以构造一个 expression 来使第二个可能会发生运行时错误的 expression 成功运行
 
 ```c
