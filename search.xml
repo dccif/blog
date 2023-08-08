@@ -525,7 +525,7 @@ Windows 10 x64 15063.674</p>
   <entry>
     <title>甘雨骗局</title>
     <url>/2021/05/09/%E7%94%98%E9%9B%A8%E9%AA%97%E5%B1%80/</url>
-    <content><![CDATA[<img data-src="/image/genshin/gy.webp" class="" width="600" height="640" title="ganyu" alt="ganyu">
+    <content><![CDATA[<img data-src="/image/genshin/gy.webp" class="" width="600" height="600" title="ganyu" alt="ganyu">
 <h1 id="随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"><a class="markdownIt-Anchor" href="#随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"></a> <strong>随着难度的提高，其实月卡平民不该硬练(投入过量资源)甘雨</strong></h1>
 <p>随着活动的结束，和深渊“开荒”的结束，很多玩家无脑吹上了甘雨，但是我认为甘雨其实是最不平民的角色，她是给平民保下限的角色。<br />
 如果难度进一步增大，可能一些 0 命上限高的角色才是最适合月卡平民的。现在新出的优菈，胡桃，公子论 dps 是平民手上最强的</p>
@@ -576,7 +576,7 @@ Windows 10 x64 15063.674</p>
 </blockquote>
 <p>最早是在<strong>php</strong>中接触到的这种求值，后来在学习<strong>Lisp</strong>中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧</p>
 <span id="more"></span>
-<h2 id="什么是短路求值short-circuit-evaluation"><a class="markdownIt-Anchor" href="#什么是短路求值short-circuit-evaluation"></a> 什么是<strong>短路求值（Short-circuit evaluation）</strong></h2>
+<h2 id="什么是短路求值short-circuit-evaluation"><a class="markdownIt-Anchor" href="#什么是短路求值short-circuit-evaluation"></a> 什么是短路求值（Short-circuit evaluation）</h2>
 <p>以下摘自<span class="exturl" data-url="aHR0cHM6Ly93d3cud2lraXdhbmQuY29tL2VuL1Nob3J0LWNpcmN1aXRfZXZhbHVhdGlvbg==">Short-circuit evaluation<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
 <p><strong>Short-circuit evaluation</strong>, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function<br />
@@ -589,10 +589,10 @@ evaluates to true, the overall value must be true.</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> denom = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (denom != <span class="number">0</span> &amp;&amp; num / denom)</span><br><span class="line">&#123;</span><br><span class="line">    ... <span class="comment">// ensures that calculating num/denom never results in divide-by-zero error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="使用了短路求值的c程序"><a class="markdownIt-Anchor" href="#使用了短路求值的c程序"></a> 使用了短路求值的<strong>C</strong>程序</h3>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (a != <span class="number">0</span> &amp;&amp; myfunc(b))</span><br><span class="line">&#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个例子中**&amp;&amp;<strong>后的</strong>myfunc(b)<strong>将永远不会执行，因为</strong>a!=0<strong>永远是</strong>FALSE**。<br />
+<p>在这个例子中 <strong>&amp;&amp;</strong> 后的 <strong>myfunc(b)</strong> 将永远不会执行，因为 <strong>a!=0</strong> 永远是 <strong>FALSE</strong> 。<br />
 利用短路求值有 2 个有用的技巧</p>
 <ol>
-<li>如果条件判断的 expression 需要复杂的计算，并且第一个结果为<strong>False</strong>，则可以不计算之后的表达式</li>
+<li>如果条件判断的 expression 需要复杂的计算，并且第一个结果为 <strong>False</strong> ，则可以不计算之后的表达式</li>
 <li>可以构造一个 expression 来使第二个可能会发生运行时错误的 expression 成功运行</li>
 </ol>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">is_first_char_valid_alpha_unsafe</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// SEGFAULT highly possible with p == NULL</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">is_first_char_valid_alpha</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> p != <span class="literal">NULL</span> &amp;&amp; <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// 1) no unneeded isalpha() execution with p == NULL, 2) no SEGFAULT risk</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
