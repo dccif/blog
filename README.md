@@ -1,5 +1,3 @@
-# dccif's Blog
+# dccif's Website
 
-[![Build and Deploy](https://github.com/dccif/blog/actions/workflows/main.yml/badge.svg)](https://github.com/dccif/blog/actions/workflows/main.yml)
-
-Basic file of dccif's blog
+## The web source
