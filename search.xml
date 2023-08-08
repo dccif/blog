@@ -3,7 +3,7 @@
   <entry>
     <title>IDEA下的Java Webapp环境搭建</title>
     <url>/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-    <content><![CDATA[<h1 id="idea-下java-webapp的环境搭建"><a class="markdownIt-Anchor" href="#idea-下java-webapp的环境搭建"></a> IDEA 下Java Webapp的环境搭建</h1>
+    <content><![CDATA[<h1 id="idea-下-java-webapp-的环境搭建"><a class="markdownIt-Anchor" href="#idea-下-java-webapp-的环境搭建"></a> IDEA 下 Java Webapp 的环境搭建</h1>
 <p>本文在以下环境搭建：</p>
 <blockquote>
 <p>IntelliJ IDEA 2017.2.5<br />
@@ -13,29 +13,29 @@ JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o<br />
 Apache Tomcat 9.0.1 Server<br />
 Windows 10 x64 15063.674</p>
 </blockquote>
-<p><strong>注意!!</strong> 本文不包括JAVA环境及Tomcat的搭建！</p>
+<p><strong>注意!!</strong> 本文不包括 JAVA 环境及 Tomcat 的搭建！</p>
 <span id="more"></span>
 <h2 id="写文缘由"><a class="markdownIt-Anchor" href="#写文缘由"></a> 写文缘由</h2>
-<p>可能有人问我既然不是写给新人看的，还不写重点的JAVA环境及Tomcat的搭建，你写这有什么用？那么你可以<strong>Ctrl+w</strong>了。因为现在网上的都是关于Eclipse或者老版本的IDEA的教程，所以想写一篇新的，顺带拉一波新人入IDEA的坑。</p>
+<p>可能有人问我既然不是写给新人看的，还不写重点的 JAVA 环境及 Tomcat 的搭建，你写这有什么用？那么你可以<strong>Ctrl+w</strong>了。因为现在网上的都是关于 Eclipse 或者老版本的 IDEA 的教程，所以想写一篇新的，顺带拉一波新人入 IDEA 的坑。</p>
 <p><s>个人不喜欢课堂上老师用的旧工具</s></p>
-<h3 id="新建project"><a class="markdownIt-Anchor" href="#新建project"></a> 新建Project</h3>
+<h3 id="新建-project"><a class="markdownIt-Anchor" href="#新建-project"></a> 新建 Project</h3>
 <img data-src="/image/IDEA/newproject.jpg" class="" title="新建项目">
 <img data-src="/image/IDEA/select.jpg" class="" title="选择应用module">
 <p>下一步随便给项目取一个名字</p>
 <h3 id="下面是重点了"><a class="markdownIt-Anchor" href="#下面是重点了"></a> <strong>下面是重点了</strong></h3>
 <p>可能是我的环境太新了，和网上的教程生成的目录结构是不一样的。</p>
 <img data-src="/image/IDEA/struct.jpg" class="" title="目录结构">
-<p>我们要新建2个文件夹，都是在web/WEB-INF/目录下</p>
+<p>我们要新建 2 个文件夹，都是在 web/WEB-INF/目录下</p>
 <ol>
 <li>classes &nbsp&nbsp&nbsp&nbsp --编译后的文件</li>
-<li>lib &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --以后要引入的库</li>
+<li>lib &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --以后要引入的库</li>
 </ol>
 <h3 id="新的目录结构-swig7-"><a class="markdownIt-Anchor" href="#新的目录结构-swig7-"></a> 新的目录结构 <img data-src="/image/IDEA/after.jpg" class="" title="新建Servlet和新的目录结构"></h3>
 <img data-src="/image/IDEA/newservlet.jpg" class="" title="新建Servlet">
 <h3 id="更改项目目录结构-swig9-"><a class="markdownIt-Anchor" href="#更改项目目录结构-swig9-"></a> 更改项目目录结构 <img data-src="/image/IDEA/newstruct.jpg" class="" title="更改目录结构"></h3>
-<h4 id="更改out目录-swig10-"><a class="markdownIt-Anchor" href="#更改out目录-swig10-"></a> 更改out目录 <img data-src="/image/IDEA/newout.jpg" class="" title="更改out目录"></h4>
-<h4 id="更改lib目录-swig11-"><a class="markdownIt-Anchor" href="#更改lib目录-swig11-"></a> 更改lib目录 <img data-src="/image/IDEA/newlib.jpg" class="" title="更改lib目录"></h4>
-<h4 id="更改out结构-swig12-"><a class="markdownIt-Anchor" href="#更改out结构-swig12-"></a> 更改out结构 <img data-src="/image/IDEA/outset.jpg" class="" title="更改out结构"></h4>
+<h4 id="更改-out-目录-swig10-"><a class="markdownIt-Anchor" href="#更改-out-目录-swig10-"></a> 更改 out 目录 <img data-src="/image/IDEA/newout.jpg" class="" title="更改out目录"></h4>
+<h4 id="更改-lib-目录-swig11-"><a class="markdownIt-Anchor" href="#更改-lib-目录-swig11-"></a> 更改 lib 目录 <img data-src="/image/IDEA/newlib.jpg" class="" title="更改lib目录"></h4>
+<h4 id="更改-out-结构-swig12-"><a class="markdownIt-Anchor" href="#更改-out-结构-swig12-"></a> 更改 out 结构 <img data-src="/image/IDEA/outset.jpg" class="" title="更改out结构"></h4>
 <h3 id="配置服务器-swig13-"><a class="markdownIt-Anchor" href="#配置服务器-swig13-"></a> 配置服务器 <img data-src="/image/IDEA/configserver.jpg" class="" title="配置服务器"></h3>
 <img data-src="/image/IDEA/setserver1.jpg" class="">
 <img data-src="/image/IDEA/setserver2.jpg" class="" title="配置服务器">
@@ -49,16 +49,16 @@ Windows 10 x64 15063.674</p>
 <p>结果：</p>
 <img data-src="/image/IDEA/result2.jpg" class="" title="Servlet测试">
 <h2 id="搭建完成"><a class="markdownIt-Anchor" href="#搭建完成"></a> 搭建完成</h2>
-<p>至此完成了在IDEA上Servlet的环境搭建。</p>
+<p>至此完成了在 IDEA 上 Servlet 的环境搭建。</p>
 <p><s>你以为接这样结束了？</s></p>
 <p>你难道想每次都按怎么多才能搭建好环境？<br />
-<s>其实可以选择Maven的，但是Maven更难掌握</s><br />
+<s>其实可以选择 Maven 的，但是 Maven 更难掌握</s><br />
 有个简单的方法能节省几步以后搭建的操作</p>
 <h3 id="保存模版"><a class="markdownIt-Anchor" href="#保存模版"></a> 保存模版</h3>
 <img data-src="/image/IDEA/savetemp.jpg" class="" title="保存模版">
 <p>之后就能看到了</p>
 <img data-src="/image/IDEA/usertemp.jpg" class="" title="用户模版">
-<p>然而这个功能支持Java项目并不完美，所以以后每次都要新建两个文件夹，就是classes和lib，但之后的目录结构设置会自动完成的</p>
+<p>然而这个功能支持 Java 项目并不完美，所以以后每次都要新建两个文件夹，就是 classes 和 lib，但之后的目录结构设置会自动完成的</p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -381,11 +381,11 @@ Windows 10 x64 15063.674</p>
 <h2 id="为什么只备份文章"><a class="markdownIt-Anchor" href="#为什么只备份文章"></a> 为什么只备份文章</h2>
 <p>毕竟文章本来就是给各位看的，但是私人的配置文件中有个人 APIKey 和一些个性化设定，这些可不好 Public 了 😃</p>
 <h2 id="git-小技巧"><a class="markdownIt-Anchor" href="#git-小技巧"></a> Git 小技巧</h2>
-<p>因为这次忽略文件是我临时添加的，再修改了**.gitignore**文件后在次上传并没有生效</p>
+<p>因为这次忽略文件是我临时添加的，再修改了 <strong>.gitignore</strong> 文件后在次上传并没有生效</p>
 <p>感谢 pfeng 的作者，本文参考 <span class="exturl" data-url="aHR0cDovL3d3dy5wZmVuZy5vcmcvYXJjaGl2ZXMvODQw">http://www.pfeng.org/archives/840<i class="fa fa-external-link-alt"></i></span></p>
 <p>在<strong>git</strong>中如果想忽略掉某个文件，不让这个文件提交到版本库中，可以使用修改根目录中 <strong>.gitignore</strong> 文件的方法（如无，则需自己手工建立此文件）。这个文件每一行保存了一个匹配的规则例如：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此为注释 – 将被 Git 忽略</span></span><br><span class="line">*.a         # 忽略所有 .a 结尾的文件</span><br><span class="line">!lib.a      # 但 lib.a 除外</span><br><span class="line">/TODO`      # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO</span><br><span class="line">build/      # 忽略 build/ 目录下的所有文件</span><br><span class="line">doc/*.txt   # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt</span><br></pre></td></tr></table></figure>
-<p>规则很简单，不做过多解释，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效，原因是**.gitignore<strong>只能忽略那些原来没有被 track 的文件，如果某些文件已经被纳入了版本管理中，则修改</strong>.gitignore**是无效的。那么解决方法就是先把本地缓存删除（改变成未 track 状态），然后再提交：</p>
+<p>规则很简单，不做过多解释，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效，原因是 <strong>.gitignore</strong> 只能忽略那些原来没有被 track 的文件，如果某些文件已经被纳入了版本管理中，则修改 <strong>.gitignore</strong> 是无效的。那么解决方法就是先把本地缓存删除（改变成未 track 状态），然后再提交：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rm -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m &#x27;update .gitignore&#x27;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
