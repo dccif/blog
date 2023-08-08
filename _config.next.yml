@@ -355,11 +355,11 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: default
+    light: stackoverflow-light
     dark: stackoverflow-dark
   prism:
-    light: prism
-    dark: prism-dark
+    light: prism-coy.min
+    dark: prism-coy.min
   # Add copy button on codeblock
   copy_button:
     enable: true
