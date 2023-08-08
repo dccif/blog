@@ -48,7 +48,6 @@ jobs:
           npm install hexo-theme-next --save
           npm install hexo-word-counter --save
           npm install
-          mv -f ./localsearch.pug ./themes/stun/layout/_third-party/search/localsearch.pug
           hexo clean
           hexo g
           cd public
