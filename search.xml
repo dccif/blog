@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>IDEA下的Java Webapp环境搭建</title>
+    <url>/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h1 id="idea-下java-webapp的环境搭建"><a class="markdownIt-Anchor" href="#idea-下java-webapp的环境搭建"></a> IDEA 下Java Webapp的环境搭建</h1>
+<p>本文在以下环境搭建：</p>
+<blockquote>
+<p>IntelliJ IDEA 2017.2.5<br />
+JDK 1.8.0_144<br />
+JRE: 1.8.0_152-release-915-b12 amd64<br />
+JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o<br />
+Apache Tomcat 9.0.1 Server<br />
+Windows 10 x64 15063.674</p>
+</blockquote>
+<p><strong>注意!!</strong> 本文不包括JAVA环境及Tomcat的搭建！</p>
+<span id="more"></span>
+<h2 id="写文缘由"><a class="markdownIt-Anchor" href="#写文缘由"></a> 写文缘由</h2>
+<p>可能有人问我既然不是写给新人看的，还不写重点的JAVA环境及Tomcat的搭建，你写这有什么用？那么你可以<strong>Ctrl+w</strong>了。因为现在网上的都是关于Eclipse或者老版本的IDEA的教程，所以想写一篇新的，顺带拉一波新人入IDEA的坑。</p>
+<p><s>个人不喜欢课堂上老师用的旧工具</s></p>
+<h3 id="新建project"><a class="markdownIt-Anchor" href="#新建project"></a> 新建Project</h3>
+<img data-src="/image/IDEA/newproject.jpg" class="" title="新建项目">
+<img data-src="/image/IDEA/select.jpg" class="" title="选择应用module">
+<p>下一步随便给项目取一个名字</p>
+<h3 id="下面是重点了"><a class="markdownIt-Anchor" href="#下面是重点了"></a> <strong>下面是重点了</strong></h3>
+<p>可能是我的环境太新了，和网上的教程生成的目录结构是不一样的。</p>
+<img data-src="/image/IDEA/struct.jpg" class="" title="目录结构">
+<p>我们要新建2个文件夹，都是在web/WEB-INF/目录下</p>
+<ol>
+<li>classes &nbsp&nbsp&nbsp&nbsp --编译后的文件</li>
+<li>lib &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --以后要引入的库</li>
+</ol>
+<h3 id="新的目录结构-swig7-"><a class="markdownIt-Anchor" href="#新的目录结构-swig7-"></a> 新的目录结构 <img data-src="/image/IDEA/after.jpg" class="" title="新建Servlet和新的目录结构"></h3>
+<img data-src="/image/IDEA/newservlet.jpg" class="" title="新建Servlet">
+<h3 id="更改项目目录结构-swig9-"><a class="markdownIt-Anchor" href="#更改项目目录结构-swig9-"></a> 更改项目目录结构 <img data-src="/image/IDEA/newstruct.jpg" class="" title="更改目录结构"></h3>
+<h4 id="更改out目录-swig10-"><a class="markdownIt-Anchor" href="#更改out目录-swig10-"></a> 更改out目录 <img data-src="/image/IDEA/newout.jpg" class="" title="更改out目录"></h4>
+<h4 id="更改lib目录-swig11-"><a class="markdownIt-Anchor" href="#更改lib目录-swig11-"></a> 更改lib目录 <img data-src="/image/IDEA/newlib.jpg" class="" title="更改lib目录"></h4>
+<h4 id="更改out结构-swig12-"><a class="markdownIt-Anchor" href="#更改out结构-swig12-"></a> 更改out结构 <img data-src="/image/IDEA/outset.jpg" class="" title="更改out结构"></h4>
+<h3 id="配置服务器-swig13-"><a class="markdownIt-Anchor" href="#配置服务器-swig13-"></a> 配置服务器 <img data-src="/image/IDEA/configserver.jpg" class="" title="配置服务器"></h3>
+<img data-src="/image/IDEA/setserver1.jpg" class="">
+<img data-src="/image/IDEA/setserver2.jpg" class="" title="配置服务器">
+<h2 id="测试代码"><a class="markdownIt-Anchor" href="#测试代码"></a> 测试代码</h2>
+<p>Jsp 测试：</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;简单的JSP页面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Hello,World!&lt;/h1&gt;</span><br><span class="line">现在的时间是: &lt;%= <span class="keyword">new</span> <span class="title class_">java</span>.util.Date() %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<img data-src="/image/IDEA/result1.jpg" class="" title="Jsp页面测试">
+<p>Servlet 测试：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet(name = &quot;HelloServlet&quot;, urlPatterns = &#123;&quot;/helloServlet.do&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line">        <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">        out.println(<span class="string">&quot;&lt;html&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;head&gt;&lt;title&gt;当前时间&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;h3&gt;Hello,World!&lt;/h3&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;现在时间是：&quot;</span> + <span class="keyword">new</span> <span class="title class_">java</span>.util.Date());</span><br><span class="line">        out.println(<span class="string">&quot;&lt;/body&gt;&quot;</span>);</span><br><span class="line">        out.println(<span class="string">&quot;&lt;/html&gt;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<img data-src="/image/IDEA/result2.jpg" class="" title="Servlet测试">
+<h2 id="搭建完成"><a class="markdownIt-Anchor" href="#搭建完成"></a> 搭建完成</h2>
+<p>至此完成了在IDEA上Servlet的环境搭建。</p>
+<p><s>你以为接这样结束了？</s></p>
+<p>你难道想每次都按怎么多才能搭建好环境？<br />
+<s>其实可以选择Maven的，但是Maven更难掌握</s><br />
+有个简单的方法能节省几步以后搭建的操作</p>
+<h3 id="保存模版"><a class="markdownIt-Anchor" href="#保存模版"></a> 保存模版</h3>
+<img data-src="/image/IDEA/savetemp.jpg" class="" title="保存模版">
+<p>之后就能看到了</p>
+<img data-src="/image/IDEA/usertemp.jpg" class="" title="用户模版">
+<p>然而这个功能支持Java项目并不完美，所以以后每次都要新建两个文件夹，就是classes和lib，但之后的目录结构设置会自动完成的</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Prologue</title>
+    <url>/2017/10/10/Prologue/</url>
+    <content><![CDATA[<h1 id="一些闲话来作为我博客的序章吧"><a class="markdownIt-Anchor" href="#一些闲话来作为我博客的序章吧"></a> 一些闲话来作为我博客的序章吧</h1>
+<p>可以说是“<strong>机缘巧合</strong>”吧，我从原来的自建服务器迁移到了<a href="https://pages.github.com/"><strong>GitHub Pages</strong></a>上，具体的原因我绝的可以留到下一篇博文再说了😜</p>
+<h2 id="写作的缘由"><a class="markdownIt-Anchor" href="#写作的缘由"></a> 写作的缘由</h2>
+<p>在一番折腾之后终于搭成了这个博客，想着也不能浪费，于是就来写写东西了，主要也是个人生活或者学习的记录。不过鉴于我个人的水平，如果有读者有幸看到这篇文章的话，那么也请别抱太大的希望，因为我本质上还是一个<code>理工男</code>。在本博客中你可能看不到什么精彩的文风或者犀利的批判。</p>
+<span id="more"></span>
+<h2 id="本博客以后和现在的内容"><a class="markdownIt-Anchor" href="#本博客以后和现在的内容"></a> 本博客以后和现在的内容</h2>
+<p>想了半天也不知道和清楚写什么，于是就想先介绍一下博客好了。</p>
+<p>以后包括未来博主主要写的文章大多是</p>
+<ol>
+<li>编程类</li>
+<li>细节类</li>
+<li>感想类</li>
+<li>推荐类</li>
+</ol>
+<p>下面就来细说一下好了。<s>我又想到扯得东西了</s></p>
+<h3 id="编程类"><a class="markdownIt-Anchor" href="#编程类"></a> 编程类</h3>
+<p>因为本人专业和兴趣的原因，我还是写的编程的多点，因为这个博客我也想当成我学习编程的成长记录吧。</p>
+<h3 id="细节类"><a class="markdownIt-Anchor" href="#细节类"></a> 细节类</h3>
+<p>怎么定义呢？说实话我也很难说什么属于细节，只是因为以前写的文章算是细节，便单独开了一个目录了，因为我现在的编程学习，个人还是理论派，看的书比写的码多，于是便把一些书上好的地方记录下来，日后也许可以写一些物品在实践中处理问题遇到的细节。</p>
+<h3 id="感想类"><a class="markdownIt-Anchor" href="#感想类"></a> 感想类</h3>
+<p>虽然我现在一篇此类的文章都没写，但是我觉得一个博客之所以能叫博客就是因为能抒发作者自己的想法，所以我的博客也不例外，如果没有这个类的话，我的博客就不能说是我的博客了，只能说是一些零散知识的拼凑。</p>
+<h3 id="推荐类"><a class="markdownIt-Anchor" href="#推荐类"></a> 推荐类</h3>
+<p>个人觉得这也许是我以后写的最多的文章了，因为个人对新奇软件和数码的喜好，我个人会推荐和介绍一些本人正在使用的好的软件或硬件，甚至是上文编程类中的好东西，当然这也是否考验功力，你凭什么推荐这个？</p>
+]]></content>
+      <categories>
+        <category>随想</category>
+      </categories>
+      <tags>
+        <tag>闲谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QT 6.2 msvc 2019 下 静态编译</title>
+    <url>/2021/11/11/QT-6-2-msvc-2019-%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<h1 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h1>
+<p>QT 6版本全面换成了CMake，Win下环境需要</p>
+<p>CMake, Ninja, Perl, Python <a href="https://doc.qt.io/qt-6/windows-building.html">官网要求</a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Tool</strong></th>
+<th><strong>Supported Versions</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMake</td>
+<td>Version 3.16 and newer (3.17 and newer for <code>-debug-and-release</code> builds 3.21 and newer for <code>-static</code> builds).</td>
+<td>Required for configuring the Qt build. Available in the Qt Online Installer and on <a href="https://cmake.org/">cmake.org</a>.</td>
+</tr>
+<tr>
+<td>Ninja</td>
+<td>-</td>
+<td>Recommended tool for building Qt. Available in the Qt Online Installer and on <a href="https://ninja-build.org/">ninja-build.org</a>.</td>
+</tr>
+<tr>
+<td>Perl</td>
+<td>-</td>
+<td>Required build tool. Popular Windows installers are <a href="https://www.activestate.com/products/perl/downloads/">ActiveState Perl</a> and <a href="https://strawberryperl.com/">Strawberry Perl</a>. Perl is also installed as part of <a href="https://git-scm.com/download/win">Git</a>.</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Version 3</td>
+<td>Required build tool. Windows installers are available on <a href="https://www.python.org/downloads/windows/">python.org</a>, or from the <a href="https://docs.python.org/3/using/windows.html#windows-store">Microsoft Store</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>关于Perl 个人推荐 <a href="https://strawberryperl.com/">Strawberry Perl</a> 版本新，安装方便。缺工具就去下，全部环境变量中配置好就行</p>
+<span id="more"></span>
+<h3 id="编译环境选择mingwmsvc"><a class="markdownIt-Anchor" href="#编译环境选择mingwmsvc"></a> 编译环境选择：MinGW/MSVC</h3>
+<p>在Windows上，有两个预构建环境可供选择：一个是 MinGW ，另一个是Microsoft Visual Studio(MSVC)。这两个环境不兼容，无法混合。你必须选择一个。</p>
+<p>这两者的区别如下：</p>
+<p>当你的项目使用MinGW编译的使用，想要用一个MSVC编译生成的库时就会有问题。使用MinGW编译项目的时候，所使用的Lib也要是MinGW编译的。如果你只是开发Window平台的软件时，最好用Qt MSVC组合，这样可以使用大量的第三方lib，还有很多的构建指令，毕竟window上MSVC才是王道。</p>
+<p>我选择MSVC，打开安装VS时自带安装的MSCV：<code>x64 Native Tools Command Prompt for VS 2019</code></p>
+<p><em>不要使用 Developer Command Prompt for VS 2019</em></p>
+<h2 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h2>
+<p>在随便什么盘里新建一个目录用来存放编译好的内容：<code>D:\qt</code></p>
+<p>在<code>x64 Native Tools Command Prompt for VS 2019</code>的终端进入Qt源代码目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\peter\Downloads&gt;cd qt-everywhere-src-5.15.0</span><br><span class="line"></span><br><span class="line">C:\Users\peter\Downloads\qt-everywhere-src-5.15.0&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="不推荐可跳过1修改源码里的qtbasemkspecscommonmsvc-desktopconf文件"><a class="markdownIt-Anchor" href="#不推荐可跳过1修改源码里的qtbasemkspecscommonmsvc-desktopconf文件"></a> <s>（不推荐,可跳过）1.修改源码里的<code>qtbase\mkspecs\common\msvc-desktop.conf</code>文件</s></h3>
+<p>修改-MD为-MT</p>
+<p>修改前：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">QMAKE_CFLAGS_RELEASE    = $$QMAKE_CFLAGS_OPTIMIZE -MD</span><br><span class="line">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $$QMAKE_CFLAGS_OPTIMIZE -Zi -MD</span><br><span class="line">QMAKE_CFLAGS_DEBUG      = -Zi -MDd</span><br></pre></td></tr></table></figure>
+<p>修改后：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">QMAKE_CFLAGS_RELEASE    = $$QMAKE_CFLAGS_OPTIMIZE -MT</span><br><span class="line">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $$QMAKE_CFLAGS_OPTIMIZE -Zi -MT</span><br><span class="line">QMAKE_CFLAGS_DEBUG      = -Zi -MTd</span><br></pre></td></tr></table></figure>
+<p>D的意思是动态编译(dynamic link)，T的意思是静态编译（static link）。 这一步官方教程没有要求</p>
+<p>目的仅有让编译出来的Win上静态文件是最小的（不推荐使用）会导致example等动态链接的库无法使用编译好的静态QT编译</p>
+<h3 id="配置config文件"><a class="markdownIt-Anchor" href="#配置config文件"></a> 配置config文件：</h3>
+<p>主要需要在 VS 2019的命令行中运行，如果一次配置不通过，出错下一次也是无法通过的，因为有<code>CMakeCache.txt</code> 文件，需要删除上一步失败的<code>CMakeCache.txt</code>文件</p>
+<p>我的配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">configure.bat -static -prefix &quot;D:\qt&quot; -confirm-license -opensource -debug-and-release -platform win32-msvc -optimize-size -no-pch -nomake examples -nomake tests -nomake tools -plugin-sql-sqlite -plugin-sql-odbc -qt-zlib -qt-libpng -qt-freetype -qt-pcre -qt-harfbuzz -qt-libjpeg -opengl desktop -mp</span><br></pre></td></tr></table></figure>
+<p>具体含义如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">configure.bat </span><br><span class="line">-static  #指明静态编译</span><br><span class="line">-prefix &quot;D:\qt&quot; #安装目录，最好使用不需要管理员权限的目录</span><br><span class="line">-confirm-license -opensource #指明是开源版本</span><br><span class="line">-debug-and-release #指明需要debug版和release版，可以单独选择release版</span><br><span class="line">-platform win32-msvc #指明使用msvc编译，这里的win32并不指32位</span><br><span class="line">-optimize-size #最优化文件大小而不是速度(可选)</span><br><span class="line">-no-pch #不使用预编译头文件（可选）</span><br><span class="line">-nomake examples -nomake tests -nomake tools #不编译用不上的东西</span><br><span class="line">-plugin-sql-sqlite -plugin-sql-odbc -qt-zlib -qt-libpng -qt-freetype -qt-pcre -qt-harfbuzz -qt-libjpeg #可选插件</span><br><span class="line">-opengl desktop  #用系统自带的opengl</span><br><span class="line">-mp #多核编译</span><br></pre></td></tr></table></figure>
+<p>如果无报错</p>
+<p>接着运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake --build . ---parallel //编译本目录，parallel为并行，即多核心编译</span><br><span class="line">cmake --install . //安装命令</span><br></pre></td></tr></table></figure>
+<h2 id="配置qtcreator"><a class="markdownIt-Anchor" href="#配置qtcreator"></a> 配置QtCreator</h2>
+<p>Qt version 下找到刚才编译的<code>bin/qmake.exe</code></p>
+<p>Kits下选择刚才的Qt version 注意编译器选择需要和上面编译时使用的一样</p>
+<p>至此，编译完成</p>
+<h2 id="测试大小"><a class="markdownIt-Anchor" href="#测试大小"></a> 测试大小</h2>
+<p>选择release模式编译，等待编译完成后打开编译文件夹，即可看到编译后的文件大小大约12.7MB</p>
+<p>如果是动态编译，再使用<code>windeployqt</code>个人测试的大小是78MB左右，所以还是静态编译时省事</p>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<p>最后感谢这些文章的作者，Thanks</p>
+<p><a href="https://last2win.com/qt-5.15-static-link/">Qt5.15在Windows环境静态编译安装和部署的完整过程 VS 2019-Qt static link build Windows 64 bit</a></p>
+<p><a href="https://aymetic.com/post/2273ab9c.html">使用MSVC2019静态编译生成Qt库</a></p>
+<p><a href="https://decovar.dev/blog/2018/02/17/build-qt-statically/">At last, let’s build Qt statically</a></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+        <tag>编程</tag>
+        <tag>QT</tag>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu的个性化配置</title>
+    <url>/2017/10/27/Ubuntu%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="ubuntu下的个性化配置"><a class="markdownIt-Anchor" href="#ubuntu下的个性化配置"></a> Ubuntu下的个性化配置</h1>
+<p>因为使用Linux开发方便的缘故，我在虚拟机上用全性能搭建了一个Ubuntu环境~~(别问我为什么不装双系统)~~</p>
+<p>于是和之前那篇Windows的重装一样，也想写一篇文章记录一下，以后搭建时可以方便一些</p>
+<span id="more"></span>
+<h2 id="java环境"><a class="markdownIt-Anchor" href="#java环境"></a> Java环境</h2>
+<p>本文参考<a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04">How To Install Java with Apt-Get on Ubuntu 16.04</a></p>
+<p>这里是Java8</p>
+<p>添加Oracle’s PPA</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<p>Then, depending on the version you want to install, execute one of the following commands:</p>
+<h3 id="oracle-jdk-8"><a class="markdownIt-Anchor" href="#oracle-jdk-8"></a> Oracle JDK 8</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install oracle-java8-installer</span><br></pre></td></tr></table></figure>
+<h3 id="linux下的添加java环境变量"><a class="markdownIt-Anchor" href="#linux下的添加java环境变量"></a> Linux下的添加Java环境变量</h3>
+<p>Many programs, such as Java servers, use the <code>JAVA_HOME</code> environment variable to determine the Java installation location. To set this environment variable, we will first need to find out where Java is installed. You can do this by executing the same command as in the previous section:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo update-alternatives --config java</span><br></pre></td></tr></table></figure>
+<p>Copy the path from your preferred installation and then open <code>/etc/environment</code> using <code>nano</code> or your favorite text editor.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/environment</span><br></pre></td></tr></table></figure>
+<p>At the end of this file, add the following line, making sure to replace the highlighted path with your own copied path.</p>
+<p>/etc/environment</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=&quot;/usr/lib/jvm/java-8-oracle&quot;</span><br></pre></td></tr></table></figure>
+<p>Save and exit the file, and reload it.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /etc/environment</span><br></pre></td></tr></table></figure>
+<p>You can now test whether the environment variable has been set by executing the following command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br></pre></td></tr></table></figure>
+<h2 id="开发环境"><a class="markdownIt-Anchor" href="#开发环境"></a> 开发环境</h2>
+<p>Vim-gtk 官方源已经有最新的了，直接apt install 就行了</p>
+<p>Emacs (需要手动添加源)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:kelleyk/emacs</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install emacs25</span><br></pre></td></tr></table></figure>
+<p>其余jetbrains全家桶，因为没有VS只好用Clion了</p>
+<h2 id="oh-my-zsh配置zsh"><a class="markdownIt-Anchor" href="#oh-my-zsh配置zsh"></a> oh-my-zsh配置zsh</h2>
+<p>ubuntu默认不是zsh，输入下面命令安装 zsh</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br></pre></td></tr></table></figure>
+<p>接下来我们需要下载 oh-my-zsh 项目来帮我们配置 zsh，注意此时一定要用 超级权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</span><br></pre></td></tr></table></figure>
+<p>查看你的zsh位置，输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ cat /etc/shells</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/shells: valid login shells</span></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/dash</span><br><span class="line">/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/bin/zsh</span><br><span class="line">/usr/bin/zsh</span><br><span class="line">➜  ~ </span><br></pre></td></tr></table></figure>
+<p>更改默认 shell，输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/passwd</span><br></pre></td></tr></table></figure>
+<p>更改 root 和用户默认 shell</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root:x:0:0:root:/root:/usr/bin/zsh</span><br><span class="line">song:x:1000:1000:song,,,:/home/song:/usr/bin/zsh</span><br></pre></td></tr></table></figure>
+<p>zsh 的配置文件是在用户目录下的 .zshrc</p>
+<p>每一行的配置前面都有#号,如果想要配置生效,去掉 #号即可.</p>
+<h2 id="补全插件-incrzsh"><a class="markdownIt-Anchor" href="#补全插件-incrzsh"></a> 补全插件 incr.zsh</h2>
+<p>这个插件的官网是: <a href="http://link.zhihu.com/?target=http%3A//mimosa-pudica.net/zsh-incremental.html">Incremental completion on zsh</a></p>
+<p>最新版本是 incr-0.2.zsh</p>
+<p>新建一个 incr-0.2.zsh 文件把他放进 用户目录下的 .oh-my-zsh/plugins/incr 目录下，没有的目录自己新建，其实放哪都一样。</p>
+<p>分别编辑 root 目录下的 .zshrc 和用户目录下的 .zsnrc</p>
+<p>加上一句</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /home/song/.oh-my-zsh/plugins/incr/incr-0.2.zsh</span><br></pre></td></tr></table></figure>
+<p>/home/song/.oh-my-zsh/plugins/incr 是你放的不同的目录。</p>
+<p>最后还有一个小问题，原来我们用的 超级用户创建的 oh-my-zsh 导致 .oh-my-zsh 目录下的缓存目录 cache 所有者和用户组也是root 这样就导致我们在普通用户下使用有些问题，下面改变 cache的所有者</p>
+<p>输入</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown song:song cache/ -R</span><br></pre></td></tr></table></figure>
+<p>这样就不会在命令提示时候弹出错误了。</p>
+]]></content>
+      <categories>
+        <category>清单</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>my test page</title>
+    <url>/2017/10/10/my-test-page/</url>
+    <content><![CDATA[<h1 id="个人测试页"><a class="markdownIt-Anchor" href="#个人测试页"></a> 个人测试页</h1>
+<h2 id="这是我的一个测试页面"><a class="markdownIt-Anchor" href="#这是我的一个测试页面"></a> 这是我的一个测试页面</h2>
+<h3 id="我也不知道写什么好"><a class="markdownIt-Anchor" href="#我也不知道写什么好"></a> 我也不知道写什么好</h3>
+]]></content>
+  </entry>
+  <entry>
+    <title>一个简单的简谱转调程序</title>
+    <url>/2017/08/07/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%AE%80%E8%B0%B1%E8%BD%AC%E8%B0%83%E7%A8%8B%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="老版本的问题"><a class="markdownIt-Anchor" href="#老版本的问题"></a> 老版本的问题</h1>
+<p>从<a href="https://blog.dccif.top/2015/12/14/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/">《记第一个对我有实际作用的程序》</a>之后已经过了602天。终于我更新了第二个版本😂</p>
+<p>尴尬…其实我也只是为了练习前几天新学的新方法（不然谁还挖以前的坑）🤣</p>
+<p>回想我上一个版本的程序，只能转换<strong>全音</strong>，还没法识别<strong>半音</strong>。。。。现在来看就是因为那时我用了<strong>键值对</strong>的方法来转换的。。。我没功夫把所有的音阶都记录下键值对。。。</p>
+<p>同时感谢贴吧  <a href="https://tieba.baidu.com/home/main?id=tb.1.8026e840.pvGEopbxnwZpX2aH7NkVfg">DverysGetime</a> 的贴，让我理解的转调原理，原文 <a href="https://tieba.baidu.com/p/2473627200">【申精】DG教你看简谱音阶转调图，转调翻译再也不求人</a></p>
+<p>我的<strong>参照表</strong>也是原贴中的：</p>
+<p><img data-src="/image/tuneChange/jp1.webp" alt="jp1" /></p>
+<p>这样一看下来</p>
+<p>如果全部写成键值对的话就要</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>12</mn><mo>∗</mo><mn>3</mn><mo>∗</mo><mn>12</mn><mo>=</mo><mn>432</mn></mrow><annotation encoding="application/x-tex">12*3*12=432</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mord">3</span><span class="mord">2</span></span></span></span></p>
+<p>一共这么多对，当然理论上也不是不行，但是当写成这么傻的方法时，应该要考虑换一下方法了。。。。</p>
+<span id="more"></span> 
+<p>各位这时不妨也思考一下怎么转换好了，这篇文章我是不会贴代码了（反正我知道也没人会看）我只分享我的思路</p>
+<h1 id="新思路"><a class="markdownIt-Anchor" href="#新思路"></a> 新思路</h1>
+<p>怎么样，思考好了吗？（多半也没人认真想吧!😝)</p>
+<p>那么我分享一下我的思路</p>
+<p>首先原来的音阶表上的音名。。。ABC 这些对我干扰太大了😥，<a href="https://github.com/dccif-zz/Bauble/blob/master/TuneChange/TuneChange.py">老的版本</a>上我就傻傻地把简谱的1,2,3还先转换成音名CDE</p>
+<p>然后利用CDE在我提前输入的转换表中查找来进行音调转换</p>
+<p>因为原来我天真地认为是</p>
+<p>不管输入什么简谱的1，2，3对应到表上第一排的音名是不变的，再利用音名转换到目标简谱上就行了。。。</p>
+<p>看过我<a href="https://github.com/dccif-zz/Bauble/blob/master/TuneChange/TuneChange.py">原先的程序</a>的就知道了，很傻很天真的方法表情</p>
+<p>所以我就参考了<strong>转调的定义</strong>：不同调的<strong>Do位置</strong>不同，在上面的图上中间灰色的矩形很好的表示了这一点，也就是说不同的调的转换只需要移动<strong>Do的位置</strong>就行了，并不用原先的我用的那种还需要音名CDE来当两个不同简谱间桥梁的转换方法。</p>
+<p>那么发现了转调的定义后，如何实现的这个所谓的“<strong>移动的Do的位置</strong>”呢？</p>
+<p>用户的输入都是各自调的1,2,3,4… 程序要做的是移动他们输入调的Do到目标调上。</p>
+<h2 id="换一个角度看问题"><a class="markdownIt-Anchor" href="#换一个角度看问题"></a> 换一个角度看问题</h2>
+<p><img data-src="/image/tuneChange/jp2.webp" alt="jp2" /></p>
+<p>怎么样？有答案了吗？这样建立坐标后，就不用管什么音调，音名了，要做的只有坐标之间的转换。</p>
+<p><img data-src="/image/tuneChange/jp3.webp" alt="jp3" /></p>
+<p>是不是一下觉得很简单了？</p>
+<p>要做的就是把输入转换成一个坐标，然后再转到目标调所在的坐标就行了。这样就能实现“<strong>移动D的位置</strong>”</p>
+<p>根本不用考虑如何把1,2,3与C D E 对上，我们要考虑的问题又从“<strong>移动D的位置</strong>”变成了如何获取输入的“<strong>坐标</strong>”位置。</p>
+<p>再仔细看这个2位<strong>坐标</strong>的转换问题；我原先旧的程序就是已知一个调转换到另一个调，也就是在上图的两行之间转换，</p>
+<p>提前选择的要转换的调就是告诉我们初始<strong>X坐标</strong>了，要转换的目标调也就是告诉我们另一个点的<strong>X</strong>值了</p>
+<p>也就是程序提前就能知道两个<strong>坐标（X,Y）<strong>中的</strong>X</strong>值，实际上的计算只要在<strong>Y</strong>上计算不同行之间的差了。也就是说这样就实现了“<strong>移动Do的位置</strong>”</p>
+<h2 id="怎么样思路有了剩下就是实现了吧"><a class="markdownIt-Anchor" href="#怎么样思路有了剩下就是实现了吧"></a> 怎么样，思路有了，剩下就是实现了吧！</h2>
+<p>既然我已经写了这篇文章</p>
+<p>就是我个人已经实现了😀</p>
+<p>上次我的做的是（没人会再用的）命令行程序</p>
+<p>这次我打包成exe文件了，顺带还做了图形界面，毕竟隔了那么久了（这602天不能白过啊）</p>
+<p>如果还是做是命令行，再做一次就没什么意思了</p>
+<p><a href="https://github.com/dccif-zz/TuneChange/releases">程序地址</a></p>
+<p>Version 0.1</p>
+<p>个人画的GUI，有点丑，这就不要在意了</p>
+<p><img data-src="/image/tuneChange/jp4.webp" alt="jp4" /></p>
+<p>简单明了(一堆Bug)</p>
+<p><img data-src="/image/tuneChange/jp5.webp" alt="jp5" /></p>
+<p>现在的版本也就是简单的“<strong>坐标转换</strong>”，输入格式不对的话就不能转换了</p>
+<p>这次的版本使用因为使用了上面说的方法，核心的“<strong>坐标转换</strong>”就用了一个<strong>键值对</strong>表和4行代码就实现了，当然这是Python的版本。。。。用其他麻烦一点的语言可能就不止了。</p>
+<p>后续会不会再升级或者修Bug什么的（多半是不可能了，看看和上次隔了多久），倒是我可能会顺带尝试一下Android端，因为做以上这个程序只是顺带的</p>
+<p>实际是练习前面文章第二行说的新方法：一种和<strong>面向对象编程</strong>（OOP）不同但是又同样强大的方法——<strong>函数式编程</strong></p>
+<p><a href="https://github.com/dccif-zz/TuneChange">项目地址</a></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于《疯狂系列》</title>
+    <url>/2018/02/24/%E5%85%B3%E4%BA%8E%E3%80%8A%E7%96%AF%E7%8B%82%E7%B3%BB%E5%88%97%E3%80%8B/</url>
+    <content><![CDATA[<h1 id="关于疯狂系列"><a class="markdownIt-Anchor" href="#关于疯狂系列"></a> 关于《疯狂系列》</h1>
+<p>首先感谢李刚老师的《疯狂HTML5》的一书，本文以下的内容也是基于这本目前我看完的书得出的，作为对比的是《Head First HTML5》。</p>
+<p>下面我就从我暂时能想到的几个方面来谈谈这本《疯狂HTML5》或者同样的《疯狂系列》和《Head Fist》系列的对比吧。</p>
+<span id="more"></span>
+<h2 id="目标受众"><a class="markdownIt-Anchor" href="#目标受众"></a> 目标受众</h2>
+<p>很多人评价书时没有注意到这本书是写个谁的，举个不恰当的例子，就像小学生买了高数书，然后说这本书不好，这样对书的评价我觉得是不客观的，也是不公平的，我竟然从这两个系列面向的不同的受众说说吧，当然本来我的水平也不高😅</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">《疯狂系列》</th>
+<th style="text-align:center">《Head First》</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">已经从事软件开发的人员</td>
+<td style="text-align:center">还未入门的人士</td>
+</tr>
+</tbody>
+</table>
+<p>这不是我说的，是这两本书前言自己写的。</p>
+<p>所以有人拿着一本《疯狂系列》然后说没法入门，是本<s>垃圾</s>书我个人觉得是有失客观的。</p>
+<h2 id="内容深度和广度"><a class="markdownIt-Anchor" href="#内容深度和广度"></a> 内容深度和广度</h2>
+<p>说到一本入门级的书，到底要到什么程度？每个人有自己的看法，但是就书的广度来说，《疯狂系列》不愧是看完之后还能作作参考书的“入门书”，而《Head First》更像一个领路人，告诉读者这里可以这样，原理是什么。</p>
+<p>所以就我看的这一本来说</p>
+<p>深度：《疯狂》部分 &lt;≈，其余 &gt;《Head First》</p>
+<p>广度：《疯狂》&gt;《Head First》</p>
+<h3 id="暂时的结语"><a class="markdownIt-Anchor" href="#暂时的结语"></a> 暂时的结语</h3>
+<p>所以如果我推荐，还是两本都看看，不重要的可以先跳过，但是《Head First》要先看，之后再看《疯狂系统》</p>
+<p>当然最好的入门还是best practices，在做的过程中学得最快。</p>
+]]></content>
+      <categories>
+        <category>随想</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客备份-Git小技巧</title>
+    <url>/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h1 id="hexo博客的备份"><a class="markdownIt-Anchor" href="#hexo博客的备份"></a> Hexo博客的备份</h1>
+<p>可能是因为被害妄想症的原因吧，我怕博客的丢失，在我的硬盘，电脑和GitHub和私有服务器上备份了四份，在本博客的仓库的Public分支上就是我的博客文章的备份</p>
+<span id="more"></span>
+<h2 id="为什么要备份"><a class="markdownIt-Anchor" href="#为什么要备份"></a> 为什么要备份</h2>
+<p>备份的重要性我觉的不用我说了吧，为了防止数据的丢失 <s>虽然好像没什么宝贵的数据</s></p>
+<p>其实是突然发奇想想利用Git的分支来在一个仓库管理我的博客</p>
+<h2 id="为什么只备份文章"><a class="markdownIt-Anchor" href="#为什么只备份文章"></a> 为什么只备份文章</h2>
+<p>毕竟文章本来就是给各位看的，但是私人的配置文件中有个人APIKey和一些个性化设定，这些可不好Public了😃</p>
+<h2 id="git小技巧"><a class="markdownIt-Anchor" href="#git小技巧"></a> Git小技巧</h2>
+<p>因为这次忽略文件是我临时添加的，再修改了**.gitignore**文件后在次上传并没有生效</p>
+<p>感谢pfeng的作者，本文参考 <a href="http://www.pfeng.org/archives/840">http://www.pfeng.org/archives/840</a></p>
+<p>在<strong>git</strong>中如果想忽略掉某个文件，不让这个文件提交到版本库中，可以使用修改根目录中 <strong>.gitignore</strong> 文件的方法（如无，则需自己手工建立此文件）。这个文件每一行保存了一个匹配的规则例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此为注释 – 将被 Git 忽略</span></span><br><span class="line">*.a         # 忽略所有 .a 结尾的文件</span><br><span class="line">!lib.a      # 但 lib.a 除外</span><br><span class="line">/TODO`      # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO</span><br><span class="line">build/      # 忽略 build/ 目录下的所有文件</span><br><span class="line">doc/*.txt   # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt</span><br></pre></td></tr></table></figure>
+<p>规则很简单，不做过多解释，但是有时候在项目开发过程中，突然心血来潮想把某些目录或文件加入忽略规则，按照上述方法定义后发现并未生效，原因是**.gitignore<strong>只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理中，则修改</strong>.gitignore**是无效的。那么解决方法就是先把本地缓存删除（改变成未track状态），然后再提交：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rm -r --cached .</span><br><span class="line">git add .</span><br><span class="line">git commit -m &#x27;update .gitignore&#x27;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>细节</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客的一键部署</title>
+    <url>/2017/11/27/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h1 id="博客的一键部署"><a class="markdownIt-Anchor" href="#博客的一键部署"></a> 博客的一键部署</h1>
+<p>终于在一番折腾和学习下，我用“三脚猫”的水平写了一个能一键写博客的脚本😂，这样以后写博客我只需要想写什么东西了，不用再在部署上折腾了。。。</p>
+<h2 id="为什么要折腾"><a class="markdownIt-Anchor" href="#为什么要折腾"></a> 为什么要折腾</h2>
+<p>说来这么折腾的写博客，也是我自找没趣。。。承接<a href="https://blog.dccif.top/2017/10/23/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD-Git%E5%B0%8F%E6%8A%80%E5%B7%A7/">《博客的备份》</a>，我这的写作环境我备份了好多份，每次要在这么多环境之间选择那些可见，那些不可见太麻烦了。。。写脚本的目的也是为了这个，当然脚本我是存在私有仓库的😋~~(写得太烂不好意放出来丢人现眼)~~</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客的一键部署2</title>
+    <url>/2021/11/06/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B22/</url>
+    <content><![CDATA[<h1 id="博客的一键部署2"><a class="markdownIt-Anchor" href="#博客的一键部署2"></a> 博客的一键部署2</h1>
+<p>承接以前的 <a href="https://blog.dccif.top/2017/11/27/%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/"><strong>博客的一键部署</strong></a></p>
+<p>时隔几年，我又开始写博客了，这次一开始还是纠结了是选用传统的动态博客还是静态博客，考虑的价钱和安全性的问题，可能还是静态博客更适合我目前的阶段</p>
+<h2 id="曾经的一键部署不好用了吗"><a class="markdownIt-Anchor" href="#曾经的一键部署不好用了吗"></a> 曾经的一键部署不好用了吗？</h2>
+<p>的确曾经我的一键部署把简单的问题复杂了，想着利用一个仓库的两个分支保存原始文件和生成文件。的确这没有问题，目前我的博客也是这个方式，但是有问题的是我过去的整个工作流程。曾经我的流程完全和现在相反，难怪当初的用法那么难受😂</p>
+<h2 id="现在的方法"><a class="markdownIt-Anchor" href="#现在的方法"></a> 现在的方法</h2>
+<p>用现在Modern一点的词来说，就是现在使用了<strong>持续集成 ( Continuous integration )</strong>, 毕竟博客这种<em>项目</em>也算一种<strong>持续交付（Continuous delivery）</strong>，<strong>持续部署（continuous deployment）</strong>，只不过现在我只需写文章，然后推送，现代的在线工具就可以完成部署任务了，可以说能让我更专注于写作了。不过如果要长时间保持产出干货文章还是有点难度的啊，还是评说评说游戏什么的好了🤣</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小谈绘画中的RGB与HSB(V)</title>
+    <url>/2020/07/27/%E5%B0%8F%E8%B0%88%E7%BB%98%E7%94%BB%E4%B8%AD%E7%9A%84RGB%E4%B8%8EHSB(V)%20/</url>
+    <content><![CDATA[<h1 id="开篇一段废话"><a class="markdownIt-Anchor" href="#开篇一段废话"></a> 开篇一段废话：</h1>
+<p>看了网络上的关于数字绘画，图层混合模式还有所谓的不同色彩空间的描述，感觉还是不够满意，便有了这篇文章，本人才疏学浅，试图从原理上说明一下，如有疏漏和错误，还是请真大佬来指出了吧。以下都是本人个人闭门造车的一些经验。</p>
+<h1 id="首先什么是rgbhsbv"><a class="markdownIt-Anchor" href="#首先什么是rgbhsbv"></a> 首先什么是RGB,HSB(V)：</h1>
+<p>能点进来看的人，多半这两个都是知道的吧。但是这两本质是一个“<strong>色彩空间</strong>”，只不过HSB(V)是RGB的另一种坐标表达方式。但是绘画中还是HSB(V)好用，但是图层混合模式中使用的又是RGB，这反正就使得我个人对使用HSB(V)颜色时对图层混合的不断“试错”。</p>
+<p>归根到底还是要知道RGB&lt;-&gt;HSB(V) 到底发生了什么</p>
+<span id="more"></span>
+<p><img data-src="/image/draw/rgbtohsv.webp" alt="RGB to HSV" /></p>
+<p>最快方式就是看公式。</p>
+<p>看<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>G</mi><mi>B</mi><mo>→</mo><mi>H</mi><mi>S</mi><mi>B</mi><mo stretchy="false">(</mo><mi>V</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">RGB \to HSB(V)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">G</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mclose">)</span></span></span></span>的公式，很快我们能发现S和V的值的定义。</p>
+<p><strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mfrac><mrow><mtext>（最亮光</mtext><mo>−</mo><mtext>最暗光）</mtext></mrow><mtext>最亮光</mtext></mfrac></mrow><annotation encoding="application/x-tex">S=\frac{（最亮光-最暗光）} {最亮光}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">最</span><span class="mord cjk_fallback mtight">亮</span><span class="mord cjk_fallback mtight">光</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord cjk_fallback mtight">（</span><span class="mord cjk_fallback mtight">最</span><span class="mord cjk_fallback mtight">亮</span><span class="mord cjk_fallback mtight">光</span><span class="mbin mtight">−</span><span class="mord cjk_fallback mtight">最</span><span class="mord cjk_fallback mtight">暗</span><span class="mord cjk_fallback mtight">光</span><span class="mord cjk_fallback mtight">）</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></strong></p>
+<p><strong>V简单明了，就是当前最亮光的值。</strong></p>
+<p>我个人感觉知道这两就够了，特别是B(V)值得由来，毕竟绘画时也是这个最重要。</p>
+<p>这样随便一个RGB的颜色的明度都能“脑内”换算了。整一个图的明度也知道依照的是什么了。</p>
+<p>HSB(V)-&gt;RGB公式的实用意义不大，我也就不列了</p>
+<p>所以最重要的结论便是 <strong>RGB中最亮的光就是当前颜色的明度。饱和度是最亮光与最暗光的差值与最亮光的比值</strong></p>
+<h1 id="色彩与明度的关系"><a class="markdownIt-Anchor" href="#色彩与明度的关系"></a> 色彩与明度的关系：</h1>
+<p>不同的颜色会给人产生不同的明度感。比如下图</p>
+<p><img data-src="/image/draw/hueandvalue.webp" alt="hue and value" /></p>
+<p>这种明度感，我们可以通过转换成灰度，一下就能看出</p>
+<p><img data-src="/image/draw/grayandvalue.webp" alt="gray and value" /></p>
+<p>明明RGB上一样光数值的颜色，为什么给人的“明度”感不一样呢？</p>
+<p>说到底颜色就是一种幻觉，一切颜色不过是电磁波打在了视锥，视杆细胞上产生了电信号后经大脑处理后产生的罢了。</p>
+<p><img data-src="/image/draw/eyeballandcolor.webp" alt="eyeball and color" /></p>
+<p>一张图就能说明一切，因为人眼对不同光线的“灵敏度”不同。</p>
+<p>举上面的黄光为例，人之所为看到黄光，本质是绿色视锥细胞和红色视锥细胞被激活了，这两细胞被激活的同时，感受“明度”的视杆细胞同时被两种“光线”刺激，很显然就会觉得“明度”高了。</p>
+<p>这就可以得出结论<strong>哪怕RGB上同明度的混合色，人眼感知明度也比同明度的原色高。</strong></p>
+<h1 id="图层混合模式"><a class="markdownIt-Anchor" href="#图层混合模式"></a> 图层混合模式：</h1>
+<p>说到绘画中最常用的模式，多半还是Multiply/正片叠底/色彩增值 和 Screen/滤色了。一个是变暗，一个是加亮</p>
+<p>Multiply/正片叠底/色彩增值：直接2种颜色相乘，公式网上都是。因为最亮的白色是1，所以1*任何颜色 = 任何颜色，这样就能去白留黑。</p>
+<p>然而在绘画中，多半是用来绘制阴影。与其用中性灰来压暗，绘画中可能更多的是<strong>使用光线的颜色来直接绘制“带颜色”的阴影</strong>。直接使用光线的颜色，这样的阴影还会有光源的颜色信息，因为都是比例，两个小数会越乘越小。</p>
+<p>Screen/滤色：其实同理，只不过是两个颜色的“负片”正片叠底后再负片。负片越暗再负片就越亮，同理<strong>直接使用光源的颜色，能反映出光源信息。</strong></p>
+<h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h1>
+<p>写这种多本质还是想说绘画时其实也可以通过RGB思考颜色，并不一定总是HSB(V)，通过RGB思考颜色，还能比较方便的转换到CMYK的手绘上，毕竟颜色的本质都是反射多少光线。</p>
+<h1 id="附rgb-hsv的3维过程"><a class="markdownIt-Anchor" href="#附rgb-hsv的3维过程"></a> 附：RGB-&gt;HSV的3维过程</h1>
+<p><img data-src="/image/draw/rgbtohsv3d.webp" alt="RGB to HSV in 3D" /></p>
+]]></content>
+      <categories>
+        <category>随想</category>
+      </categories>
+      <tags>
+        <tag>绘画</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组扩展的效率</title>
+    <url>/2017/11/04/%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E7%9A%84%E6%95%88%E7%8E%87/</url>
+    <content><![CDATA[<h1 id="数组扩展的效率差异"><a class="markdownIt-Anchor" href="#数组扩展的效率差异"></a> 数组扩展的效率差异</h1>
+<p>说来惭愧，我现在才开始认真的学习算法和程序的效率 😓。</p>
+<p>本文是我在阅读</p>
+<blockquote>
+<p><strong>Data Structures,Algorithms,and Applications in C++</strong> Second Edition<br />
+<em>Sartaj Sahni</em></p>
+</blockquote>
+<p>遇到的一个小细节，与数组扩展的效率差异的原理。</p>
+<span id="more"></span>
+<h1 id="原始代码"><a class="markdownIt-Anchor" href="#原始代码"></a> 原始代码</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="type">void</span> arrayList&lt;T&gt;::<span class="built_in">insert</span>(<span class="type">int</span> theIndex, <span class="type">const</span> T&amp; theElement)</span><br><span class="line">&#123;<span class="comment">// Insert theElement so that its index is theIndex.</span></span><br><span class="line">   <span class="keyword">if</span> (theIndex &lt; <span class="number">0</span> || theIndex &gt; listSize)</span><br><span class="line">   &#123;<span class="comment">// invalid index</span></span><br><span class="line">      ostringstream s;</span><br><span class="line">      s &lt;&lt; <span class="string">&quot;index = &quot;</span> &lt;&lt; theIndex &lt;&lt; <span class="string">&quot; size = &quot;</span> &lt;&lt; listSize;</span><br><span class="line">      <span class="keyword">throw</span> <span class="built_in">illegalIndex</span>(s.<span class="built_in">str</span>());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// valid index, make sure we have space</span></span><br><span class="line">   <span class="keyword">if</span> (listSize == arrayLength)</span><br><span class="line">      &#123;<span class="comment">// no space, double capacity</span></span><br><span class="line">         <span class="built_in">changeLength1D</span>(element, arrayLength, <span class="number">2</span> * arrayLength);</span><br><span class="line">         arrayLength *= <span class="number">2</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// shift elements right one position</span></span><br><span class="line">   <span class="built_in">copy_backward</span>(element + theIndex, element + listSize,</span><br><span class="line">                 element + listSize + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">   element[theIndex] = theElement;</span><br><span class="line"></span><br><span class="line">   listSize++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不知道各位有没有觉得奇怪，为什么<strong>12-16</strong>行是当空间不足的时候，数组空间翻倍呢？</p>
+<p>同样的问题书上也提供了解答。。。。不过也许是我数学基础太差了，一时半会没理解 😥</p>
+<p>本文也参考了<em>Stack Overflow</em>上的<a href="https://stackoverflow.com/questions/19146037/efficiency-of-growing-a-dynamic-array-by-a-fixed-constant-each-time">Efficiency of growing a dynamic array by a fixed constant each time?</a></p>
+<h2 id="背后原理"><a class="markdownIt-Anchor" href="#背后原理"></a> 背后原理</h2>
+<p>这就要用的数学知识了</p>
+<p>让我们假设现在有一个初始长度为 1 的空数组，需要执行 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n=2^k+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p>n 次的插入操作，每次都在尾部插入。</p>
+<p>于是，每次插入我们都不需要移动已经存在的元素，n 次插入的时间是 Θ(n)加上数组扩展长度的时间。</p>
+<h3 id="数组每次增加-1-的情况"><a class="markdownIt-Anchor" href="#数组每次增加-1-的情况"></a> 数组每次增加 1 的情况</h3>
+<p>如果数组每次增加 1，那么增加数组长度的时间为</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></munderover><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>4</mn><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mfrac><mrow><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta (\sum _{i=1}^{n-1} i)=\Theta(1+2+3+4+...+(n-1))=\Theta(\frac{n(n-1)}{2} )=\Theta(n^2)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0787820000000004em;vertical-align:-1.277669em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011130000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
+<p>利用等差数列的公式，得到，如果数组每次长度增加 1，n 次插入的总时间是 Θ(n^2)。</p>
+<h3 id="数组每次翻倍的情况"><a class="markdownIt-Anchor" href="#数组每次翻倍的情况"></a> 数组每次翻倍的情况</h3>
+<p>下面来解释为什么原始代码中的数组扩展使用的翻倍</p>
+<p>如果数组长度每次增倍，那么改变数组长度的时间是</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mi>k</mi></munderover><msup><mn>2</mn><mi>i</mi></msup><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mn>0</mn></msup><mo>+</mo><msup><mn>2</mn><mn>1</mn></msup><mo>+</mo><msup><mn>2</mn><mn>2</mn></msup><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><msup><mn>2</mn><mi>k</mi></msup><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta(\sum _{i=0}^k 2^i)=\Theta(2^0+2^1+2^2+...+2^k)=\Theta(2^{k+1}-1)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.1137820000000005em;vertical-align:-1.277669em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8361130000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9474379999999999em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.149108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.149108em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>k</mi><mo>=</mo><mrow><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">k={\log _2(n-1)}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mrow><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>3</mn><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta(2^{k+1}-1)=\Theta(2^{\log _2(n-1)+1}-1)=\Theta(2n-3)=\Theta(n)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.149108em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1879999999999997em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9379999999999998em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop mtight"><span class="mtight">l</span><span class="mtight">o</span><span class="mtight" style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.19444571428571428em;"><span style="top:-2.2341314285714287em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26586857142857145em;"><span></span></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></span></p>
+<p>利用等比数列公式，得到，如果每次数组长度翻倍，n 次插入的总时间是 Θ(n)。</p>
+<h3 id="推论"><a class="markdownIt-Anchor" href="#推论"></a> 推论</h3>
+<p>从数组每次翻倍的情况的公式，我们可以看出如果我们总是在原数组上按一个乘法因子来倍增，得到的总时间都是是 Θ(n)</p>
+<p>这也是为什么<a href="#%E5%8E%9F%E5%A7%8B%E4%BB%A3%E7%A0%81">原始代码</a>中使用的是把长度翻倍的原因。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>细节</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>甘雨骗局</title>
+    <url>/2021/05/09/%E7%94%98%E9%9B%A8%E9%AA%97%E5%B1%80/</url>
+    <content><![CDATA[<h1 id="随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"><a class="markdownIt-Anchor" href="#随着难度的提高其实月卡平民不该硬练投入过量资源甘雨"></a> <strong>随着难度的提高，其实月卡平民不该硬练(投入过量资源)甘雨</strong></h1>
+<p>随着活动的结束，和深渊“开荒”的结束，很多玩家无脑吹上了甘雨，但是我认为甘雨其实是最不平民的角色，她是给平民保下限的角色。<br />
+如果难度进一步增大，可能一些0命上限高的角色才是最适合月卡平民的。现在新出的优菈，胡桃，公子论dps是平民手上最强的</p>
+<p>首先我给出平民的定义: 满精4星武器0命5星角色，拿着5星武器甚至专属武器的就不要来“代入”了</p>
+<h2 id="甘雨不适合平民的理由"><a class="markdownIt-Anchor" href="#甘雨不适合平民的理由"></a> 甘雨不适合平民的理由：</h2>
+<span id="more"></span>
+<h3 id="1-甘雨的提升难"><a class="markdownIt-Anchor" href="#1-甘雨的提升难"></a> 1. 甘雨的提升难</h3>
+<p>练过的玩家肯定知道所谓的“一箭”多少w的提升有多难，冰套的“垃圾”词条有多少，乐团还没有稳定的获取途径。而且就算你阳寿，我们看武器都能看出，阿莫斯的精炼提升有多高，高精阿莫斯一箭大约能8w，而平民4w可能都难，逼真大佬的输出是平民的2倍。</p>
+<p>有人就说了，其他角色也这样啊？可是问题就是其他反应角色可以依靠反应“拉近”和氪佬的距离，而甘雨单射的时候就和氪金多少有关系。<br />
+举一下那些核弹角色的例子，莫娜，公子，胡桃这几位，因为现在就能轻松打反应，所以哪怕平民玩家也能打出“大数字”。<br />
+大数字是有一定意义的，因为一般深渊难的怪就1，2只，靠大数字秒了，就是能不能过，和超不超时的区别。<br />
+现版本因为配套设施的问题，甘雨打融化并不容易，或者说比较别扭，既没全火力(吃满阿莫斯)的队友，也没融化冰套，只能捡“阳寿”圣遗物。</p>
+<h3 id="2-甘雨的队友难"><a class="markdownIt-Anchor" href="#2-甘雨的队友难"></a> 2. 甘雨的队友难</h3>
+<p>大家都知道莫甘温娜的阵容，可是同样的主c阵容里，甘雨需要的队友是5星最多的，她需要的那位四星还是可有可无的。其他的主c都没她这么高的队友要求。</p>
+<p>而另一种双火融化流，可能也需要钟离或者盾角色。比起其他主c全靠完善的4星就能配，她其实是最吃队友的。</p>
+<h3 id="3-甘雨的操作难"><a class="markdownIt-Anchor" href="#3-甘雨的操作难"></a> 3. 甘雨的操作难</h3>
+<p>手机上蓄力射击有多难，不用多说了吧。可是同样别的主c手机上也能方便玩，pc上也方便。你说玩大招流，可是莫甘温娜终究是看ch愿不愿意抬和限制的问题，这阵容对单，比如1.6的古岩龙蜥就等于没有。</p>
+<h3 id="4-平民甘雨站场射击dps并不高"><a class="markdownIt-Anchor" href="#4-平民甘雨站场射击dps并不高"></a> 4. 平民甘雨站场射击dps并不高</h3>
+<p>如果全程只靠平民甘雨战场射击，就算你弹无虚发，算下来的dps可能就2w射击+ 冰锥的1w，总计3w左右。<br />
+这里说的是dps：射击4w，需要1.8s，实战一般要2s，冰锥一般6000，实战1s3下左右，dps相加3w8<br />
+这是在一个4人游戏，可能还需要一个套盾人。意味着平民玩家让甘雨单战场需要吃2个队伍的位置，换来的dps就3w，而这个dps是很多2人角色都可以轻松超过的。<br />
+不和dps天花板胡桃比，就和迪卢克或者可莉比，其实都没优势。比如迪卢克，因为依靠平a可以触发后台副c，最典型的就是行秋。可莉走a重也能接近。<br />
+甘雨蓄力重击在平民玩家手上是不如高练后台2人的，最关键的上面的1点，平民甘雨提升难，其他能搭配副c的角色，提升输出难度就比甘雨容易。</p>
+<h3 id="5-平民甘雨不主c当后台冰工具人还不行了"><a class="markdownIt-Anchor" href="#5-平民甘雨不主c当后台冰工具人还不行了"></a> 5. 平民甘雨不主c当后台冰工具人还不行了？</h3>
+<p>首先现在后台冰工具人的用途不算大，也不算抢手，不然早在开服时候为什么大家不练起来凯亚呢？而且平民甘雨要“无缝”大是需要堆充能的，势必会让dps更低。在不聚怪的情况下，平民甘雨可能q对单的总伤有10w左右，这输出分配到15s里，dps就7000左右，这个dps其实高练度的脱手，比如大家总“看不上”的阿贝多，都能做到。</p>
+<h3 id="6-甘雨可能是命座拆分最大的角色之一"><a class="markdownIt-Anchor" href="#6-甘雨可能是命座拆分最大的角色之一"></a> 6. 甘雨可能是命座拆分最大的角色之一</h3>
+<p>不知道为什么甘雨命座竟然没“节奏”，也许只是大家看0命“大数字”就觉得强了吧。<br />
+甘雨命座藏了充能，生存，辅助，爆发。最关键的是爆发，当初迪卢克为什么被大家说呢？不就是爆发低了吗，甘雨把“爆发”机制藏进了命座。而其他的限定五星C 0命基本上都是又能爆发又能站场的。</p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>综上，甘雨吹们和平民玩家都冷静一点，平民配置下的她强度可能是跟不上“璃月3C”的名号的，也不是所谓的有了能解决一切烦恼的角色。</p>
+<p>那些还没甘雨的玩家也别因为“复刻”时真有了，感觉和“想象”中有差距就好了。</p>
+<p>真正适合平民的队伍可能还是高命的4星队伍，因为高命4星命座有伤害也有机制和配合，打过一个0命5星的队伍现在也不是什么稀奇的事吧。</p>
+]]></content>
+      <categories>
+        <category>原神</category>
+      </categories>
+      <tags>
+        <tag>角色评价</tag>
+        <tag>理解交流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>短路求值(Short-circuit evaluation)</title>
+    <url>/2017/10/10/%E7%9F%AD%E8%B7%AF%E6%B1%82%E5%80%BC-Short-circuit-evaluation/</url>
+    <content><![CDATA[<h1 id="短路求值"><a class="markdownIt-Anchor" href="#短路求值"></a> 短路求值</h1>
+<blockquote>
+<p>Short-circuit evaluation</p>
+</blockquote>
+<p>最早是在<strong>php</strong>中接触到的这种求值，后来在学习<strong>Lisp</strong>中又一次接触到了，于是想写一篇文章记录一下，并分享一下，这个被我忽略的可能可以说是细节的点吧</p>
+<span id="more"></span>
+<h2 id="什么是短路求值short-circuit-evaluation"><a class="markdownIt-Anchor" href="#什么是短路求值short-circuit-evaluation"></a> 什么是<strong>短路求值（Short-circuit evaluation）</strong></h2>
+<p>以下摘自<a href="https://www.wikiwand.com/en/Short-circuit_evaluation">Short-circuit evaluation</a></p>
+<blockquote>
+<p><strong>Short-circuit evaluation</strong>, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function<br />
+evaluates to true, the overall value must be true.</p>
+</blockquote>
+<p>概况来说就是在求<strong>布尔表达式</strong>的时候程序并不会执行全部的<strong>Expression</strong></p>
+<p>比如<strong>AND</strong>或者<strong>OR</strong>操作时如果后面第一个Expression为True，那么之后的Expression就不会再求值了。</p>
+<h2 id="一些例子"><a class="markdownIt-Anchor" href="#一些例子"></a> 一些例子</h2>
+<h3 id="普通的c程序"><a class="markdownIt-Anchor" href="#普通的c程序"></a> 普通的<strong>C</strong>程序</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> denom = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (denom != <span class="number">0</span> &amp;&amp; num / denom)</span><br><span class="line">&#123;</span><br><span class="line">    ... <span class="comment">// ensures that calculating num/denom never results in divide-by-zero error   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用了短路求值的c程序"><a class="markdownIt-Anchor" href="#使用了短路求值的c程序"></a> 使用了短路求值的<strong>C</strong>程序</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (a != <span class="number">0</span> &amp;&amp; myfunc(b))</span><br><span class="line">&#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个例子中**&amp;&amp;<strong>后的</strong>myfunc(b)<strong>将永远不会执行，因为</strong>a!=0<strong>永远是</strong>FALSE**。<br />
+利用短路求值有2个有用的技巧</p>
+<ol>
+<li>如果条件判断的expression需要复杂的计算，并且第一个结果为<strong>False</strong>，则可以不计算之后的表达式</li>
+<li>可以构造一个expression来使第二个可能会发生运行时错误的expression成功运行</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">is_first_char_valid_alpha_unsafe</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// SEGFAULT highly possible with p == NULL</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="title function_">is_first_char_valid_alpha</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> p != <span class="literal">NULL</span> &amp;&amp; <span class="built_in">isalpha</span>(p[<span class="number">0</span>]); <span class="comment">// 1) no unneeded isalpha() execution with p == NULL, 2) no SEGFAULT risk</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子避免了空指针</p>
+<h3 id="最近学习的lisp中的例子"><a class="markdownIt-Anchor" href="#最近学习的lisp中的例子"></a> 最近学习的Lisp中的例子：</h3>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">(<span class="name">defparameter</span> *is-it-even* <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">or</span> (<span class="name">oddp</span> <span class="number">5</span>) </span><br><span class="line">(<span class="name">setf</span> *is-it-even* <span class="literal">t</span>))</span><br></pre></td></tr></table></figure>
+<p>利用短路求值，用<strong>OR</strong>实现了条件判断</p>
+<h2 id="可能的问题"><a class="markdownIt-Anchor" href="#可能的问题"></a> 可能的问题：</h2>
+<p>尽管有上面说的优点，但是可能会带来没有意识到的问题，比如：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (expressionA &amp;&amp; myfunc(b)) &#123;</span><br><span class="line">    do_something();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<strong>expressionA</strong>为<strong>True</strong>时无论**do_something()**是否执行，**myfunc(b)**都会执行，例如分配系统资源的操作。</p>
+<p>相反，<strong>expressionA</strong>为<strong>False</strong>时**myfunc(b)**永远不会执行</p>
+<h2 id="支持的语言"><a class="markdownIt-Anchor" href="#支持的语言"></a> 支持的语言</h2>
+<p><strong>并不是所有语言和所有操作符支持的</strong><br />
+Java支持<strong>非短路求值</strong>也支持<strong>短路求值</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">常见的语言</th>
+<th style="text-align:left">支持的操作符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">C, Obejective-C, C++, C#</td>
+<td style="text-align:left">&amp;&amp;, ∥, ?</td>
+</tr>
+<tr>
+<td style="text-align:left">Java, MATLAB, R, Swift</td>
+<td style="text-align:left">&amp;&amp;, ∥</td>
+</tr>
+<tr>
+<td style="text-align:left">JavaScript, GO, Haskel</td>
+<td style="text-align:left">&amp;&amp;, ∥</td>
+</tr>
+<tr>
+<td style="text-align:left">Lisp, Lua, Scheme</td>
+<td style="text-align:left">and, or</td>
+</tr>
+<tr>
+<td style="text-align:left">PHP</td>
+<td style="text-align:left">&amp;&amp;, and, ∥, or</td>
+</tr>
+<tr>
+<td style="text-align:left">Python</td>
+<td style="text-align:left">and, or</td>
+</tr>
+<tr>
+<td style="text-align:left">Visual Basic</td>
+<td style="text-align:left">不支持</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>细节</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>致过去的一年</title>
+    <url>/2018/01/02/%E8%87%B4%E8%BF%87%E5%8E%BB%E7%9A%84%E4%B8%80%E5%B9%B4/</url>
+    <content><![CDATA[<h1 id="致过去的一年"><a class="markdownIt-Anchor" href="#致过去的一年"></a> 致过去的一年</h1>
+<p>眨眼间，2017就过去了，回首这一年，也许我最大的收获就是发现了自己有多弱了吧。从编译到算法，从语言到实现，我看上去每一门都知道那么一点，可是却又都不都不深入，也没自己实现过大一点的项目。</p>
+]]></content>
+      <categories>
+        <category>随想</category>
+      </categories>
+      <tags>
+        <tag>闲谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记第一个对我有实际作用的程序（逃）</title>
+    <url>/2015/12/13/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="问题的起因挖坑原因"><a class="markdownIt-Anchor" href="#问题的起因挖坑原因"></a> 问题的起因（挖坑原因）：</h1>
+<ol>
+<li>玩乐器的同学知道，简谱上的不同调之间的转换不如五线谱上方便，我原来最先是参照转调表一个一个人工查找😥太累，后来就想写个程序完成了。</li>
+<li>———关于调，不懂的可以百毒一下。。。就是与起始音do的位置，或者末音la的位置（这不是小调了吗，不管，乐理也不太精通，如有大神求指出）</li>
+</ol>
+<h1 id="问题的实现"><a class="markdownIt-Anchor" href="#问题的实现"></a> 问题的实现：</h1>
+<ol>
+<li>
+<p>脑洞昨天太大😓，明明只是一个会C调的，你干嘛要写个转换任意调的。。。。<br />
+原始目的只是想任意调转成C，后来写着写着觉得这样这程序太弱了（虽然本来就不强)，就临时想转成任意调了。。。。于是有琢磨了一会就有了实现。。。</p>
+</li>
+<li>
+<p>实现思路：当初第一目的——任意调到C，最初是想通过if一句一句判断进行实现。。。。后来想写任意调后发现不现实，因为会有C(6,2)，15种可能，每个if下还要再进行判断是否是1，2，3，4，这类的简谱名，这样会造成程序的冗长与无用。。。于是就放弃了</p>
+</li>
+<li>
+<p>于是想到了Python的dict数据结构，使用key-value对，便可以便捷的实现调之间转换，只需提前输入好dict</p>
+</li>
+</ol>
+<span id="more"></span>
+<h1 id="实现过程中的问题"><a class="markdownIt-Anchor" href="#实现过程中的问题"></a> 实现过程中的问题：</h1>
+<ol>
+<li>
+<p>我就不应该用command line（命令行）来获取输入数据🙈</p>
+</li>
+<li>
+<p>命令行输入的数据我要考虑各种间隔，因为input()函数获取的输入是“******“中的所有字符，其中考虑如何实现区分，b7,7 ，8这类输入都头疼了我好久。。</p>
+<p>b7在input()中会当成b和7两个单独的字符，而我想表示的是低音7，</p>
+<p><img data-src="/image/tuneChange/cmd.webp" alt="cmd" /></p>
+<p>7，8在input()中也会傻不拉唧的把逗号（，）也识别进入，我要想办法去除符号后才能进行数据操作</p>
+</li>
+</ol>
+<h1 id="问题的解决"><a class="markdownIt-Anchor" href="#问题的解决"></a> 问题的解决</h1>
+<ol>
+<li>input()的问题，假设用户配合，全用空格分开，便可利用.split(&quot; &quot;)方法进行去除，之后便可传入列表就行操作</li>
+<li>函数中局部变量和函数定义好后，不会自行调用真是够了</li>
+</ol>
+<h1 id="一些感想"><a class="markdownIt-Anchor" href="#一些感想"></a> 一些感想</h1>
+<ol>
+<li>
+<p>变量名要取好，我这么一点我都有时忘记了这个变量是干嘛（水平太差）</p>
+</li>
+<li>
+<p>函数中的变量尽量与函数外的变量不要重名，我这个就是重名的，有时搞不懂为何会没有输出，就是因为函数中变量是局部的</p>
+</li>
+<li>
+<p>写什么要先写好第一目的，不要想我这样，写着写着又想写其他目的了，也不要想我一样边写边调试，大部分时间都废在找bug和纠错上了。。。。当然因为我是写着写着就想别的目的了，所以边写边调试还是没什么问题的。。。（我觉得）</p>
+</li>
+</ol>
+<h1 id="垃圾代码"><a class="markdownIt-Anchor" href="#垃圾代码"></a> 垃圾代码</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#一时兴起想写的转换简谱调的代码，可以实现任意调之间的转换，啪啪啪，如果在字典中</span></span><br><span class="line"><span class="comment">#有的话。。。字典还没填完备，暂时只有其他调的全音，还无半音</span></span><br><span class="line"><span class="comment">#因为字典还不完备，任意调之间的转换可能会出问题，转c调是没问题的</span></span><br><span class="line"><span class="comment">#（啪啪，打脸，@_@，原本只是想任意调转c，后来脑洞又开，写任意调了）</span></span><br><span class="line"><span class="comment">#命令行版本。。command line version。我觉得还是函数版本好写，不管了以后有空再补</span></span><br><span class="line"><span class="comment">#输入</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Please enter the original an&#x27;dand ambition tune(use space splite)&quot;</span>)</span><br><span class="line">tuneer = <span class="built_in">input</span>(<span class="string">&quot;The default is to C:&quot;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;#b表示低音，#表示升（半音阶），g表示高音，用b#表示低半音，用g#表示高半音&#x27;&#x27;&#x27;</span></span><br><span class="line">putin = <span class="built_in">input</span>(<span class="string">&quot;please enter number:&quot;</span>)</span><br><span class="line">first1 = <span class="string">&quot;&quot;</span></span><br><span class="line">listin1 = []</span><br><span class="line">listin2 = []</span><br><span class="line">listout1 = []</span><br><span class="line">listout2 = []</span><br><span class="line">listoutTemp = []</span><br><span class="line">listTemp = []</span><br><span class="line">changekey = &#123;&#125;</span><br><span class="line">changekey2 = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># #如有空格去除后再操作</span></span><br><span class="line"><span class="comment"># first1 =&quot;&quot;</span></span><br><span class="line"><span class="comment"># listin1 = []</span></span><br><span class="line"><span class="comment"># listin2 = []</span></span><br><span class="line"><span class="comment"># listout1 = []</span></span><br><span class="line"><span class="comment"># first1 = putin.strip()</span></span><br><span class="line"><span class="comment"># final1 = first1.split(&quot; &quot;)</span></span><br><span class="line"><span class="comment"># for i in final1:</span></span><br><span class="line">    <span class="comment"># listin1.append(i)</span></span><br><span class="line"><span class="comment"># print(listin1)</span></span><br><span class="line"><span class="comment"># #对tune去除</span></span><br><span class="line"><span class="comment"># first2 =&quot;&quot;</span></span><br><span class="line"><span class="comment"># first2 = tuneer.strip()</span></span><br><span class="line"><span class="comment"># final2 = first2.split(&quot; &quot;)</span></span><br><span class="line"><span class="comment"># for i in final2:</span></span><br><span class="line">    <span class="comment"># listin2.append(i)</span></span><br><span class="line"><span class="comment"># print(listin2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#清除空格和转换大小写，默认到c调</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">checkspace</span>(<span class="params">listin</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;#b表示低音，#表示升（半音阶），g表示高音，用b#表示低半音，用g#表示高半音&#x27;&#x27;&#x27;</span></span><br><span class="line">    listTemp = <span class="string">&quot;&quot;</span></span><br><span class="line">    listTemp = listin.strip()</span><br><span class="line">    listlow = listTemp.lower()</span><br><span class="line">    listOut = listlow.split(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(listOut) == <span class="number">1</span>:</span><br><span class="line">        listOut.append(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> listOut</span><br><span class="line">    </span><br><span class="line"><span class="comment">#获取原始输入</span></span><br><span class="line">listin1 = checkspace(putin)</span><br><span class="line">formtuneer = checkspace(tuneer)</span><br><span class="line">tuneerin = formtuneer[<span class="number">0</span>]</span><br><span class="line">tuneerout = formtuneer[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#b表示低音，#表示升（半音阶），g表示高音，用b#表示低升半音，用g#表示高半音</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#keys   </span></span><br><span class="line">GtoC = &#123;<span class="string">&quot;1&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;1&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;2&quot;</span>, <span class="string">&quot;6&quot;</span>: <span class="string">&quot;3&quot;</span>, </span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;g2&quot;</span>:<span class="string">&quot;6&quot;</span>,<span class="string">&quot;g3&quot;</span>:<span class="string">&quot;7&quot;</span>,<span class="string">&quot;g4&quot;</span>:<span class="string">&quot;g1&quot;</span>,<span class="string">&quot;g5&quot;</span>:<span class="string">&quot;g2&quot;</span>,<span class="string">&quot;g6&quot;</span>:<span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;g7&quot;</span>:<span class="string">&quot;g#4&quot;</span>,<span class="string">&quot;gg1&quot;</span>:<span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line">AtoC = &#123;<span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;2&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;6&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#1&quot;</span>, <span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g2&quot;</span>,</span><br><span class="line"><span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g6&quot;</span> : <span class="string">&quot;g#4&quot;</span> &#125;</span><br><span class="line">BtoC = &#123;<span class="string">&quot;b6&quot;</span> : <span class="string">&quot;b#5&quot;</span>, <span class="string">&quot;b7&quot;</span>:<span class="string">&quot;b#6&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#2&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;3&quot;</span>,</span><br><span class="line"><span class="string">&quot;5&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#6&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g#1&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#2&quot;</span>,</span><br><span class="line"><span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g#4&quot;</span>&#125;</span><br><span class="line">DtoC = &#123;<span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;2&quot;</span>,</span><br><span class="line"><span class="string">&quot;2&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g2&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#4&quot;</span>, <span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line">EtoC = &#123;<span class="string">&quot;b3&quot;</span> : <span class="string">&quot;b#5&quot;</span>, <span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;#1&quot;</span>, <span class="string">&quot;b7&quot;</span> : <span class="string">&quot;#2&quot;</span>,</span><br><span class="line"><span class="string">&quot;1&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;g#2&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g#4&quot;</span>&#125;</span><br><span class="line">FtoC = &#123;<span class="string">&quot;b2&quot;</span> : <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;b3&quot;</span> : <span class="string">&quot;b6&quot;</span>, <span class="string">&quot;b4&quot;</span> : <span class="string">&quot;b#6&quot;</span>, <span class="string">&quot;b5&quot;</span> : <span class="string">&quot;1&quot;</span>, <span class="string">&quot;b6&quot;</span> : <span class="string">&quot;2&quot;</span>,</span><br><span class="line"><span class="string">&quot;b7&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;1&quot;</span> : <span class="string">&quot;4&quot;</span>, <span class="string">&quot;2&quot;</span> : <span class="string">&quot;5&quot;</span>, <span class="string">&quot;3&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;4&quot;</span> : <span class="string">&quot;#6&quot;</span>, <span class="string">&quot;5&quot;</span> : <span class="string">&quot;g1&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;g2&quot;</span>,</span><br><span class="line"><span class="string">&quot;7&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;g4&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;g5&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">Fulltunekey = &#123;<span class="string">&quot;g&quot;</span>:GtoC, <span class="string">&quot;a&quot;</span> : AtoC, <span class="string">&quot;b&quot;</span> : BtoC, <span class="string">&quot;d&quot;</span> : DtoC, </span><br><span class="line"><span class="string">&quot;e&quot;</span> : EtoC, <span class="string">&quot;f&quot;</span> : FtoC&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#Anykeys，key转换</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">inverse</span>(<span class="params"><span class="built_in">dict</span></span>):</span><br><span class="line">    dictout = &#123;v : k <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">dict</span>.items()&#125;</span><br><span class="line">    <span class="keyword">return</span> dictout</span><br><span class="line">    </span><br><span class="line">CtoG = inverse(GtoC)</span><br><span class="line">CtoA = inverse(AtoC)</span><br><span class="line">CtoB = inverse(BtoC)</span><br><span class="line">CtoD = inverse(DtoC)</span><br><span class="line">CtoE = inverse(EtoC)</span><br><span class="line">CtoF = inverse(FtoC)</span><br><span class="line"></span><br><span class="line">Fulltuneanykey = &#123;<span class="string">&quot;g&quot;</span> : CtoG, <span class="string">&quot;a&quot;</span> : CtoA, <span class="string">&quot;b&quot;</span> : CtoB, <span class="string">&quot;d&quot;</span> : CtoD, </span><br><span class="line"><span class="string">&quot;e&quot;</span> : CtoE, <span class="string">&quot;f&quot;</span> : CtoF&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#转换key-values对 （first 全到C)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dictoc</span>(<span class="params">tuneerin,tuneerout</span>):</span><br><span class="line">    <span class="keyword">if</span> tuneerin == <span class="string">&quot;a&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;a&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;g&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;g&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;b&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;b&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;d&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;d&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;e&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;e&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerin == <span class="string">&quot;f&quot;</span>:</span><br><span class="line">        changekey = Fulltunekey[<span class="string">&quot;f&quot;</span>]</span><br><span class="line">    <span class="keyword">return</span> changekey</span><br><span class="line"><span class="comment"># def dicany(tuneerin,tuneerout):</span></span><br><span class="line">    <span class="comment"># if tuneerin != &quot;c&quot;:</span></span><br><span class="line">        <span class="comment"># changekey = Fulltunekey[tuneerin]</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#判断输出，如不是C，再进行转换</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dictoany</span>(<span class="params">tuneerout</span>):</span><br><span class="line">    <span class="keyword">if</span> tuneerout == <span class="string">&quot;a&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;a&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;g&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;g&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;b&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;b&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;d&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;d&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;e&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;e&quot;</span>]</span><br><span class="line">    <span class="keyword">elif</span> tuneerout == <span class="string">&quot;f&quot;</span>:</span><br><span class="line">        changekey2 = Fulltuneanykey[<span class="string">&quot;f&quot;</span>]</span><br><span class="line">    <span class="keyword">return</span> changekey2   </span><br><span class="line">    </span><br><span class="line"><span class="comment">#强制全部到c调</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">alltoC</span>(<span class="params">tuneerin</span>):</span><br><span class="line">    changekey = dictoc(tuneerin, tuneerout)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> listin1:</span><br><span class="line">        listout1.append(changekey[i])</span><br><span class="line">    <span class="comment">#print(listout1)</span></span><br><span class="line">    <span class="keyword">return</span> listout1</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># print(listout1)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ctoall</span>(<span class="params">tuneerout</span>):</span><br><span class="line">    <span class="keyword">if</span> tuneerout != <span class="string">&quot;c&quot;</span>:</span><br><span class="line">        changekey2 = dictoany(tuneerout)</span><br><span class="line">        listout1 = alltoC(tuneerin) </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> listout1:</span><br><span class="line">            listout2.append(changekey2[i])</span><br><span class="line">    <span class="keyword">return</span> listout2</span><br><span class="line"><span class="comment"># ctoall(tuneerout)</span></span><br><span class="line"><span class="comment"># print(listout2)   </span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># if tuneerout != &quot;c&quot;:</span></span><br><span class="line">    <span class="comment"># dicany(tuneerout)</span></span><br><span class="line">    <span class="comment"># for i in listoutTemp:</span></span><br><span class="line">        <span class="comment"># listout1.append(changekey[i])</span></span><br><span class="line">    <span class="comment"># print(listout1)</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">#最后输出   </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">checkout</span>(<span class="params">tuneerin,tuneerout</span>):</span><br><span class="line">    <span class="keyword">if</span> tuneerout == <span class="string">&quot;c&quot;</span>:</span><br><span class="line">        alltoC(tuneerin)</span><br><span class="line">        <span class="built_in">print</span>(tuneerin,listin1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;-&gt;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;c&quot;</span>,listout1) </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        listout2 = ctoall(tuneerout)</span><br><span class="line">        <span class="built_in">print</span>(tuneerin,listin1)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;-&gt;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(tuneerout,listout2)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">checkout(tuneerin,tuneerout)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#AtoC = &#123;&quot;b7&quot; : &quot;#5&quot;, &quot;1&quot; : &quot;b6&quot;, &quot;2&quot; : &quot;b7&quot;, &quot;3&quot; : &quot;#1&quot;, &quot;4&quot; : &quot;2&quot;, </span></span><br><span class="line"><span class="string">&quot;5&quot;</span> : <span class="string">&quot;3&quot;</span>, <span class="string">&quot;6&quot;</span> : <span class="string">&quot;#4&quot;</span>, <span class="string">&quot;7&quot;</span> : <span class="string">&quot;#5&quot;</span>, <span class="string">&quot;g1&quot;</span> : <span class="string">&quot;6&quot;</span>, <span class="string">&quot;g2&quot;</span> : <span class="string">&quot;7&quot;</span>, <span class="string">&quot;g3&quot;</span> : <span class="string">&quot;g#1&quot;</span>, </span><br><span class="line"><span class="string">&quot;g4&quot;</span> : <span class="string">&quot;g2&quot;</span>, <span class="string">&quot;g5&quot;</span> : <span class="string">&quot;g3&quot;</span>, <span class="string">&quot;g6&quot;</span> : <span class="string">&quot;g#4&quot;</span> &#125;</span><br><span class="line"><span class="comment"># if tuneerout == &quot;c&quot;:</span></span><br><span class="line">    <span class="comment"># for i in listin1:</span></span><br><span class="line">        <span class="comment"># listout1.append(changekey[i])</span></span><br><span class="line">    <span class="comment"># print(listout1)</span></span><br></pre></td></tr></table></figure>
+<p>如有大神愿意改良或者提出修改的话。。。求到 <a href="https://github.com/dccif-zz/Bauble/blob/master/TuneChange/TuneChange.py">Github地址</a></p>
+<p>感激不尽。。。。（半路出家，最近更快期末了，压力山大 ）</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+        <tag>音乐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>近期随想</title>
+    <url>/2017/12/18/%E8%BF%91%E6%9C%9F%E9%9A%8F%E6%83%B3/</url>
+    <content><![CDATA[<h1 id="近期的随想"><a class="markdownIt-Anchor" href="#近期的随想"></a> 近期的随想</h1>
+<p>自从我上次写好一键脚本后，过了快半个月，我却完全没有因为有了方便的脚本而增加写文产量😥，于是打算今天写一篇，并说说今日的学习记录吧。</p>
+<h2 id="学习的一些心得"><a class="markdownIt-Anchor" href="#学习的一些心得"></a> 学习的一些心得</h2>
+<p>最近因为Java Web中要使用Java而又对Java不太熟悉的我，翻出了以前库存的一大批书中，写给Java新人的书</p>
+<p>《Head First Java》顿时有种相见恨晚的感觉，这书有些难度又不失趣味的介绍了Java的核心思想和技术，对于我这种要巩固Java应用与提高使用水平的我来说，如一盏明灯，在Java的世界中给我照亮了一片前进与深入的方向，请允许我这这里用这种修饰来表达我对这本书的赞誉，虽然这和我以前的博文风格有着极大的不同😅，但是我相信读者朋友（如果有的话）一定可以感受出这本书，或者说这一系列书对我的帮助（下面会说Head First一系列的书），在此，我真的给每一位在自我感觉在入门到中高级的朋友推荐Head First系列的书。</p>
+]]></content>
+      <categories>
+        <category>清单</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>递归的两种优化方法</title>
+    <url>/2017/10/10/%E9%80%92%E5%BD%92%E7%9A%84%E4%B8%A4%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="递归recursion的两种优化方法"><a class="markdownIt-Anchor" href="#递归recursion的两种优化方法"></a> 递归（Recursion）的两种优化方法</h1>
+<p>最近学习了一些递归的优化方法，于是想写一篇文章记录一下，方便以后查看，并想分享一下。<br />
+虽然平日的上课中老师都是建议我们不要使用递归，但是在**函数式编程（functional programming）**中递归是很常用的，而且掌握递归的思想有时能让我们找到最优解。</p>
+<span id="more"></span>
+<h2 id="1-最经典的斐波那契数列"><a class="markdownIt-Anchor" href="#1-最经典的斐波那契数列"></a> 1. 最经典的斐波那契数列</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Fibonacci</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span> || n == <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> Fibonacci(n - <span class="number">2</span>) + Fibonacci(n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个算法一般计算到40左右就不行了，因为运行栈已经被函数的递归调用占满了</p>
+<h2 id="2-尾递归tail-recursive"><a class="markdownIt-Anchor" href="#2-尾递归tail-recursive"></a> 2. 尾递归（Tail Recursive）</h2>
+<p>传说中的<a href="https://www.wikiwand.com/zh/%E5%B0%BE%E8%B0%83%E7%94%A8"><strong>尾递归</strong></a>。具体我不细说了，就是上一个版本的优化，每次调用函数时不生成新的运行栈，利用上一次的结果<br />
+<strong>注意：<strong>不是所有语言都有</strong>尾递归</strong>优化的（Java就没有）<br />
+也不是所有算法都能写成<strong>尾递归</strong>的形式的</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fiboTail</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> acc, <span class="type">int</span> cal)</span> </span><br><span class="line"><span class="comment">//acc充当收集器的左右，收集上一次运行栈的返回值，因为之后栈空间会被回收</span></span><br><span class="line"><span class="comment">//cal是每一次递归的计算</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> acc;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> cal;</span><br><span class="line">    <span class="keyword">return</span> fiboTail(n - <span class="number">1</span>, cal, acc+cal);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到尾递归的函数比原始的版本多了2个参数，一个起到**收集器（accumulator)**的作用，记录每上一次栈的返回值，因为原来栈的空间会被下一层递归覆盖。<br />
+还有一个参数就是每次递归的操作了，因为是斐波那契，所以这里是相加。</p>
+<p>尾递归的调用方法也与原来的不一样，因为斐波那契的初始值 ( 1. 1 . 2 . 3 …)<br />
+所以以下的调用，acc 要用初始值 1，cal 也要用第二位的值这里也是1<br />
+调用的方法就是  <strong>fiboTail(n, 1，1）</strong><br />
+尾递归的方法计算基本上是秒出的，可是比起下面一种方法还是要慢，就是在32位机器上要注意 <strong>int范围</strong> 第47位已经超过int的表示范围了</p>
+<h2 id="3-利用缓存"><a class="markdownIt-Anchor" href="#3-利用缓存"></a> 3. 利用缓存</h2>
+<p>典型的空间换时间</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span> gnFib = <span class="number">99</span> &#125;;</span><br><span class="line"><span class="type">int</span> gFib[gnFib];      <span class="comment">// 生成一个数组记录已经生成的斐波那契数</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">fib</span><span class="params">(<span class="type">int</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; <span class="number">0</span> || n &gt;= gnFib) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> &amp;fn = gFib[n];   </span><br><span class="line">    <span class="keyword">if</span> (!fn) &#123;            <span class="comment">//如果当前数不在数组中才计算</span></span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span> || n == <span class="number">1</span>) fn = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> fn = fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>核心思想就是利用之前信息，每次递归不用再重新计算了</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重装系统程序清单</title>
+    <url>/2017/10/16/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E6%B8%85%E5%8D%95/</url>
+    <content><![CDATA[<h1 id="因为种种原因"><a class="markdownIt-Anchor" href="#因为种种原因"></a> 因为种种原因</h1>
+<p>我不得不重装我这用了快3年的电脑，心里一阵苦，本清单用于个人重装系统后的恢复工作，日后也能参考</p>
+<h1 id="驱动安装"><a class="markdownIt-Anchor" href="#驱动安装"></a> 驱动安装</h1>
+<p><s>这步我就不说了</s></p>
+<p>这个周末被这个折腾的够呛，我觉得还是有必要说一下了😭</p>
+<span id="more"></span>
+<p>首先说下我遇到的坑吧，现在事后说起来觉得好蠢，可以当我遇到的时候真是百思不得其解。</p>
+<p>这次我遇到的坑一句话就是驱动的冲突，我原本的罗技鼠标和这个国产软件----驱动精灵，检测出来的不一样，于是就给我装了一个雷蛇的驱动。。。关键是我装好了之后还没法卸载。导致的现象就是每次开机我都要手动用管理员权限打开罗技的<code>游戏软件</code>，也许是我强迫症吧，为了发现和解决这个问题，我重装了5次系统。。。</p>
+<p>好好的一个周末都被浪费掉了。。。</p>
+<p>收获就是国产的驱动软件不能完全相信。。，每一步安装前要先确认一下这个驱动是什么</p>
+<p>还有2个被土啬的驱动检测软件，这两个的驱动都是没有问题的，名字我就先不提了。</p>
+<h2 id="程序清单"><a class="markdownIt-Anchor" href="#程序清单"></a> 程序清单</h2>
+<p>没有链接的文件在个人备份的磁盘中</p>
+<h3 id="语言环境"><a class="markdownIt-Anchor" href="#语言环境"></a> 语言环境</h3>
+<ol>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Java8</a></li>
+<li><a href="https://tomcat.apache.org/download-90.cgi">Tomcat9</a></li>
+<li><a href="https://www.python.org/downloads/">Python</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+<li><strong>别忘了配置环境变量</strong></li>
+</ol>
+<h3 id="开发工具"><a class="markdownIt-Anchor" href="#开发工具"></a> 开发工具</h3>
+<h4 id="微软"><a class="markdownIt-Anchor" href="#微软"></a> 微软</h4>
+<ol>
+<li><a href="https://www.visualstudio.com/zh-hans/">Visual Studio</a> (<s>之所以重装都是因为这个巨无霸</s>)</li>
+<li><a href="https://www.visualstudio.com/zh-hans/">VIsual Studio Code</a> (还好没有什么配置文件)</li>
+</ol>
+<h4 id="gnu"><a class="markdownIt-Anchor" href="#gnu"></a> GNU</h4>
+<ol start="3">
+<li><a href="http://mirrors.ustc.edu.cn/gnu/emacs/windows/">Emacs</a>，GVIM (硬盘中拷备份件)</li>
+<li><a href="https://git-scm.com/download/win">Git</a></li>
+<li><a href="https://desktop.github.com/">GitHub Desktop</a></li>
+</ol>
+<h4 id="jetbrains"><a class="markdownIt-Anchor" href="#jetbrains"></a> JetBrains</h4>
+<ol start="4">
+<li><a href="https://www.jetbrains.com/idea/">Intellij IDEA</a></li>
+<li><a href="https://developer.android.com/studio/index.html">Android Studio</a></li>
+<li><a href="https://www.jetbrains.com/webstorm/?fromMenu">WebStorm</a></li>
+<li><a href="https://www.jetbrains.com/pycharm/?fromMenu">PyCharm</a></li>
+</ol>
+<h4 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h4>
+<ol start="8">
+<li><a href="http://www.eclipse.org/home/index.php">Eclipse</a></li>
+<li><a href="https://racket-lang.org/download/">DrRacket</a></li>
+<li>VMware Workstation Pro</li>
+<li><a href="http://www.wampserver.com/en/">wampserver</a></li>
+<li><a href="https://www.wireshark.org/download.html">Wireshark</a></li>
+<li><a href="https://notepad-plus-plus.org/download/v7.5.1.html">Notepad++</a></li>
+</ol>
+<h3 id="多媒体"><a class="markdownIt-Anchor" href="#多媒体"></a> 多媒体</h3>
+<ol>
+<li><a href="https://potplayer.daum.net/">Potplayer</a></li>
+<li>PDFX</li>
+<li><a href="http://blog.sina.com.cn/s/blog_6fcc51420102wv92.html">foobar2000</a></li>
+<li><a href="https://calibre-ebook.com/download">Calibre</a></li>
+<li>Sigil</li>
+<li><a href="https://www.mp3tag.de/en/download.html">Mp3tag</a></li>
+</ol>
+<h3 id="娱乐"><a class="markdownIt-Anchor" href="#娱乐"></a> 娱乐</h3>
+<ol>
+<li><a href="http://store.steampowered.com/about/">Steam</a></li>
+</ol>
+<h3 id="学习"><a class="markdownIt-Anchor" href="#学习"></a> 学习</h3>
+<ol>
+<li>GoldenDict</li>
+<li>wolfram mathematica</li>
+<li><a href="https://www.manictime.com/">ManicTime</a></li>
+</ol>
+<h3 id="效率工具"><a class="markdownIt-Anchor" href="#效率工具"></a> 效率工具</h3>
+<ol>
+<li><a href="https://www.voidtools.com/downloads/">Everything</a></li>
+<li>IDM</li>
+<li><a href="https://justgetflux.com/">f.lux</a></li>
+<li><a href="http://ditto-cp.sourceforge.net/">Ditto</a></li>
+<li><a href="https://www.chuyu.me/zh-Hans/">Dism++</a></li>
+<li><a href="https://www.teamviewer.com/zhcn/download/windows/">TeamViewer</a></li>
+<li><a href="https://www.kcsoftwares.com/?download">Sumo</a></li>
+<li><a href="https://github.com/Wox-launcher/Wox/releases">Wox</a></li>
+<li>TriDnet</li>
+<li>XYplorer</li>
+<li>Total Commander</li>
+<li>MySpeed</li>
+<li><a href="http://www.listary.com/download">Listary</a></li>
+<li><a href="https://www.inputdirector.com/downloads.html">Input Director</a></li>
+<li>Capture2Tex</li>
+<li>Process</li>
+</ol>
+<h3 id="ssh工具"><a class="markdownIt-Anchor" href="#ssh工具"></a> SSH工具</h3>
+<ol>
+<li>XX-net</li>
+<li><a href="https://www.echoteen.com/proxifier-newway.html">Proxifier</a></li>
+<li>Xshell5 &amp; Xftp</li>
+<li><a href="https://filezilla-project.org/">FileZilla</a></li>
+</ol>
+<h3 id="浏览器及插件"><a class="markdownIt-Anchor" href="#浏览器及插件"></a> 浏览器及插件</h3>
+<ol>
+<li><a href="https://www.google.com/chrome/browser/desktop/index.html">Chrome32bit</a><br />
+备份文件</li>
+<li><a href="https://www.mozilla.org/zh-CN/firefox/desktop/">Firefox</a></li>
+</ol>
+<h2 id="其余"><a class="markdownIt-Anchor" href="#其余"></a> 其余</h2>
+<p>在个人备份硬盘中</p>
+]]></content>
+      <categories>
+        <category>清单</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+      </tags>
+  </entry>
+</search>
