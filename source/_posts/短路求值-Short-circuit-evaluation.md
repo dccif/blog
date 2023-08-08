@@ -4,6 +4,7 @@ date: 2017-10-10 16:05:27
 categories: 编程
 tags: 细节
 ---
+
 # 短路求值
 
 > Short-circuit evaluation
@@ -15,12 +16,13 @@ tags: 细节
 ## 什么是**短路求值（Short-circuit evaluation）**
 
 以下摘自[Short-circuit evaluation](https://www.wikiwand.com/en/Short-circuit_evaluation)
-> **Short-circuit evaluation**, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function 
-evaluates to true, the overall value must be true.
+
+> **Short-circuit evaluation**, minimal evaluation, or McCarthy evaluation (after John McCarthy) is the semantics of some Boolean operators in some programming languages in which the second argument is executed or evaluated only if the first argument does not suffice to determine the value of the expression: when the first argument of the AND function evaluates to false, the overall value must be false; and when the first argument of the OR function
+> evaluates to true, the overall value must be true.
 
 概况来说就是在求**布尔表达式**的时候程序并不会执行全部的**Expression**
 
-比如**AND**或者**OR**操作时如果后面第一个Expression为True，那么之后的Expression就不会再求值了。
+比如**AND**或者**OR**操作时如果后面第一个 Expression 为 True，那么之后的 Expression 就不会再求值了。
 
 ## 一些例子
 
@@ -30,7 +32,7 @@ evaluates to true, the overall value must be true.
 int denom = 0;
 if (denom != 0 && num / denom)
 {
-    ... // ensures that calculating num/denom never results in divide-by-zero error   
+    ... // ensures that calculating num/denom never results in divide-by-zero error
 }
 ```
 
@@ -45,10 +47,10 @@ if (a != 0 && myfunc(b))
 ```
 
 在这个例子中**&&**后的**myfunc(b)**将永远不会执行，因为**a!=0**永远是**FALSE**。
-利用短路求值有2个有用的技巧
+利用短路求值有 2 个有用的技巧
 
- 1. 如果条件判断的expression需要复杂的计算，并且第一个结果为**False**，则可以不计算之后的表达式
- 1. 可以构造一个expression来使第二个可能会发生运行时错误的expression成功运行
+1.  如果条件判断的 expression 需要复杂的计算，并且第一个结果为**False**，则可以不计算之后的表达式
+1.  可以构造一个 expression 来使第二个可能会发生运行时错误的 expression 成功运行
 
 ```c
 bool is_first_char_valid_alpha_unsafe(const char *p)
@@ -64,11 +66,11 @@ bool is_first_char_valid_alpha(const char *p)
 
 这个例子避免了空指针
 
-### 最近学习的Lisp中的例子：
+### 最近学习的 Lisp 中的例子：
 
 ```Lisp
 (defparameter *is-it-even* nil)
-(or (oddp 5) 
+(or (oddp 5)
 (setf *is-it-even* t))
 ```
 
@@ -91,14 +93,14 @@ if (expressionA && myfunc(b)) {
 ## 支持的语言
 
 **并不是所有语言和所有操作符支持的**
-Java支持**非短路求值**也支持**短路求值**
+Java 支持**非短路求值**也支持**短路求值**
 
-| 常见的语言 | 支持的操作符 |
-| :------- | :--------- |
-| C, Obejective-C, C++, C# | &&, ∥, ? |
-| Java, MATLAB, R, Swift | &&, ∥ |
-| JavaScript, GO, Haskel | &&, ∥ |
-| Lisp, Lua, Scheme | and, or |
-| PHP | &&, and, ∥, or |
-| Python | and, or |
-| Visual Basic | 不支持 |
+| 常见的语言               | 支持的操作符   |
+| :----------------------- | :------------- |
+| C, Obejective-C, C++, C# | &&, ∥, ?       |
+| Java, MATLAB, R, Swift   | &&, ∥          |
+| JavaScript, GO, Haskel   | &&, ∥          |
+| Lisp, Lua, Scheme        | and, or        |
+| PHP                      | &&, and, ∥, or |
+| Python                   | and, or        |
+| Visual Basic             | 不支持         |

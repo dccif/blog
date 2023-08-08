@@ -1,26 +1,26 @@
 ---
 title: Ubuntu的个性化配置
 date: 2017-10-27 19:40:10
-updated: 
+updated:
 categories: 清单
 tags: 环境搭建
 ---
 
-# Ubuntu下的个性化配置
+# Ubuntu 下的个性化配置
 
-因为使用Linux开发方便的缘故，我在虚拟机上用全性能搭建了一个Ubuntu环境~~(别问我为什么不装双系统)~~
+因为使用 Linux 开发方便的缘故，我在虚拟机上用全性能搭建了一个 Ubuntu 环境~~(别问我为什么不装双系统)~~
 
-于是和之前那篇Windows的重装一样，也想写一篇文章记录一下，以后搭建时可以方便一些
+于是和之前那篇 Windows 的重装一样，也想写一篇文章记录一下，以后搭建时可以方便一些
 
 <!--more-->
 
-## Java环境
+## Java 环境
 
 本文参考[How To Install Java with Apt-Get on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04)
 
-这里是Java8
+这里是 Java8
 
-添加Oracle's PPA
+添加 Oracle's PPA
 
 ```shell
 sudo add-apt-repository ppa:webupd8team/java
@@ -35,7 +35,7 @@ Then, depending on the version you want to install, execute one of the following
 sudo apt-get install oracle-java8-installer
 ```
 
-### Linux下的添加Java环境变量
+### Linux 下的添加 Java 环境变量
 
 Many programs, such as Java servers, use the `JAVA_HOME` environment variable to determine the Java installation location. To set this environment variable, we will first need to find out where Java is installed. You can do this by executing the same command as in the previous section:
 
@@ -69,11 +69,9 @@ You can now test whether the environment variable has been set by executing the 
 echo $JAVA_HOME
 ```
 
-
-
 ## 开发环境
 
-Vim-gtk 官方源已经有最新的了，直接apt install 就行了
+Vim-gtk 官方源已经有最新的了，直接 apt install 就行了
 
 Emacs (需要手动添加源)
 
@@ -83,13 +81,11 @@ sudo apt update
 sudo apt install emacs25
 ```
 
-其余jetbrains全家桶，因为没有VS只好用Clion了
+其余 jetbrains 全家桶，因为没有 VS 只好用 Clion 了
 
+## oh-my-zsh 配置 zsh
 
-
-## oh-my-zsh配置zsh
-
-ubuntu默认不是zsh，输入下面命令安装 zsh
+ubuntu 默认不是 zsh，输入下面命令安装 zsh
 
 ```shell
 sudo apt-get install zsh
@@ -101,7 +97,7 @@ sudo apt-get install zsh
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
 ```
 
-查看你的zsh位置，输入
+查看你的 zsh 位置，输入
 
 ```shell
 cat /etc/shells
@@ -116,7 +112,7 @@ cat /etc/shells
 /bin/rbash
 /bin/zsh
 /usr/bin/zsh
-➜  ~ 
+➜  ~
 ```
 
 更改默认 shell，输入
@@ -140,7 +136,7 @@ zsh 的配置文件是在用户目录下的 .zshrc
 
 这个插件的官网是: [Incremental completion on zsh](http://link.zhihu.com/?target=http%3A//mimosa-pudica.net/zsh-incremental.html)
 
-最新版本是 incr-0.2.zsh 
+最新版本是 incr-0.2.zsh
 
 新建一个 incr-0.2.zsh 文件把他放进 用户目录下的 .oh-my-zsh/plugins/incr 目录下，没有的目录自己新建，其实放哪都一样。
 
@@ -154,7 +150,7 @@ source /home/song/.oh-my-zsh/plugins/incr/incr-0.2.zsh
 
 /home/song/.oh-my-zsh/plugins/incr 是你放的不同的目录。
 
-最后还有一个小问题，原来我们用的 超级用户创建的 oh-my-zsh 导致 .oh-my-zsh 目录下的缓存目录 cache 所有者和用户组也是root 这样就导致我们在普通用户下使用有些问题，下面改变 cache的所有者
+最后还有一个小问题，原来我们用的 超级用户创建的 oh-my-zsh 导致 .oh-my-zsh 目录下的缓存目录 cache 所有者和用户组也是 root 这样就导致我们在普通用户下使用有些问题，下面改变 cache 的所有者
 
 输入
 
@@ -163,4 +159,3 @@ chown song:song cache/ -R
 ```
 
 这样就不会在命令提示时候弹出错误了。
-

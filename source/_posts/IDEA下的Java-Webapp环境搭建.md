@@ -4,9 +4,11 @@ categories: 编程
 tags: 环境搭建
 date: 2017-10-14 15:14:55
 ---
+
 # IDEA 下Java Webapp的环境搭建
 
 本文在以下环境搭建：
+
 > IntelliJ IDEA 2017.2.5
 > JDK 1.8.0_144
 > JRE: 1.8.0_152-release-915-b12 amd64
@@ -25,6 +27,7 @@ date: 2017-10-14 15:14:55
 ~~个人不喜欢课堂上老师用的旧工具~~
 
 ### 新建Project
+
 {% img /image/IDEA/newproject.jpg 新建项目 %}
 
 {% img /image/IDEA/select.jpg 选择应用module %}
@@ -32,6 +35,7 @@ date: 2017-10-14 15:14:55
 下一步随便给项目取一个名字
 
 ### **下面是重点了**
+
 可能是我的环境太新了，和网上的教程生成的目录结构是不一样的。
 
 {% img /image/IDEA/struct.jpg 目录结构 %}
@@ -75,11 +79,10 @@ Jsp 测试：
 </body>
 </html>
 ```
+
 结果：
 
 {% img /image/IDEA/result1.jpg Jsp页面测试 %}
-
-
 
 Servlet 测试：
 
@@ -111,6 +114,7 @@ public class HelloServlet extends HttpServlet {
 {% img /image/IDEA/result2.jpg Servlet测试 %}
 
 ## 搭建完成
+
 至此完成了在IDEA上Servlet的环境搭建。
 
 ~~你以为接这样结束了？~~

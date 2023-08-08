@@ -472,9 +472,9 @@ gitalk:
   # Github repository.
   repo: blog
   # Github Application Client ID.
-  client_id: 
+  client_id:
   # Github Application Client Secret.
-  client_secret: 
+  client_secret:
   # GitHub repo owner and collaborators, only these guys can initialize github issues.
   admin: dccif
   # Facebook-like distraction free mode.
@@ -895,7 +895,7 @@ icon:
   notetag_warning: fas fa-exclamation-circle
   notetag_danger: fas fa-minus-circle
   google: fab fa-google
-  bing: 
+  bing:
   # bing: fab fa-bing # not exist
 
 # Set a CDN address for the vendor you want to customize.
