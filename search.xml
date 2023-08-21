@@ -265,6 +265,68 @@ Windows 10 x64 15063.674</p>
 ]]></content>
   </entry>
   <entry>
+    <title>在pve下通过9p virtio共享宿主机的目录</title>
+    <url>/2023/08/21/virtio%E5%85%B1%E4%BA%AB%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%9B%AE%E5%BD%95/</url>
+    <content><![CDATA[<blockquote>
+<p>前提声明本文以下性能数据全是在个人硬件，软件下测的：<br />
+PVE 8.0.4 Linux version 6.2.16-6-pve<br />
+OMV 6.5 Linux version 6.1.0-0.deb11.7-amd64<br />
+smb 共享挂载文档夹后测速</p>
+</blockquote>
+<p>起因：<br />
+本人因为不想让虚拟机独占硬盘，于是想出了让虚拟机共享宿主机的文档的方案，于是就在挑选技术，同时感谢<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xMzgyNTQ2ODk=">OpenMediaVault：你的开源 NAS 系统<i class="fa fa-external-link-alt"></i></span> 韦易笑 指出的 9p 技术<br />
+以下是我选择的几种技术的对比，本人才疏学浅，如有错误请 dalao 指出</p>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>速度</th>
+<th>ACL（访问控制权限）</th>
+<th>支持系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Virtio 9p</td>
+<td><img data-src="/image/pve/9pspeed.webp" alt="9p" /></td>
+<td>默认支持在虚拟机直接改变宿主机共享文档权限</td>
+<td>Linux</td>
+</tr>
+<tr>
+<td>NFSv4.2</td>
+<td><img data-src="/image/pve/nfsspeed.webp" alt="nfs" /></td>
+<td>无法通过虚拟机设置，需要在宿主机设置</td>
+<td>Linux，windows 额外安装</td>
+</tr>
+<tr>
+<td>Virtiofs</td>
+<td><img data-src="/image/pve/virtiofsspeed.webp" alt="virtiofs" /></td>
+<td>可选支持是否在虚拟机直接改变宿主机共享文档权限</td>
+<td>Linux,windows 需要额外安装驱动</td>
+</tr>
+</tbody>
+</table>
+<p>参考上述的表格，我最终选择了使用 9p 共享文档夹。</p>
+<p>下面是介绍一下如何设置 9p 共享文档，只需要修改 3 个文档<br />
+虚拟机 conf 文档 路径在 pve 下的 <code>/etc/pve/qemu-server/&lt;你的虚拟机 ID&gt;.conf</code></p>
+<p>在第一行添加 args：参数</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">args: -virtfs local,path=&lt;你要共享的宿主机目录路径&gt;,mount_tag=&lt;你要取名的挂载TAG，之后挂载要用&gt;,security_model=passthrough,id=fs0</span><br></pre></td></tr></table></figure>
+<p>更具体的参数可以参考 <span class="exturl" data-url="aHR0cHM6Ly93aWtpLnFlbXUub3JnL0RvY3VtZW50YXRpb24vOXBzZXR1cA==">9psetup<i class="fa fa-external-link-alt"></i></span></p>
+<p>Linux 虚拟机启动后，编辑 <code>/etc/fstab</code>添加下述一行 请先确保虚拟机内的路径存在，没有就先 mkdir 一个</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">取名的挂载TAG   你虚拟机内的挂载路径        9p trans=virtio,version=9p2000.L,rw,share,nobootwait,posixacl,msize=104857600  0  0</span><br></pre></td></tr></table></figure>
+<p>然后执行 <code>mount -a</code> 如果没出错，<code>mount</code> 之后就会列出所有目录<br />
+之后虚拟机就可以愉快的使用宿主共享出来文档夹了，同时还能设置 ACL</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>环境搭建</tag>
+        <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个简单的简谱转调程序</title>
     <url>/2017/08/07/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%AE%80%E8%B0%B1%E8%BD%AC%E8%B0%83%E7%A8%8B%E5%BA%8F/</url>
     <content><![CDATA[<h1 id="老版本的问题"><a class="markdownIt-Anchor" href="#老版本的问题"></a> 老版本的问题</h1>
