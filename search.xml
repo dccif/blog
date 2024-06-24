@@ -1,57 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Arch下Wayland使用Nvidia私有驱动</title>
-    <url>/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/</url>
-    <content><![CDATA[<h1 id="起因"><a class="markdownIt-Anchor" href="#起因"></a> 起因:</h1>
-<p>最近因为家用的 windows 机器遇到可能是硬件上的故障无法正常使用，没办法，为了有一台电脑用，将之前家用的 pve 上的 vGPU 也卸载了，为了性能使用了显卡直通+Nvidia 专有驱动来运行 Arch 虚拟机，但是发现在最新的 KDE+Wayland 下，默认显示全是黑屏，只有一个光标，无法正常使用。在各种地方查看了之后终于配置成功了，写下这篇文章以帮助其他朋友和备忘。</p>
-<span id="more"></span>
-<h2 id="安装-软件包与编译环境"><a class="markdownIt-Anchor" href="#安装-软件包与编译环境"></a> 安装 软件包与编译环境</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pacman -Syu</span><br><span class="line">sudo pacman -S base-devel linux-headers git nano --needed</span><br></pre></td></tr></table></figure>
-<h2 id="安装-nvidia-驱动"><a class="markdownIt-Anchor" href="#安装-nvidia-驱动"></a> 安装 nvidia 驱动</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils</span><br><span class="line">or</span><br><span class="line">sudo yay -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils</span><br></pre></td></tr></table></figure>
-<p>本人使用的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hsaW51eC9hcmNoaW5zdGFsbA==">archinstall<i class="fa fa-external-link-alt"></i></span>，这一步应该是默认安装的，关键是后续的配置，只是先写在这里。</p>
-<h2 id="wayland-环境变量配置"><a class="markdownIt-Anchor" href="#wayland-环境变量配置"></a> Wayland 环境变量配置</h2>
-<p>这下面的才是关键：</p>
-<p>NVIDIA-specific options in the root environment file <code>/etc/environment</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GBM_BACKEND=nvidia-drm</span><br><span class="line">__GLX_VENDOR_LIBRARY_NAME=nvidia</span><br><span class="line">ENABLE_VKBASALT=1</span><br><span class="line">LIBVA_DRIVER_NAME=nvidia</span><br></pre></td></tr></table></figure>
-<p>需要将如上变量写入/etc/environment</p>
-<h2 id="kernel-modules-配置"><a class="markdownIt-Anchor" href="#kernel-modules-配置"></a> kernel modules 配置</h2>
-<p>找到 <code>/etc/mkinitcpio.conf</code></p>
-<p>找到 <code>MODULES=()</code>行，在<code>()</code>中加入 <code>nvidia nvidia_modeset nvidia_uvm nvidia_drm</code></p>
-<p>找到 <code>HOOKS=()</code>行，如果<code>()</code>中有<code>kms</code>,则删除</p>
-<p>新建一个文件 <code>/etc/modprobe.d/nvidia.conf</code> 文件,内容如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blacklist nouveau</span><br><span class="line">options nvidia_drm modeset=1 fbdev=1</span><br></pre></td></tr></table></figure>
-<p>之后最关键的一步</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mkinitcpio -P</span><br></pre></td></tr></table></figure>
-<p>更新 initramfs</p>
-<h2 id="配置-pacman-hook"><a class="markdownIt-Anchor" href="#配置-pacman-hook"></a> 配置 Pacman Hook</h2>
-<p>新建一个文件比如：nvidia.hook,内容如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Trigger]</span><br><span class="line">Operation=Install</span><br><span class="line">Operation=Upgrade</span><br><span class="line">Operation=Remove</span><br><span class="line">Type=Package</span><br><span class="line">Target=nvidia</span><br><span class="line">Target=linux</span><br><span class="line"># Adjust line(6) above to match your driver, e.g. Target=nvidia-470xx-dkms</span><br><span class="line"># Change line(7) above, if you are not using the regular kernel For example, Target=linux-lts</span><br><span class="line"></span><br><span class="line">[Action]</span><br><span class="line">Description=Update Nvidia module in initcpio</span><br><span class="line">Depends=mkinitcpio</span><br><span class="line">When=PostTransaction</span><br><span class="line">NeedsTargets</span><br><span class="line">Exec=/bin/sh -c &#x27;while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#x27;</span><br></pre></td></tr></table></figure>
-<p>文件中的注释可以不用调整，面向的是老驱动以及非官方内核</p>
-<p>最后将文件移动到<code>/etc/pacman.d/hooks/</code>下</p>
-<h2 id="完成"><a class="markdownIt-Anchor" href="#完成"></a> 完成</h2>
-<p>正常情况就可以重启了，这下可以愉快地使用 Walyland 了并且运行在 nvidia 私有驱动下了</p>
-<h2 id="一键脚本"><a class="markdownIt-Anchor" href="#一键脚本"></a> 一键脚本</h2>
-<p>如果上文不想看，那么直接新建一个<code>nvidia.sh</code>文件，文件名任意</p>
-<p>内容如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义要写入 /etc/environment 的变量</span></span><br><span class="line">nvidia_variables=(</span><br><span class="line">    &quot;GBM_BACKEND=nvidia-drm&quot;</span><br><span class="line">    &quot;__GLX_VENDOR_LIBRARY_NAME=nvidia&quot;</span><br><span class="line">    &quot;ENABLE_VKBASALT=1&quot;</span><br><span class="line">    &quot;LIBVA_DRIVER_NAME=nvidia&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">backup_file() &#123;</span><br><span class="line">    local file=$1</span><br><span class="line">    sudo cp &quot;$file&quot; &quot;$file.bak&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">update_environment() &#123;</span><br><span class="line">    local env_file=&quot;/etc/environment&quot;</span><br><span class="line">    backup_file &quot;$env_file&quot;</span><br><span class="line"></span><br><span class="line">    for var in &quot;$&#123;nvidia_variables[@]&#125;&quot;; do</span><br><span class="line">        if grep -q &quot;^$&#123;var%%=*&#125;&quot; &quot;$env_file&quot;; then</span><br><span class="line">            sudo sed -i &quot;s|^$&#123;var%%=*&#125;.*|$var|&quot; &quot;$env_file&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;$var&quot; | sudo tee -a &quot;$env_file&quot; &gt; /dev/null</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line"></span><br><span class="line">    echo &quot;NVIDIA-specific options have been written to $env_file.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">update_mkinitcpio_conf() &#123;</span><br><span class="line">    local mkinitcpio_conf=&quot;/etc/mkinitcpio.conf&quot;</span><br><span class="line">    backup_file &quot;$mkinitcpio_conf&quot;</span><br><span class="line"></span><br><span class="line">    sudo sed -i &#x27;/^MODULES=/ s/(\(.*\))/(\1 nvidia nvidia_modeset nvidia_uvm nvidia_drm)/&#x27; &quot;$mkinitcpio_conf&quot;</span><br><span class="line">    sudo sed -i &#x27;/^HOOKS=/ s/\(\s*kms\s*\)//g&#x27; &quot;$mkinitcpio_conf&quot;</span><br><span class="line"></span><br><span class="line">    echo &quot;mkinitcpio.conf has been updated.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">create_nvidia_conf() &#123;</span><br><span class="line">    local nvidia_conf=&quot;/etc/modprobe.d/nvidia.conf&quot;</span><br><span class="line">    sudo bash -c &quot;cat &gt; $nvidia_conf&quot; &lt;&lt;EOL</span><br><span class="line">blacklist nouveau</span><br><span class="line">options nvidia_drm modeset=1 fbdev=1</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">    echo &quot;$nvidia_conf has been created.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">regenerate_initramfs() &#123;</span><br><span class="line">    sudo mkinitcpio -P</span><br><span class="line">    echo &quot;initramfs has been regenerated.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">create_nvidia_hook() &#123;</span><br><span class="line">    local hook_dir=&quot;/etc/pacman.d/hooks&quot;</span><br><span class="line">    local hook_file=&quot;$hook_dir/nvidia.hook&quot;</span><br><span class="line"></span><br><span class="line">    sudo mkdir -p &quot;$hook_dir&quot;</span><br><span class="line"></span><br><span class="line">    sudo bash -c &quot;cat &gt; $hook_file&quot; &lt;&lt;EOL</span><br><span class="line">[Trigger]</span><br><span class="line">Operation=Install</span><br><span class="line">Operation=Upgrade</span><br><span class="line">Operation=Remove</span><br><span class="line">Type=Package</span><br><span class="line">Target=nvidia</span><br><span class="line">Target=linux</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Adjust line(6) above to match your driver, e.g. Target=nvidia-470xx-dkms</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Change line(7) above, <span class="keyword">if</span> you are not using the regular kernel For example, Target=linux-lts</span></span><br><span class="line"></span><br><span class="line">[Action]</span><br><span class="line">Description=Update Nvidia module in initcpio</span><br><span class="line">Depends=mkinitcpio</span><br><span class="line">When=PostTransaction</span><br><span class="line">NeedsTargets</span><br><span class="line">Exec=/bin/sh -c &#x27;while read -r trg; do case \$trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#x27;</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">    echo &quot;nvidia.hook has been added to $hook_dir.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">    update_environment</span><br><span class="line">    update_mkinitcpio_conf</span><br><span class="line">    create_nvidia_conf</span><br><span class="line">    regenerate_initramfs</span><br><span class="line">    create_nvidia_hook</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>添加运行权限与执行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x nvidia.sh &amp;&amp; ./nvidia.sh</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
-<p>最后感谢这些文章的作者，Thanks</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2tvcnZhaGFubnUvYXJjaC1udmlkaWEtZHJpdmVycy1pbnN0YWxsYXRpb24tZ3VpZGU=">arch-nvidia-drivers-installation-guide<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvTlZJRElBL1Ryb3VibGVzaG9vdGluZw==">Black screen at Wayland startup<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-        <tag>环境搭建</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>IDEA下的Java Webapp环境搭建</title>
     <url>/2017/10/14/IDEA%E4%B8%8B%E7%9A%84Java-Webapp%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<h1 id="idea-下-java-webapp-的环境搭建"><a class="markdownIt-Anchor" href="#idea-下-java-webapp-的环境搭建"></a> IDEA 下 Java Webapp 的环境搭建</h1>
@@ -235,8 +184,8 @@ Windows 10 x64 15063.674</p>
         <category>编程</category>
       </categories>
       <tags>
-        <tag>编程</tag>
         <tag>环境搭建</tag>
+        <tag>编程</tag>
         <tag>QT</tag>
         <tag>C++</tag>
       </tags>
@@ -373,8 +322,8 @@ smb 共享挂载文档夹后测速</p>
         <category>编程</category>
       </categories>
       <tags>
-        <tag>编程</tag>
         <tag>环境搭建</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
