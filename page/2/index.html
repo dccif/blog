@@ -89,7 +89,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">12</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">12</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -154,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -203,6 +203,120 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.dccif.top/2017/11/04/%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E7%9A%84%E6%95%88%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/head.jpg">
+      <meta itemprop="name" content="Barry He">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dccif's Blog">
+      <meta itemprop="description" content="blog dccif">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | dccif's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/11/04/%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E7%9A%84%E6%95%88%E7%8E%87/" class="post-title-link" itemprop="url">数组扩展的效率</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-11-04 18:53:00" itemprop="dateCreated datePublished" datetime="2017-11-04T18:53:00+08:00">2017-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>633</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="数组扩展的效率差异"><a class="markdownIt-Anchor" href="#数组扩展的效率差异"></a> 数组扩展的效率差异</h1>
+<p>说来惭愧，我现在才开始认真的学习算法和程序的效率 😓。</p>
+<p>本文是我在阅读</p>
+<blockquote>
+<p><strong>Data Structures,Algorithms,and Applications in C++</strong> Second Edition<br />
+<em>Sartaj Sahni</em></p>
+</blockquote>
+<p>遇到的一个小细节，与数组扩展的效率差异的原理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/04/%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E7%9A%84%E6%95%88%E7%8E%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.dccif.top/2017/10/27/Ubuntu%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -239,7 +353,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -348,7 +462,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -456,7 +570,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -567,7 +681,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -684,7 +798,7 @@ Windows 10 x64 15063.674</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -794,7 +908,7 @@ Windows 10 x64 15063.674</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -903,7 +1017,7 @@ Windows 10 x64 15063.674</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1014,7 +1128,7 @@ Windows 10 x64 15063.674</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
 
   
@@ -1107,7 +1221,7 @@ Windows 10 x64 15063.674</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
+      <time title="修改时间：2024-06-24 11:15:02" itemprop="dateModified" datetime="2024-06-24T11:15:02+08:00">2024-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1180,132 +1294,8 @@ Windows 10 x64 15063.674</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.dccif.top/2015/12/13/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/image/head.jpg">
-      <meta itemprop="name" content="Barry He">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="dccif's Blog">
-      <meta itemprop="description" content="blog dccif">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | dccif's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/13/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/" class="post-title-link" itemprop="url">记第一个对我有实际作用的程序（逃）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2015-12-14 01:14:35" itemprop="dateCreated datePublished" datetime="2015-12-14T01:14:35+08:00">2015-12-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-02 20:53:44" itemprop="dateModified" datetime="2024-06-02T20:53:44+08:00">2024-06-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="问题的起因挖坑原因"><a class="markdownIt-Anchor" href="#问题的起因挖坑原因"></a> 问题的起因（挖坑原因）：</h1>
-<ol>
-<li>玩乐器的同学知道，简谱上的不同调之间的转换不如五线谱上方便，我原来最先是参照转调表一个一个人工查找 😥 太累，后来就想写个程序完成了。</li>
-<li>———关于调，不懂的可以百毒一下。。。就是与起始音 do 的位置，或者末音 la 的位置（这不是小调了吗，不管，乐理也不太精通，如有大神求指出）</li>
-</ol>
-<h1 id="问题的实现"><a class="markdownIt-Anchor" href="#问题的实现"></a> 问题的实现：</h1>
-<ol>
-<li>
-<p>脑洞昨天太大 😓，明明只是一个会 C 调的，你干嘛要写个转换任意调的。。。。<br />
-原始目的只是想任意调转成 C，后来写着写着觉得这样这程序太弱了（虽然本来就不强)，就临时想转成任意调了。。。。于是有琢磨了一会就有了实现。。。</p>
-</li>
-<li>
-<p>实现思路：当初第一目的——任意调到 C，最初是想通过 if 一句一句判断进行实现。。。。后来想写任意调后发现不现实，因为会有 C(6,2)，15 种可能，每个 if 下还要再进行判断是否是 1，2，3，4，这类的简谱名，这样会造成程序的冗长与无用。。。于是就放弃了</p>
-</li>
-<li>
-<p>于是想到了 Python 的 dict 数据结构，使用 key-value 对，便可以便捷的实现调之间转换，只需提前输入好 dict</p>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/12/13/%E8%AE%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AF%B9%E6%88%91%E6%9C%89%E5%AE%9E%E9%99%85%E4%BD%9C%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%EF%BC%88%E9%80%83%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1368,7 +1358,7 @@ Windows 10 x64 15063.674</p>
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
