@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.dccif.top","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="起因: 最近因为家用的 windows 机器遇到可能是硬件上的故障无法正常使用，没办法，为了有一台电脑用，将之前家用的 pve 上的 vGPU 也卸载了，为了性能使用了显卡直通+Nvidia 专有驱动来运行 Arch 虚拟机，但是发现在最新的 KDE+Wayland 下，默认显示全是黑屏，只有一个光标，无法正常使用。在各种地方查看了之后终于配置成功了，写下这篇文章以帮助其他朋友和备忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch下Wayland使用Nvidia私有驱动">
+<meta property="og:url" content="https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/">
+<meta property="og:site_name" content="dccif&#39;s Blog">
+<meta property="og:description" content="起因: 最近因为家用的 windows 机器遇到可能是硬件上的故障无法正常使用，没办法，为了有一台电脑用，将之前家用的 pve 上的 vGPU 也卸载了，为了性能使用了显卡直通+Nvidia 专有驱动来运行 Arch 虚拟机，但是发现在最新的 KDE+Wayland 下，默认显示全是黑屏，只有一个光标，无法正常使用。在各种地方查看了之后终于配置成功了，写下这篇文章以帮助其他朋友和备忘。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-24T02:13:12.000Z">
+<meta property="article:modified_time" content="2024-06-24T03:32:26.053Z">
+<meta property="article:author" content="Barry He">
+<meta property="article:tag" content="编程">
+<meta property="article:tag" content="环境搭建">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/","path":"2024/06/24/Arch下Wayland使用Nvidia私有驱动/","title":"Arch下Wayland使用Nvidia私有驱动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Arch下Wayland使用Nvidia私有驱动 | dccif's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">dccif's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">dccif 的博客 记录一些心得</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">12</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text"> 起因:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-%E8%BD%AF%E4%BB%B6%E5%8C%85%E4%B8%8E%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text"> 安装 软件包与编译环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-nvidia-%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.2.</span> <span class="nav-text"> 安装 nvidia 驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wayland-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text"> Wayland 环境变量配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kernel-modules-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text"> kernel modules 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-pacman-hook"><span class="nav-number">1.5.</span> <span class="nav-text"> 配置 Pacman Hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%88%90"><span class="nav-number">1.6.</span> <span class="nav-text"> 完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC"><span class="nav-number">1.7.</span> <span class="nav-text"> 一键脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.8.</span> <span class="nav-text"> 参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Barry He"
+      src="/image/head.jpg">
+  <p class="site-author-name" itemprop="name">Barry He</p>
+  <div class="site-description" itemprop="description">blog dccif</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RjY2lm" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dccif"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmhleXVqaWVib3lAaG90bWFpbC5jb20=" title="E-Mail → mailto:heyujieboy@hotmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/image/head.jpg">
+      <meta itemprop="name" content="Barry He">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dccif's Blog">
+      <meta itemprop="description" content="blog dccif">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Arch下Wayland使用Nvidia私有驱动 | dccif's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Arch下Wayland使用Nvidia私有驱动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-06-24 10:13:12 / 修改时间：11:32:26" itemprop="dateCreated datePublished" datetime="2024-06-24T10:13:12+08:00">2024-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>832</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="起因"><a class="markdownIt-Anchor" href="#起因"></a> 起因:</h1>
+<p>最近因为家用的 windows 机器遇到可能是硬件上的故障无法正常使用，没办法，为了有一台电脑用，将之前家用的 pve 上的 vGPU 也卸载了，为了性能使用了显卡直通+Nvidia 专有驱动来运行 Arch 虚拟机，但是发现在最新的 KDE+Wayland 下，默认显示全是黑屏，只有一个光标，无法正常使用。在各种地方查看了之后终于配置成功了，写下这篇文章以帮助其他朋友和备忘。</p>
+<span id="more"></span>
+<h2 id="安装-软件包与编译环境"><a class="markdownIt-Anchor" href="#安装-软件包与编译环境"></a> 安装 软件包与编译环境</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syu</span><br><span class="line">sudo pacman -S base-devel linux-headers git nano --needed</span><br></pre></td></tr></table></figure>
+<h2 id="安装-nvidia-驱动"><a class="markdownIt-Anchor" href="#安装-nvidia-驱动"></a> 安装 nvidia 驱动</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils</span><br><span class="line">or</span><br><span class="line">sudo yay -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils</span><br></pre></td></tr></table></figure>
+<p>本人使用的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hsaW51eC9hcmNoaW5zdGFsbA==">archinstall<i class="fa fa-external-link-alt"></i></span>，这一步应该是默认安装的，关键是后续的配置，只是先写在这里。</p>
+<h2 id="wayland-环境变量配置"><a class="markdownIt-Anchor" href="#wayland-环境变量配置"></a> Wayland 环境变量配置</h2>
+<p>这下面的才是关键：</p>
+<p>NVIDIA-specific options in the root environment file <code>/etc/environment</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GBM_BACKEND=nvidia-drm</span><br><span class="line">__GLX_VENDOR_LIBRARY_NAME=nvidia</span><br><span class="line">ENABLE_VKBASALT=1</span><br><span class="line">LIBVA_DRIVER_NAME=nvidia</span><br></pre></td></tr></table></figure>
+<p>需要将如上变量写入/etc/environment</p>
+<h2 id="kernel-modules-配置"><a class="markdownIt-Anchor" href="#kernel-modules-配置"></a> kernel modules 配置</h2>
+<p>找到 <code>/etc/mkinitcpio.conf</code></p>
+<p>找到 <code>MODULES=()</code>行，在<code>()</code>中加入 <code>nvidia nvidia_modeset nvidia_uvm nvidia_drm</code></p>
+<p>找到 <code>HOOKS=()</code>行，如果<code>()</code>中有<code>kms</code>,则删除</p>
+<p>新建一个文件 <code>/etc/modprobe.d/nvidia.conf</code> 文件,内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">blacklist nouveau</span><br><span class="line">options nvidia_drm modeset=1 fbdev=1</span><br></pre></td></tr></table></figure>
+<p>之后最关键的一步</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkinitcpio -P</span><br></pre></td></tr></table></figure>
+<p>更新 initramfs</p>
+<h2 id="配置-pacman-hook"><a class="markdownIt-Anchor" href="#配置-pacman-hook"></a> 配置 Pacman Hook</h2>
+<p>新建一个文件比如：nvidia.hook,内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[Trigger]</span><br><span class="line">Operation=Install</span><br><span class="line">Operation=Upgrade</span><br><span class="line">Operation=Remove</span><br><span class="line">Type=Package</span><br><span class="line">Target=nvidia</span><br><span class="line">Target=linux</span><br><span class="line"># Adjust line(6) above to match your driver, e.g. Target=nvidia-470xx-dkms</span><br><span class="line"># Change line(7) above, if you are not using the regular kernel For example, Target=linux-lts</span><br><span class="line"></span><br><span class="line">[Action]</span><br><span class="line">Description=Update Nvidia module in initcpio</span><br><span class="line">Depends=mkinitcpio</span><br><span class="line">When=PostTransaction</span><br><span class="line">NeedsTargets</span><br><span class="line">Exec=/bin/sh -c &#x27;while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#x27;</span><br></pre></td></tr></table></figure>
+<p>文件中的注释可以不用调整，面向的是老驱动以及非官方内核</p>
+<p>最后将文件移动到<code>/etc/pacman.d/hooks/</code>下</p>
+<h2 id="完成"><a class="markdownIt-Anchor" href="#完成"></a> 完成</h2>
+<p>正常情况就可以重启了，这下可以愉快地使用 Walyland 了并且运行在 nvidia 私有驱动下了</p>
+<h2 id="一键脚本"><a class="markdownIt-Anchor" href="#一键脚本"></a> 一键脚本</h2>
+<p>如果上文不想看，那么直接新建一个<code>nvidia.sh</code>文件，文件名任意</p>
+<p>内容如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义要写入 /etc/environment 的变量</span></span><br><span class="line">nvidia_variables=(</span><br><span class="line">    &quot;GBM_BACKEND=nvidia-drm&quot;</span><br><span class="line">    &quot;__GLX_VENDOR_LIBRARY_NAME=nvidia&quot;</span><br><span class="line">    &quot;ENABLE_VKBASALT=1&quot;</span><br><span class="line">    &quot;LIBVA_DRIVER_NAME=nvidia&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">backup_file() &#123;</span><br><span class="line">    local file=$1</span><br><span class="line">    sudo cp &quot;$file&quot; &quot;$file.bak&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">update_environment() &#123;</span><br><span class="line">    local env_file=&quot;/etc/environment&quot;</span><br><span class="line">    backup_file &quot;$env_file&quot;</span><br><span class="line"></span><br><span class="line">    for var in &quot;$&#123;nvidia_variables[@]&#125;&quot;; do</span><br><span class="line">        if grep -q &quot;^$&#123;var%%=*&#125;&quot; &quot;$env_file&quot;; then</span><br><span class="line">            sudo sed -i &quot;s|^$&#123;var%%=*&#125;.*|$var|&quot; &quot;$env_file&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;$var&quot; | sudo tee -a &quot;$env_file&quot; &gt; /dev/null</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line"></span><br><span class="line">    echo &quot;NVIDIA-specific options have been written to $env_file.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">update_mkinitcpio_conf() &#123;</span><br><span class="line">    local mkinitcpio_conf=&quot;/etc/mkinitcpio.conf&quot;</span><br><span class="line">    backup_file &quot;$mkinitcpio_conf&quot;</span><br><span class="line"></span><br><span class="line">    sudo sed -i &#x27;/^MODULES=/ s/(\(.*\))/(\1 nvidia nvidia_modeset nvidia_uvm nvidia_drm)/&#x27; &quot;$mkinitcpio_conf&quot;</span><br><span class="line">    sudo sed -i &#x27;/^HOOKS=/ s/\(\s*kms\s*\)//g&#x27; &quot;$mkinitcpio_conf&quot;</span><br><span class="line"></span><br><span class="line">    echo &quot;mkinitcpio.conf has been updated.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">create_nvidia_conf() &#123;</span><br><span class="line">    local nvidia_conf=&quot;/etc/modprobe.d/nvidia.conf&quot;</span><br><span class="line">    sudo bash -c &quot;cat &gt; $nvidia_conf&quot; &lt;&lt;EOL</span><br><span class="line">blacklist nouveau</span><br><span class="line">options nvidia_drm modeset=1 fbdev=1</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">    echo &quot;$nvidia_conf has been created.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">regenerate_initramfs() &#123;</span><br><span class="line">    sudo mkinitcpio -P</span><br><span class="line">    echo &quot;initramfs has been regenerated.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">create_nvidia_hook() &#123;</span><br><span class="line">    local hook_dir=&quot;/etc/pacman.d/hooks&quot;</span><br><span class="line">    local hook_file=&quot;$hook_dir/nvidia.hook&quot;</span><br><span class="line"></span><br><span class="line">    sudo mkdir -p &quot;$hook_dir&quot;</span><br><span class="line"></span><br><span class="line">    sudo bash -c &quot;cat &gt; $hook_file&quot; &lt;&lt;EOL</span><br><span class="line">[Trigger]</span><br><span class="line">Operation=Install</span><br><span class="line">Operation=Upgrade</span><br><span class="line">Operation=Remove</span><br><span class="line">Type=Package</span><br><span class="line">Target=nvidia</span><br><span class="line">Target=linux</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Adjust line(6) above to match your driver, e.g. Target=nvidia-470xx-dkms</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Change line(7) above, <span class="keyword">if</span> you are not using the regular kernel For example, Target=linux-lts</span></span><br><span class="line"></span><br><span class="line">[Action]</span><br><span class="line">Description=Update Nvidia module in initcpio</span><br><span class="line">Depends=mkinitcpio</span><br><span class="line">When=PostTransaction</span><br><span class="line">NeedsTargets</span><br><span class="line">Exec=/bin/sh -c &#x27;while read -r trg; do case \$trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#x27;</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">    echo &quot;nvidia.hook has been added to $hook_dir.&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">    update_environment</span><br><span class="line">    update_mkinitcpio_conf</span><br><span class="line">    create_nvidia_conf</span><br><span class="line">    regenerate_initramfs</span><br><span class="line">    create_nvidia_hook</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>添加运行权限与执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x nvidia.sh &amp;&amp; ./nvidia.sh</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<p>最后感谢这些文章的作者，Thanks</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2tvcnZhaGFubnUvYXJjaC1udmlkaWEtZHJpdmVycy1pbnN0YWxsYXRpb24tZ3VpZGU=">arch-nvidia-drivers-installation-guide<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvTlZJRElBL1Ryb3VibGVzaG9vdGluZw==">Black screen at Wayland startup<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Barry He
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/" title="Arch下Wayland使用Nvidia私有驱动">https://blog.dccif.top/2024/06/24/Arch下Wayland使用Nvidia私有驱动/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 编程</a>
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag"><i class="fa fa-tag"></i> 环境搭建</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_telegram"></a>
+      <a class="a2a_button_wechat"></a>
+      <a class="a2a_button_qzone"></a>
+      <a class="a2a_button_copy_link"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/21/virtio%E5%85%B1%E4%BA%AB%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%9B%AE%E5%BD%95/" rel="prev" title="在pve下通过9p virtio共享宿主机的目录">
+                  <i class="fa fa-angle-left"></i> 在pve下通过9p virtio共享宿主机的目录
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Barry He</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.dccif.top/2024/06/24/Arch%E4%B8%8BWayland%E4%BD%BF%E7%94%A8Nvidia%E7%A7%81%E6%9C%89%E9%A9%B1%E5%8A%A8/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
