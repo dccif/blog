@@ -57,7 +57,7 @@ lang: zh-CN
 
 ## Hexo 迁移记录
 
-- 原始 21 篇文章和素材仍保留在 `source/`，作为迁移参考；该目录不会被 Astro 发布。以后只编辑 `src/content/`。
+- 保留的 20 篇文章及素材在 `source/` 中存有迁移参考；该目录不会被 Astro 发布。以后只编辑 `src/content/`。
 - 原 Hexo 配置归档于 `legacy/hexo/`；旧 npm 锁文件已移除，统一使用 pnpm 锁文件。
 - 旧站已发布页面清单保存在 `src/data/legacy-paths.json`，逐篇映射在 `src/data/migration.json`。
 - 两篇旧文章路径比源文件日期早一天，沿用实际已发布路径；一篇带尾随空格的旧路径跳转到清理后的地址。
