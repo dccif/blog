@@ -1,0 +1,12 @@
+---
+import MainGridLayout from '@layouts/MainGridLayout.astro';
+---
+<MainGridLayout title="页面未找到">
+  <meta slot="head" name="robots" content="noindex" />
+  <section class="card-base p-9">
+    <h1 class="text-3xl font-bold text-90 mb-4">这页走丢了</h1>
+    <p class="text-75 mb-6">链接可能有误，也可以通过搜索或文章归档找到内容。</p>
+    <a href="/" class="btn-regular rounded-lg px-5 py-3 inline-flex mr-3">返回首页</a>
+    <a href="/archive/" class="btn-regular rounded-lg px-5 py-3 inline-flex">文章归档</a>
+  </section>
+</MainGridLayout>

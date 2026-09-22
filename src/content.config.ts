@@ -1,0 +1,32 @@
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
+
+const postsCollection = defineCollection({
+ loader: glob({ pattern: "**/*.md", base: "./src/content/posts", generateId: ({ entry, data }) => typeof data.slug === "string" ? data.slug : entry.replace(/\.md$/, "") }),
+	schema: z.object({
+		title: z.string(),
+		published: z.coerce.date(),
+		updated: z.coerce.date().optional(),
+		draft: z.boolean().optional().default(false),
+		description: z.string().optional().default(""),
+		image: z.string().optional().default(""),
+		tags: z.array(z.string()).optional().default([]),
+		category: z.string().optional().nullable().default(""),
+		lang: z.string().optional().default(""),
+
+		/* For internal use */
+		prevTitle: z.string().default(""),
+		prevSlug: z.string().default(""),
+		nextTitle: z.string().default(""),
+		nextSlug: z.string().default(""),
+	}),
+});
+const specCollection = defineCollection({
+ loader: glob({ pattern: "**/*.md", base: "./src/content/spec" }),
+	schema: z.object({}),
+});
+export const collections = {
+	posts: postsCollection,
+	spec: specCollection,
+};

@@ -1,0 +1,10 @@
+@import './main.css';
+@import './markdown.css';
+@import './transition.css';
+@import './scrollbar.css';
+@import './expressive-code.css';
+@import './photoswipe.css';
+@import './custom.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

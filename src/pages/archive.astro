@@ -1,0 +1,65 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList, getTagList, getCategoryList } from "../utils/content-utils";
+import { formatDateToYYYYMMDD } from '../utils/date-utils';
+import { getPostUrlBySlug, getTagUrl, getCategoryUrl } from '../utils/url-utils';
+
+const sortedPostsList = await getSortedPostsList();
+const tags = await getTagList();
+const categories = await getCategoryList();
+const years = [...new Set(sortedPostsList.map(p => formatDateToYYYYMMDD(p.data.published).slice(0, 4)))];
+---
+
+<MainGridLayout title="文章归档" description="按年份、分类和标签浏览所有文章。">
+  <section class="card-base px-6 md:px-9 py-7">
+    <h1 class="text-3xl font-bold text-90 mb-2">文章归档</h1>
+    <p id="archive-summary" class="text-75 mb-6" aria-live="polite">共 {sortedPostsList.length} 篇文章</p>
+    <nav aria-label="按分类浏览" class="flex flex-wrap gap-2 mb-3">
+      <a class="btn-regular rounded-lg px-3 py-2" href="/archive/">全部</a>
+      {categories.map(c => <a class="btn-regular rounded-lg px-3 py-2" href={getCategoryUrl(c.name)}>{c.name} <span class="ml-2 text-sm">{c.count}</span></a>)}
+    </nav>
+    <nav aria-label="按标签浏览" class="flex flex-wrap gap-x-4 gap-y-2 mb-7 text-sm text-75">
+      {tags.map(t => <a class="link" href={getTagUrl(t.name)}>#{t.name}</a>)}
+    </nav>
+    {years.map(year => <section data-archive-year={year} class="mb-7">
+      <h2 class="text-2xl font-bold text-90 mb-3">{year}</h2>
+      <ul>{sortedPostsList.filter(p => formatDateToYYYYMMDD(p.data.published).startsWith(year)).map(post =>
+        <li data-archive-post data-date={formatDateToYYYYMMDD(post.data.published)} data-category={post.data.category || ''} data-tags={JSON.stringify(post.data.tags)} class="border-b border-black/5 dark:border-white/10">
+          <a class="flex gap-4 py-4 items-baseline text-90 hover:text-[var(--primary)]" href={getPostUrlBySlug(post.slug)}>
+            <time datetime={post.data.published.toISOString()} class="shrink-0 text-sm text-50">{formatDateToYYYYMMDD(post.data.published).slice(5)}</time>
+            <span class="font-medium">{post.data.title}</span>
+          </a>
+        </li>
+      )}</ul>
+    </section>)}
+    <p id="archive-empty" hidden class="text-75 py-6">没有符合条件的文章。<a class="link" href="/archive/">查看全部文章</a></p>
+  </section>
+</MainGridLayout>
+
+<script>
+function filterArchive() {
+  const params = new URLSearchParams(location.search);
+  const tag = params.get('tag');
+  const category = params.get('category');
+  const year = params.get('year');
+  const month = params.get('month');
+  let count = 0;
+  document.querySelectorAll<HTMLElement>('[data-archive-post]').forEach(row => {
+    const tags: string[] = JSON.parse(row.dataset.tags || '[]');
+    const date = row.dataset.date || '';
+    row.hidden = Boolean((tag && !tags.includes(tag)) || (category && row.dataset.category !== category)
+      || (params.has('uncategorized') && row.dataset.category) || (year && !date.startsWith(year))
+      || (month && date.slice(5, 7) !== month));
+    if (!row.hidden) count++;
+  });
+  document.querySelectorAll<HTMLElement>('[data-archive-year]').forEach(section => {
+    section.hidden = !section.querySelector('[data-archive-post]:not([hidden])');
+  });
+  const summary = document.getElementById('archive-summary');
+  if (summary) summary.textContent = `${[category, tag ? '#' + tag : '', year, month].filter(Boolean).join(' · ') || '全部文章'} · ${count} 篇`;
+  const empty = document.getElementById('archive-empty');
+  if (empty) empty.hidden = count > 0;
+}
+filterArchive();
+document.addEventListener('swup:page:view', filterArchive);
+</script>

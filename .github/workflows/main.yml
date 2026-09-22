@@ -1,61 +1,54 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Build and Deploy
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main"]
+    branches: [main]
   pull_request:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  TZ: Asia/Shanghai
+
 jobs:
-  # This workflow contains a single job called "build"
-  Build_and_Deploy:
-    name: set up environment
-    # The type of runner that the job will run on
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 20
-          cache: npm
-
-      - name: update npm
-        run: |
-          npm update --location=global npm
-          npm update --location=global
-
-      - name: install hexo
-        run: |
-          npm install --location=global hexo
-          npm un hexo-renderer-marked --save
-          npm install hexo-renderer-markdown-it-plus --save
-          npm install hexo-renderer-pug --save
-          npm install hexo-generator-sitemap --save
-          npm install hexo-generator-searchdb --save
-          npm install hexo-deployer-git --save
-          npm install hexo-theme-next --save
-          npm install hexo-word-counter --save
-          npm install
-          hexo clean
-          hexo g
-          cd public
-          rm -f README.html
-          cp ../source/README.md ./
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+          version: 9.14.4
+      - uses: actions/setup-node@v4
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm verify
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,24 @@
+body { font-family: Roboto, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; }
+:root { --surface-text: #1e293b; }
+:root.dark { --surface-text: #e2e8f0; }
+#navbar .card-base, #navbar .float-panel { color: var(--surface-text); background-color: var(--card-bg); }
+#navbar .btn-plain, #navbar .btn-plain > div { color: var(--surface-text); }
+.card-base { isolation: isolate; }
+.card-base [class*="text-neutral-400"] { color: var(--surface-text); opacity: .75; }
+.markdown-content { line-height: 1.9; overflow-wrap: anywhere; }
+.markdown-content img { max-width: 100%; height: auto; border-radius: .65rem; }
+.markdown-content table { display: block; max-width: 100%; overflow-x: auto; }
+.skip-link { position: fixed; top: -5rem; left: 1rem; z-index: 100; padding: .75rem 1rem; background: var(--card-bg); border-radius: .5rem; }
+.skip-link:focus { top: .5rem; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+@media (max-width: 767px) {
+  #navbar > div.card-base { padding-inline: .5rem; }
+  #navbar > div.card-base > a { padding-inline: .5rem; }
+  #display-settings-switch { display: none; }
+  #main-grid { gap: .75rem; }
+  #post-container { padding-inline: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .onload-animation { opacity: 1 !important; transform: none !important; }
+}

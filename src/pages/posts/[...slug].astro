@@ -1,0 +1,9 @@
+---
+import PostArticle from '@components/PostArticle.astro';
+import { getSortedPosts } from '@utils/content-utils';
+export async function getStaticPaths() {
+  return (await getSortedPosts()).filter(entry => !/^\d{4}\//.test(entry.slug)).map(entry => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<PostArticle entry={entry} />

@@ -1,0 +1,217 @@
+[
+  {
+    "source": "Arch下Wayland使用Nvidia私有驱动.md",
+    "title": "Arch下Wayland使用Nvidia私有驱动",
+    "legacyPath": "/2024/06/24/Arch下Wayland使用Nvidia私有驱动/",
+    "path": "/2024/06/24/Arch下Wayland使用Nvidia私有驱动/",
+    "category": "编程",
+    "tags": [
+      "编程",
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "IDEA下的Java-Webapp环境搭建.md",
+    "title": "IDEA下的Java Webapp环境搭建",
+    "legacyPath": "/2017/10/14/IDEA下的Java-Webapp环境搭建/",
+    "path": "/2017/10/14/IDEA下的Java-Webapp环境搭建/",
+    "category": "编程",
+    "tags": [
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "my-test-page.md",
+    "title": "my test page",
+    "legacyPath": "/2017/10/10/my-test-page/",
+    "path": "/2017/10/10/my-test-page/",
+    "category": "Test",
+    "tags": []
+  },
+  {
+    "source": "Prologue.md",
+    "title": "Prologue",
+    "legacyPath": "/2017/10/10/Prologue/",
+    "path": "/2017/10/10/Prologue/",
+    "category": "随想",
+    "tags": [
+      "闲谈"
+    ]
+  },
+  {
+    "source": "QT-6-2-msvc-2019-静态编译.md",
+    "title": "QT 6.2 msvc 2019 下 静态编译",
+    "legacyPath": "/2021/11/11/QT-6-2-msvc-2019-静态编译/",
+    "path": "/2021/11/11/QT-6-2-msvc-2019-静态编译/",
+    "category": "编程",
+    "tags": [
+      "编程",
+      "环境搭建",
+      "QT",
+      "C++"
+    ]
+  },
+  {
+    "source": "Ubuntu的个性化配置.md",
+    "title": "Ubuntu的个性化配置",
+    "legacyPath": "/2017/10/27/Ubuntu的个性化配置/",
+    "path": "/2017/10/27/Ubuntu的个性化配置/",
+    "category": "清单",
+    "tags": [
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "virtio共享宿主机的目录.md",
+    "title": "在pve下通过9p virtio共享宿主机的目录",
+    "legacyPath": "/2023/08/21/virtio共享宿主机的目录/",
+    "path": "/2023/08/21/virtio共享宿主机的目录/",
+    "category": "编程",
+    "tags": [
+      "编程",
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "一个简单的简谱转调程序.md",
+    "title": "一个简单的简谱转调程序",
+    "legacyPath": "/2017/08/07/一个简单的简谱转调程序/",
+    "path": "/2017/08/07/一个简单的简谱转调程序/",
+    "category": "编程",
+    "tags": [
+      "编程",
+      "音乐"
+    ]
+  },
+  {
+    "source": "关于《疯狂系列》.md",
+    "title": "关于《疯狂系列》",
+    "legacyPath": "/2018/02/24/关于《疯狂系列》/",
+    "path": "/2018/02/24/关于《疯狂系列》/",
+    "category": "随想",
+    "tags": [
+      "阅读",
+      "编程"
+    ]
+  },
+  {
+    "source": "博客备份-Git小技巧.md",
+    "title": "博客备份-Git小技巧",
+    "legacyPath": "/2017/10/23/博客备份-Git小技巧/",
+    "path": "/2017/10/23/博客备份-Git小技巧/",
+    "category": "编程",
+    "tags": [
+      "细节"
+    ]
+  },
+  {
+    "source": "博客的一键部署.md",
+    "title": "博客的一键部署",
+    "legacyPath": "/2017/11/27/博客的一键部署/",
+    "path": "/2017/11/27/博客的一键部署/",
+    "category": "编程",
+    "tags": [
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "博客的一键部署2.md",
+    "title": "博客的一键部署2",
+    "legacyPath": "/2021/11/06/博客的一键部署2/",
+    "path": "/2021/11/06/博客的一键部署2/",
+    "category": "编程",
+    "tags": [
+      "环境搭建"
+    ]
+  },
+  {
+    "source": "小谈绘画中的RGB与HSB(V) .md",
+    "title": "小谈绘画中的RGB与HSB(V)",
+    "legacyPath": "/2020/07/27/小谈绘画中的RGB与HSB(V) /",
+    "path": "/2020/07/27/小谈绘画中的RGB与HSB(V)/",
+    "category": "随想",
+    "tags": [
+      "绘画"
+    ]
+  },
+  {
+    "source": "数组扩展的效率.md",
+    "title": "数组扩展的效率",
+    "legacyPath": "/2017/11/04/数组扩展的效率/",
+    "path": "/2017/11/04/数组扩展的效率/",
+    "category": "算法",
+    "tags": [
+      "细节"
+    ]
+  },
+  {
+    "source": "甘雨骗局.md",
+    "title": "甘雨骗局",
+    "legacyPath": "/2021/05/09/甘雨骗局/",
+    "path": "/2021/05/09/甘雨骗局/",
+    "category": "原神",
+    "tags": [
+      "角色评价",
+      "理解交流"
+    ]
+  },
+  {
+    "source": "短路求值-Short-circuit-evaluation.md",
+    "title": "短路求值(Short-circuit evaluation)",
+    "legacyPath": "/2017/10/10/短路求值-Short-circuit-evaluation/",
+    "path": "/2017/10/10/短路求值-Short-circuit-evaluation/",
+    "category": "编程",
+    "tags": [
+      "细节"
+    ]
+  },
+  {
+    "source": "致过去的一年.md",
+    "title": "致过去的一年",
+    "legacyPath": "/2018/01/02/致过去的一年/",
+    "path": "/2018/01/02/致过去的一年/",
+    "category": "随想",
+    "tags": [
+      "闲谈"
+    ]
+  },
+  {
+    "source": "记第一个对我有实际作用的程序（逃）.md",
+    "title": "记第一个对我有实际作用的程序（逃）",
+    "legacyPath": "/2015/12/13/记第一个对我有实际作用的程序（逃）/",
+    "path": "/2015/12/13/记第一个对我有实际作用的程序（逃）/",
+    "category": "编程",
+    "tags": [
+      "编程",
+      "音乐"
+    ]
+  },
+  {
+    "source": "近期随想.md",
+    "title": "近期随想",
+    "legacyPath": "/2017/12/18/近期随想/",
+    "path": "/2017/12/18/近期随想/",
+    "category": "清单",
+    "tags": []
+  },
+  {
+    "source": "递归的两种优化方法.md",
+    "title": "递归的两种优化方法",
+    "legacyPath": "/2017/10/10/递归的两种优化方法/",
+    "path": "/2017/10/10/递归的两种优化方法/",
+    "category": "编程",
+    "tags": [
+      "优化"
+    ]
+  },
+  {
+    "source": "重装系统程序清单.md",
+    "title": "重装系统程序清单",
+    "legacyPath": "/2017/10/16/重装系统程序清单/",
+    "path": "/2017/10/16/重装系统程序清单/",
+    "category": "清单",
+    "tags": [
+      "环境搭建"
+    ]
+  }
+]
