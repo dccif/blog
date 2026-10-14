@@ -26,7 +26,7 @@ const { badge, url, label } = Astro.props;
         }
     >
         <div class="flex w-full min-w-0 items-center justify-between relative mr-2">
-            <div class="overflow-hidden text-left whitespace-nowrap overflow-ellipsis  ">
+            <div class="overflow-hidden text-left whitespace-nowrap text-ellipsis  ">
                 <slot></slot>
             </div>
             { badge !== undefined && badge !== null && badge !== '' &&

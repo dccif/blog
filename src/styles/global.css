@@ -1,3 +1,4 @@
+@import 'tailwindcss' source('../');
 @import './main.css';
 @import './markdown.css';
 @import './transition.css';
@@ -5,6 +6,16 @@
 @import './expressive-code.css';
 @import './photoswipe.css';
 @import './custom.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@plugin '@tailwindcss/typography';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    button:not(:disabled), [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+}

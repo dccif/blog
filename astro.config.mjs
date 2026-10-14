@@ -1,6 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import { unified } from '@astrojs/markdown-remark';
 import svelte from "@astrojs/svelte";
+import tailwindcss from "@tailwindcss/vite";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
@@ -48,7 +49,7 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				"preprocess: vitePreprocess(),": ["*"],
+				"material-symbols": ["*"],
 				"fa6-brands": ["*"],
 				"fa6-regular": ["*"],
 				"fa6-solid": ["*"],
@@ -156,6 +157,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
+		plugins: [tailwindcss()],
 		build: {
 			cssMinify: true,
 			rollupOptions: {

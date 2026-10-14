@@ -75,7 +75,7 @@ onMount(() => {
     <svg aria-hidden="true" class="ml-3 text-50" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
     <input aria-label="搜索文章" aria-controls="search-panel" aria-expanded={open} placeholder="搜索文章" value={keyword} on:input={e => scheduleSearch(e.currentTarget.value)} on:focus={() => { open = true; }} class="pl-2 pr-3 text-sm bg-transparent h-11 w-36 focus:w-48 text-75 transition-all" />
   </div>
-  <button on:click={toggle} aria-label="搜索文章" aria-controls="search-panel" aria-expanded={open} id="search-switch" class="btn-plain lg:!hidden rounded-lg w-11 h-11">
+  <button on:click={toggle} aria-label="搜索文章" aria-controls="search-panel" aria-expanded={open} id="search-switch" class="btn-plain lg:hidden! rounded-lg w-11 h-11">
     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
   </button>
   <div id="search-panel" hidden={!open} class="float-panel search-panel absolute top-20 left-3 right-3 md:left-auto md:w-[30rem] shadow-xl rounded-2xl p-3 max-h-[70vh] overflow-y-auto">

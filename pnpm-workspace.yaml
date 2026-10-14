@@ -1,2 +1,11 @@
 packages:
   - '.'
+overrides:
+  serialize-javascript: ^7.0.3
+  esbuild: ^0.28.1
+  sharp: ^0.35.5
+  rehype-katex>katex: ^0.19.0
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true

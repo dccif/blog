@@ -2,11 +2,11 @@
 
 [![Build and Deploy](https://github.com/dccif/blog/actions/workflows/main.yml/badge.svg)](https://github.com/dccif/blog/actions/workflows/main.yml)
 
-基于 **Astro 7 + Fuwari** 的中文静态博客：[blog.dccif.top](https://blog.dccif.top)。已将 Fuwari 的文章集合适配为 Content Layer，并保留 Tailwind 3 主题样式与 remark/rehype Markdown 插件。
+基于 **Astro 7 + Svelte 5 + Tailwind CSS 4 + Fuwari** 的中文静态博客：[blog.dccif.top](https://blog.dccif.top)。文章使用 Content Layer，Markdown 使用 remark/rehype 插件。Svelte 用于全文搜索、明暗模式切换和主题色设置；归档列表由 Astro 静态渲染。
 
 ## 开发
 
-使用 mise 管理的 Node 24.21.0 和 pnpm 9.14.4（版本见 `mise.toml`、`.node-version`、`package.json`）。
+使用 Node 24 和 pnpm 12.11.2（版本见 `mise.toml`、`.node-version`、`package.json`）。mise 跟随 Node 24 的更新，CI 使用 `.node-version` 中固定的版本。
 
 ```sh
 mise install
@@ -14,16 +14,23 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-如果全局 pnpm 版本不同，可使用 `npx pnpm@9.14.4` 代替下面命令中的 `pnpm`。
+如果全局 pnpm 版本不同，可使用 `npx pnpm@12.11.2` 代替下面命令中的 `pnpm`。
 
 ```sh
 pnpm check
+pnpm type-check
 pnpm build
 pnpm verify
 pnpm preview
 ```
 
 全文搜索使用构建时生成的 Pagefind 索引，需在 `build` 后用 `preview` 验证。搜索索引在输入关键词时才加载；无需搜索服务或 API 密钥。
+
+`pnpm check` 依次检查 Astro、Svelte 和 TypeScript 文件。项目 TypeScript 文件使用原生 TypeScript 7.0.2 编译器（`typescript-native` npm 别名）；Astro/Svelte 检查工具仍依赖旧的编译器 API，因此保留 TypeScript 6.0.3。`.ncurc.json` 暂时排除这个兼容依赖，`ncu -i` 仍会更新 `typescript-native`。上游支持 TypeScript 7 后可合并两者，详情见 [Astro 类型检查兼容性](https://github.com/withastro/roadmap/discussions/1321)。`pnpm type-check` 可单独运行 TypeScript 7 检查。
+
+Tailwind 4 使用 `@tailwindcss/vite`，配置集中在 `src/styles/global.css`，主题工具类使用 `@utility`。原 PostCSS 导入、嵌套和前缀插件已移除，迁移依据见 [Tailwind 4 升级指南](https://tailwindcss.com/docs/upgrade-guide)。
+
+pnpm 配置统一放在 `pnpm-workspace.yaml`。`allowBuilds` 明确允许 `@parcel/watcher`、`esbuild`、`sharp` 的安装脚本，避免本地和 CI 安装出现 `ERR_PNPM_IGNORED_BUILDS`；以后新增需要构建的依赖时，可运行 `pnpm approve-builds` 更新清单。
 
 ## 写文章
 
@@ -54,15 +61,3 @@ lang: zh-CN
 推送到 `main` 自动运行：安装锁定依赖 → 类型检查 → 静态构建与搜索索引 → 链接验证 → GitHub Pages 发布。
 
 仓库 Pages 的 Source 使用 **GitHub Actions**；部署采用官方 Pages artifact 和 OIDC，不需要 `GH_TOKEN`。Pull Request 只检查构建，不发布。域名由 `public/CNAME` 和仓库 Pages 设置共同维护，站点 URL 在 `astro.config.mjs`。
-
-## Hexo 迁移记录
-
-- 保留的 20 篇文章及素材在 `source/` 中存有迁移参考；该目录不会被 Astro 发布。以后只编辑 `src/content/`。
-- 原 Hexo 配置归档于 `legacy/hexo/`；旧 npm 锁文件已移除，统一使用 pnpm 锁文件。
-- 旧站已发布页面清单保存在 `src/data/legacy-paths.json`，逐篇映射在 `src/data/migration.json`。
-- 两篇旧文章路径比源文件日期早一天，沿用实际已发布路径；一篇带尾随空格的旧路径跳转到清理后的地址。
-- 旧归档、标签、分类及分页地址生成静态跳转页，支持无 JavaScript 的 meta refresh。GitHub Pages 不提供可配置的服务端 301。
-- `pnpm verify` 检查全部旧地址、本地链接/资源、文章 SEO、RSS 数量、搜索产物及自定义域名；新增文章无需修改迁移清单。
-- Fuwari 上游版本记录在 `src/data/fuwari-upstream.json`。更新主题时请保留本项目的路由、SEO、搜索和迁移兼容改动。
-
-原始 Hexo 版本可从 Git 历史恢复。迁移前的 `gh-pages` 分支保留为回退参考；当前发布工作流不再覆盖该分支。
