@@ -1,11 +1,26 @@
 packages:
   - '.'
 overrides:
-  serialize-javascript: ^7.0.3
-  esbuild: ^0.28.1
+  serialize-javascript: ^7.1.4
+  esbuild: ^0.28.2
   sharp: ^0.35.5
-  rehype-katex>katex: ^0.19.0
+  katex: ^0.19.1
+  postcss-selector-parser: ^7.1.7
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   sharp: true
+minimumReleaseAgeExclude:
+  - '@biomejs/biome@2.6.3'
+  - '@biomejs/cli-android-arm64@2.6.3'
+  - '@biomejs/cli-android-x64@2.6.3'
+  - '@biomejs/cli-darwin-arm64@2.6.3'
+  - '@biomejs/cli-darwin-x64@2.6.3'
+  - '@biomejs/cli-linux-arm64-musl@2.6.3'
+  - '@biomejs/cli-linux-arm64@2.6.3'
+  - '@biomejs/cli-linux-x64-musl@2.6.3'
+  - '@biomejs/cli-linux-x64@2.6.3'
+  - '@biomejs/cli-win32-arm64@2.6.3'
+  - '@biomejs/cli-win32-x64@2.6.3'
+  - unist-util-visit-parents@6.1.0
+  - unist-util-visit@5.2.0

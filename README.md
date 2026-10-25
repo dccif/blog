@@ -6,7 +6,7 @@
 
 ## 开发
 
-使用 Node 24 和 pnpm 12.11.2（版本见 `mise.toml`、`.node-version`、`package.json`）。mise 跟随 Node 24 的更新，CI 使用 `.node-version` 中固定的版本。
+使用 Node 24 和 pnpm 12.15.0（版本见 `mise.toml`、`.node-version`、`package.json`）。mise 跟随 Node 24 的更新，CI 使用 `.node-version` 中固定的版本。
 
 ```sh
 mise install
@@ -14,7 +14,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-如果全局 pnpm 版本不同，可使用 `npx pnpm@12.11.2` 代替下面命令中的 `pnpm`。
+如果全局 pnpm 版本不同，可使用 `npx pnpm@12.15.0` 代替下面命令中的 `pnpm`。
 
 ```sh
 pnpm check
@@ -31,6 +31,8 @@ pnpm preview
 Tailwind 4 使用 `@tailwindcss/vite`，配置集中在 `src/styles/global.css`，主题工具类使用 `@utility`。原 PostCSS 导入、嵌套和前缀插件已移除，迁移依据见 [Tailwind 4 升级指南](https://tailwindcss.com/docs/upgrade-guide)。
 
 pnpm 配置统一放在 `pnpm-workspace.yaml`。`allowBuilds` 明确允许 `@parcel/watcher`、`esbuild`、`sharp` 的安装脚本，避免本地和 CI 安装出现 `ERR_PNPM_IGNORED_BUILDS`；以后新增需要构建的依赖时，可运行 `pnpm approve-builds` 更新清单。
+
+依赖树通过 `overrides` 统一使用 KaTeX 0.19.1 和 postcss-selector-parser 7.1.7，修复旧间接依赖的已知问题，详情见 [KaTeX 安全公告](https://github.com/advisories/GHSA-238p-pmpm-9mq7) 和 [PostCSS 安全公告](https://github.com/advisories/GHSA-rj75-hqrm-r3gf)。更新依赖后运行 `pnpm audit`，并保留这些覆盖规则，直到上游依赖使用已修复的版本。
 
 ## 写文章
 
