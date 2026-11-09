@@ -213,8 +213,8 @@ importers:
         specifier: ^1.2.96
         version: 1.2.96
       '@iconify/svelte':
-        specifier: ^5.2.3
-        version: 5.2.3(svelte@5.57.2)
+        specifier: ^5.2.4
+        version: 5.2.4(svelte@5.57.2)
       '@swup/astro':
         specifier: ^1.8.0
         version: 1.8.0(rolldown@1.2.15)(supports-color@7.2.0)
@@ -1244,8 +1244,8 @@ packages:
   '@iconify-json/material-symbols@1.2.96':
     resolution: {integrity: sha512-o+qGm+yczwBRKeYJlsv49o8PV1otMmVd90opcokpWw7wsIpR1JfTjUMEBXIlgdRZLosepXX2xWcVe7ydJmcWXg==}
 
-  '@iconify/svelte@5.2.3':
-    resolution: {integrity: sha512-RV08FAHSsUW3/4WJsfoMYGbNt413Eh+4thU864pmX2QGFaem2P7zTcANYwkSOnApGlpYhMXJM813tN1tfk68ug==}
+  '@iconify/svelte@5.2.4':
+    resolution: {integrity: sha512-rKIsZikeLb2D30WaOoA/B5ggwm9KelOu0gXizmPHCjcwBNNm6+AGi+16gQ9HNEfm6MvMQqEuGKcp068ZeAsiNw==}
     peerDependencies:
       svelte: '>5.0.0'
 
@@ -6451,7 +6451,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/svelte@5.2.3(svelte@5.57.2)':
+  '@iconify/svelte@5.2.4(svelte@5.57.2)':
     dependencies:
       '@iconify/types': 2.0.0
       svelte: 5.57.2
